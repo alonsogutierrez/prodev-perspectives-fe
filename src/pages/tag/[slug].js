@@ -1,109 +1,102 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { getAllPosts } from '../../../lib/api';
 import InstagramOne from '../../common/components/instagram/InstagramOne';
-import FooterOne from '../../common/elements/footer/FooterOne';
+import Footer from '../../common/elements/footer/Footer';
 import HeaderOne from '../../common/elements/header/HeaderOne';
 import PostLayoutTwo from '../../common/components/post/layout/PostLayoutTwo';
-import SidebarOne from "../../common/components/sidebar/SidebarOne";
+import SidebarOne from '../../common/components/sidebar/SidebarOne';
 import BreadcrumbOne from '../../common/elements/breadcrumb/breadcrumbOne';
 import { slugify } from '../../common/utils';
 
-
 const TagsArchive = ({ tagsData, allPosts }) => {
+  const router = useRouter();
 
-    const router = useRouter()
+  const BreadCrumbTitle = router.query.slug;
 
-    const BreadCrumbTitle = (router.query.slug);
-
-    return (
-        <>
-            <HeaderOne postData={allPosts}/>
-            <BreadcrumbOne title={BreadCrumbTitle.replace('-', ' ')} />
-            <div className="axil-post-list-area axil-section-gap bg-color-white">
-                <div className="container">
-                    <div className="row">
-                    <div className="col-lg-8 col-xl-8">
-                        <PostLayoutTwo dataPost={tagsData} show="5"/>
-                    </div>
-                    <div className="col-lg-4 col-xl-4 mt_md--40 mt_sm--40">
-                        <SidebarOne dataPost={allPosts}/>
-                    </div>
-                    </div>
-                </div>
+  return (
+    <>
+      <HeaderOne postData={allPosts} />
+      <BreadcrumbOne title={BreadCrumbTitle.replace('-', ' ')} />
+      <div className='axil-post-list-area axil-section-gap bg-color-white'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-lg-8 col-xl-8'>
+              <PostLayoutTwo dataPost={tagsData} show='5' />
             </div>
-            <InstagramOne parentClass="bg-color-grey" />
-            <FooterOne />
-        </>
-    );
-}
+            <div className='col-lg-4 col-xl-4 mt_md--40 mt_sm--40'>
+              <SidebarOne dataPost={allPosts} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <InstagramOne parentClass='bg-color-grey' />
+      <Footer />
+    </>
+  );
+};
 
 export default TagsArchive;
 
+export async function getStaticProps({ params }) {
+  const pageParams = params.slug;
 
-export async function getStaticProps({params}) {
-    
-    const pageParams = params.slug;
+  const allPosts = getAllPosts([
+    'slug',
+    'cate',
+    'cate_img',
+    'title',
+    'featureImg',
+    'date',
+    'read_time',
+    'author_name',
+    'author_social',
+    'tags',
+  ]);
 
-    const allPosts = getAllPosts([
-        'slug',
-		'cate',
-		'cate_img',
-		'title',
-		'featureImg',
-		'date',
-		'read_time',
-		'author_name',
-		'author_social',
-        'tags'
-    ]);
+  let tagsData = [];
 
-    let tagsData = [];
+  for (let i = 0; i < allPosts.length; i++) {
+    const element = allPosts[i];
 
-    for (let i = 0; i < allPosts.length; i++) {
-        const element = allPosts[i];
-        
-        element.tags.map((data) => {
-            var tagsList = (slugify(data));
-            if (tagsList.includes(pageParams)) {
-                tagsData.push(element);
-            }
-        })    
-    }
-
-    return {
-        props: {
-            tagsData,
-            allPosts
-        }
-    }
-
+    element.tags.map((data) => {
+      var tagsList = slugify(data);
+      if (tagsList.includes(pageParams)) {
+        tagsData.push(element);
+      }
+    });
   }
 
-  export async function getStaticPaths() {
-    const postData = getAllPosts(['tags']);
+  return {
+    props: {
+      tagsData,
+      allPosts,
+    },
+  };
+}
 
-    let tags = [];
-    
-    for (let i = 0; i < postData.length; i++) {
-        let singleData = postData[i];
+export async function getStaticPaths() {
+  const postData = getAllPosts(['tags']);
 
-        singleData.tags.map((data) => {
-            tags.push(slugify(data));
-        }) 
-    }
+  let tags = [];
 
-    const uniqTags = [...new Set(tags)];
+  for (let i = 0; i < postData.length; i++) {
+    let singleData = postData[i];
 
-    const paths = uniqTags.map(data => ({
-        params: {
-            slug: data
-        }
-    }))
-
-    return {
-      paths,
-      fallback: false,
-    }
+    singleData.tags.map((data) => {
+      tags.push(slugify(data));
+    });
   }
 
+  const uniqTags = [...new Set(tags)];
 
+  const paths = uniqTags.map((data) => ({
+    params: {
+      slug: data,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}

@@ -1,5 +1,5 @@
 import InstagramOne from '../common/components/instagram/InstagramOne';
-import FooterThree from '../common/elements/footer/FooterThree';
+import Footer from '../common/elements/footer/Footer';
 import { getAllPosts } from '../../lib/api';
 import HeaderThree from '../common/elements/header/HeaderThree';
 import HeadTitle from '../common/elements/head/HeadTitle';
@@ -29,7 +29,7 @@ const HomeDefault = ({ allPosts }) => {
       <PostSectionFour postData={techPost} adBanner={true} />
       <PostSectionEleven postData={allPosts} />
       <InstagramOne parentClass='bg-color-grey' />
-      <FooterThree />
+      <Footer />
     </>
   );
 };
