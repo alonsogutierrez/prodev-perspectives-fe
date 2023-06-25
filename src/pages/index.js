@@ -1,56 +1,50 @@
 import InstagramOne from '../common/components/instagram/InstagramOne';
-import FooterOne from '../common/elements/footer/FooterOne';
-import HeadTitle from '../common/elements/head/HeadTitle';
-import HeaderOne from '../common/elements/header/HeaderOne';
+import FooterThree from '../common/elements/footer/FooterThree';
 import { getAllPosts } from '../../lib/api';
-import PostSectionOne from '../common/components/post/PostSectionOne';
-import PostSectionTwo from '../common/components/post/PostSectionTwo';
+import HeaderThree from '../common/elements/header/HeaderThree';
+import HeadTitle from '../common/elements/head/HeadTitle';
+import { slugify, SortingByDate } from '../common/utils';
+import PostSectionNine from '../common/components/post/PostSectionNine';
+import CategoryListSlide from '../common/components/category/CategoryListSlide';
 import PostSectionThree from '../common/components/post/PostSectionThree';
-import CategoryList from '../common/components/category/CategoryList';
 import PostSectionFour from '../common/components/post/PostSectionFour';
-import SocialOne from '../common/components/social/SocialOne';
-import PostSectionFive from '../common/components/post/PostSectionFive';
-import PostSectionSix from '../common/components/post/PostSectionSix';
-import SliderOne from '../common/components/slider/SliderOne';
+import PostSectionTen from '../common/components/post/PostSectionTen';
+import PostSectionEleven from '../common/components/post/PostSectionEleven';
 
+const HomeDefault = ({ allPosts }) => {
+  const techPost = allPosts.filter(
+    (post) =>
+      slugify(post.cate) === 'technology' || slugify(post.cate) === 'leadership'
+  );
+  const videoPost = allPosts.filter((post) => post.postFormat === 'video');
 
-const HomeDefault = ({allPosts}) => {
-
-  const videoPost = allPosts.filter(post => post.postFormat === "video");
- 
-  return ( 
+  return (
     <>
-      <HeadTitle pageTitle="Home Default" />
-      <HeaderOne postData={allPosts}/>
-      <SliderOne postData={allPosts} />
-      <PostSectionOne postData={allPosts}/>
-      <PostSectionTwo postData={allPosts} adBanner={true} />
-      <CategoryList cateData={allPosts}/>
-      <PostSectionSix postData={allPosts} />
-      <SocialOne />
-      <PostSectionFive postData={allPosts}/>
-      <PostSectionFour postData={allPosts} adBanner={true} />
-      <PostSectionThree postData={videoPost} heading="Featured Video"/>
-      <InstagramOne parentClass="bg-color-grey"/>
-      <FooterOne />
-      
+      <HeadTitle pageTitle='Tech Blog' />
+      <HeaderThree postData={allPosts} />
+      <PostSectionNine postData={techPost} />
+      <CategoryListSlide cateData={allPosts} />
+      <PostSectionTen postData={allPosts} />
+      <PostSectionThree postData={videoPost} heading='Featured Video' />
+      <PostSectionFour postData={techPost} adBanner={true} />
+      <PostSectionEleven postData={allPosts} />
+      <InstagramOne parentClass='bg-color-grey' />
+      <FooterThree />
     </>
-   );
-}
- 
-export default HomeDefault;
+  );
+};
 
+export default HomeDefault;
 
 export async function getStaticProps() {
   const allPosts = getAllPosts([
-    'id',
+    'postFormat',
     'title',
     'featureImg',
-    'postFormat',
     'featured',
-    'slidePost',
     'date',
     'slug',
+    'pCate',
     'cate',
     'cate_img',
     'author_img',
@@ -58,12 +52,10 @@ export async function getStaticProps() {
     'post_views',
     'read_time',
     'author_social',
-  ])
+  ]);
 
+  SortingByDate(allPosts);
   return {
-    props: { allPosts }
-  }
+    props: { allPosts },
+  };
 }
-
-
-
