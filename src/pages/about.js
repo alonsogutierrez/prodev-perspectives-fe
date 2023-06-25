@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import InstagramOne from '../common/components/instagram/InstagramOne';
 import BreadcrumbTwo from '../common/elements/breadcrumb/breadcrumbTwo';
 import Footer from '../common/elements/footer/Footer';
@@ -12,13 +13,13 @@ import HeadTitle from '../common/elements/head/HeadTitle';
 const AboutUs = ({ allPosts }) => {
   return (
     <>
-      <HeadTitle pageTitle='About Us' />
+      <HeadTitle pageTitle='About Me' />
       <HeaderOne postData={allPosts} />
       <BreadcrumbTwo
-        title='About Us'
-        paragraph='Wherever &amp; whenever you need us. We are here for you – contact us for all your support needs. <br />
+        title='About Me'
+        paragraph='Wherever &amp; whenever you need me. Im here for you – contact me for all your support needs. <br />
             be it technical, general queries or information support.'
-        bgImae="url('images/bg/bg-image-1.webp')"
+        bgImae="url('images/bg/show a programe 0.png')"
       />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
         <div className='container'>
@@ -27,63 +28,53 @@ const AboutUs = ({ allPosts }) => {
               {/* Start About Area  */}
               <div className='axil-about-us'>
                 <div className='inner'>
-                  <h3>The Professional Publishing Platform</h3>
+                  <h3>About Alonso Gutiérrez</h3>
                   <p>
-                    Aenean consectetur massa quis sem volutpat, a condimentum
-                    tortor pretium. Cras id ligula consequat, sagittis nulla at,
-                    sollicitudin lorem. Orci varius natoque penatibus et magnis
-                    dis parturient montes.
+                    Thank you for visiting ProDev Perspectives! If you have any
+                    questions, suggestions, or would like to collaborate,
+                    I&apos;d be happy to hear from you. Please feel free to
+                    reach out using any of the following methods:
+                  </p>
+                  <p>Email: alonsogutierrez@prodevperspectives.com</p>
+                  <p>
+                    LinkedIn:{' '}
+                    <Link href='https://www.linkedin.com/in/alonso-guti%C3%A9rrez-b27370126/'>
+                      Link
+                    </Link>
                   </p>
                   <p>
                     {' '}
-                    Cras id ligula consequat, sagittis nulla at, sollicitudin
-                    lorem. Orci varius natoque penatibus et magnis dis
-                    parturient montes, nascetur ridiculus mus. Phasellus
-                    eleifend, dolor vel condimentum imperdiet.
+                    Hi, I&apos;m Alonso Gutiérrez, a software developer with
+                    over 6 years of experience in the retail and banking
+                    sectors. Throughout my career, I have worked in various
+                    roles, including software developer, tech lead, and
+                    architect for personal projects. I have gained valuable
+                    insights and expertise by working with different companies
+                    and taking on responsibilities as a full-stack developer.
                   </p>
                   <p>
-                    In a professional context it often happens that private or
-                    corporate clients corder a publication to be made and
-                    presented with the actual content still not being ready.
-                    Think of a news blog that’s filled with content hourly on
-                    the day of going live. However, reviewers tend to be
-                    distracted by comprehensible content, say, a random text
-                    copied from a newspaper or the internet. The are likely to
-                    focus on the text, disregarding the layout and its elements.
+                    My passion for continuous learning and exploring new
+                    technologies has led me to start ProDev Perspectives.
+                    Through this blog, I aim to share my knowledge, experiences,
+                    and insights about software engineering best practices and
+                    good architectural decisions. I believe in the power of
+                    teaching others and helping them become better software
+                    developers.
                   </p>
-                  <h3>Our Growing News Network</h3>
+                  <h3>What can you find here?</h3>
                   <p>
-                    Cicero famously orated against his political opponent Lucius
-                    Sergius Catilina. Occasionally the first Oration against
-                    Catiline is taken for type specimens: Quo usque tandem
-                    abutere, Catilina, patientia nostra? Quam diu etiam furor
-                    iste tuus nos eludet? (How long, O Catiline, will you abuse
-                    our patience? And for how long will that madness of yours
-                    mock us?)
+                    At ProDev Perspectives, you can expect to find articles
+                    covering a wide range of topics, including software
+                    engineering skills, portfolio development, and discussions
+                    on various technologies and design patterns such as CQRS
+                    (Command Query Responsibility Segregation), circuit breaker,
+                    and more.
                   </p>
                   <p>
-                    Most text editors like MS Word or Lotus Notes generate
-                    random lorem text when needed, either as pre-installed
-                    module or plug-in to be added. Word selection or sequence
-                    don’t necessarily match the original, which is intended to
-                    add variety.{' '}
-                  </p>
-                  <h3>The Professional Publishing Platform</h3>
-                  <p>
-                    Cicero famously orated against his political opponent Lucius
-                    Sergius Catilina. Occasionally the first Oration against
-                    Catiline is taken for type specimens: Quo usque tandem
-                    abutere, Catilina, patientia nostra? Quam diu etiam furor
-                    iste tuus nos eludet? (How long, O Catiline, will you abuse
-                    our patience? And for how long will that madness of yours
-                    mock us?)
-                  </p>
-                  <p>
-                    Most text editors like MS Word or Lotus Notes generate
-                    random lorem text when needed, either as pre-installed
-                    module or plug-in to be added. Word selection or sequence
-                    don’t necessarily match the original, which is intended to
-                    add variety.
+                    I invite you to join me on this journey of continuous
+                    learning and growth. Together, let&apos;s explore the
+                    ever-evolving world of software development and strive to
+                    become experts in our field. Thank you for your support!{' '}
                   </p>
                 </div>
               </div>
