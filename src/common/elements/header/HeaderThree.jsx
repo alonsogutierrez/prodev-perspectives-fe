@@ -34,7 +34,7 @@ const HeaderThree = ({ darkLogo, lightLogo, postData }) => {
   return (
     <>
       <header className='header axil-header header-style-3  header-light header-sticky'>
-        <div className='header-top'>
+        {/* <div className='header-top'>
           <div className='container'>
             <div className='row align-items-center'>
               <div className='col-lg-6 col-md-8 col-sm-12'>
@@ -49,7 +49,7 @@ const HeaderThree = ({ darkLogo, lightLogo, postData }) => {
                   <ul className='header-top-nav liststyle d-flex flrx-wrap align-items-center'>
                     <li>
                       <Link href='/about'>
-                        <a>About</a>
+                        <a href='#'>About</a>
                       </Link>
                     </li>
                     <li>
@@ -76,7 +76,7 @@ const HeaderThree = ({ darkLogo, lightLogo, postData }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className='header-middle'>
           <div className='container'>
