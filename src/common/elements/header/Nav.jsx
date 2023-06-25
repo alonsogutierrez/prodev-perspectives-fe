@@ -28,10 +28,10 @@ const Nav = ({}) => {
     <>
       <ul className='mainmenu'>
         <li className='menu-item-has-children'>
-          <a href='#'>Home</a>
+          <Link href='/'>Home</Link>
         </li>
         <li className='menu-item-has-children'>
-          <Link href='/'>
+          <Link href='#'>
             <a>Topics</a>
           </Link>
           <ul className='axil-submenu'>
@@ -43,10 +43,10 @@ const Nav = ({}) => {
           </ul>
         </li>
         <li className='menu-item-has-children'>
-          <a href='#'>About Me</a>
+          <Link href='/about'>About Me</Link>
         </li>
         <li className='menu-item-has-children'>
-          <a href='#'>Contact</a>
+          <Link href='/contact'>Contact</Link>
         </li>
       </ul>
     </>

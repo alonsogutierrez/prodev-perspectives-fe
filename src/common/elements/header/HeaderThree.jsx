@@ -3,19 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import MobileMenu from './MobileMenu';
 import Nav from './Nav';
-import SocialData from '../../../data/social/SocialData.json';
 
 const HeaderThree = ({ darkLogo, lightLogo, postData }) => {
-  const dateFormate = () => {
-    let day = new Date().getDate();
-    let month = new Date().toLocaleString('en-US', { month: 'long' });
-    let year = new Date().getFullYear();
-
-    let todayDate = day + ' ' + month + ',' + ' ' + year;
-
-    return todayDate;
-  };
-
   if (typeof window !== 'undefined') {
     var colorMode = window.localStorage.getItem('color-mode');
   }
@@ -34,50 +23,6 @@ const HeaderThree = ({ darkLogo, lightLogo, postData }) => {
   return (
     <>
       <header className='header axil-header header-style-3  header-light header-sticky'>
-        {/* <div className='header-top'>
-          <div className='container'>
-            <div className='row align-items-center'>
-              <div className='col-lg-6 col-md-8 col-sm-12'>
-                <div className='header-top-bar d-flex flex-wrap align-items-center justify-content-center justify-content-md-start'>
-                  <ul className='header-top-date liststyle d-flex flrx-wrap align-items-center mr--20'>
-                    <li>
-                      <Link href='#'>
-                        <a>{dateFormate()}</a>
-                      </Link>
-                    </li>
-                  </ul>
-                  <ul className='header-top-nav liststyle d-flex flrx-wrap align-items-center'>
-                    <li>
-                      <Link href='/about'>
-                        <a href='#'>About</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href='/contact'>
-                        <a>Contact</a>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className='col-lg-6 col-md-4 col-sm-12'>
-                <ul className='social-share-transparent md-size justify-content-center justify-content-md-end'>
-                  <li>
-                    <a href={SocialData.instagram.url}>
-                      <i className={SocialData.instagram.icon} />
-                    </a>
-                  </li>
-                  <li>
-                    <a href={SocialData.linked.url}>
-                      <i className={SocialData.linked.icon} />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         <div className='header-middle'>
           <div className='container'>
             <div className='row align-items-center'>
