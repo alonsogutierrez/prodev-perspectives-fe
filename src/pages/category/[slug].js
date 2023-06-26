@@ -1,5 +1,4 @@
 import { getAllPosts } from '../../../lib/api';
-import InstagramOne from '../../common/components/instagram/InstagramOne';
 import PostLayoutTwo from '../../common/components/post/layout/PostLayoutTwo';
 import BreadcrumbOne from '../../common/elements/breadcrumb/breadcrumbOne';
 import Footer from '../../common/elements/footer/Footer';
@@ -26,7 +25,6 @@ const PostCategory = ({ postData, allPosts }) => {
           </div>
         </div>
       </div>
-      <InstagramOne parentClass='bg-color-grey' />
       <Footer />
     </>
   );
