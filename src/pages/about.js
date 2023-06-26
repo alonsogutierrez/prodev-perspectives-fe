@@ -1,12 +1,7 @@
-import Link from 'next/link';
-import InstagramOne from '../common/components/instagram/InstagramOne';
 import BreadcrumbTwo from '../common/elements/breadcrumb/breadcrumbTwo';
 import Footer from '../common/elements/footer/Footer';
 import HeaderOne from '../common/elements/header/HeaderOne';
 import { getAllPosts } from '../../lib/api';
-import WidgetCategory from '../common/components/sidebar/WidgetCategory';
-import WidgetSearch from '../common/components/sidebar/WidgetSearch';
-import WidgetPostList from '../common/components/sidebar/WidgetPostList';
 import WidgetSocialShare from '../common/components/sidebar/WidgetSocialShare';
 import HeadTitle from '../common/elements/head/HeadTitle';
 
@@ -17,8 +12,6 @@ const AboutUs = ({ allPosts }) => {
       <HeaderOne postData={allPosts} />
       <BreadcrumbTwo
         title='About Me'
-        paragraph='Wherever &amp; whenever you need me. Im here for you – contact me for all your support needs. <br />
-            be it technical, general queries or information support.'
         bgImae="url('images/bg/show a programe 0.png')"
       />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
@@ -29,28 +22,17 @@ const AboutUs = ({ allPosts }) => {
               <div className='axil-about-us'>
                 <div className='inner'>
                   <h3>About Alonso Gutiérrez</h3>
-                  <p>
-                    Thank you for visiting ProDev Perspectives! If you have any
-                    questions, suggestions, or would like to collaborate,
-                    I&apos;d be happy to hear from you. Please feel free to
-                    reach out using any of the following methods:
-                  </p>
-                  <p>Email: alonsogutierrez@prodevperspectives.com</p>
-                  <p>
-                    LinkedIn:{' '}
-                    <Link href='https://www.linkedin.com/in/alonso-guti%C3%A9rrez-b27370126/'>
-                      Link
-                    </Link>
-                  </p>
+
                   <p>
                     {' '}
                     Hi, I&apos;m Alonso Gutiérrez, a software developer with
-                    over 6 years of experience in the retail and banking
+                    over 6+ years of experience in the retail and banking
                     sectors. Throughout my career, I have worked in various
                     roles, including software developer, tech lead, and
                     architect for personal projects. I have gained valuable
                     insights and expertise by working with different companies
-                    and taking on responsibilities as a full-stack developer.
+                    and taking on responsibilities as a full-stack developer and
+                    backend developer mainly.
                   </p>
                   <p>
                     My passion for continuous learning and exploring new
@@ -82,17 +64,12 @@ const AboutUs = ({ allPosts }) => {
             </div>
             <div className='col-lg-4 col-xl-4 mt_md--40 mt_sm--40'>
               <div className='sidebar-inner'>
-                <WidgetCategory catData={allPosts} />
-                <WidgetSearch />
-                <WidgetPostList postData={allPosts} />
                 <WidgetSocialShare />
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <InstagramOne parentClass='bg-color-grey' />
       <Footer />
     </>
   );

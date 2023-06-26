@@ -43,6 +43,9 @@ const Nav = ({}) => {
           </ul>
         </li>
         <li className='menu-item-has-children'>
+          <Link href='/portfolio'>Portfolio</Link>
+        </li>
+        <li className='menu-item-has-children'>
           <Link href='/about'>About Me</Link>
         </li>
         <li className='menu-item-has-children'>

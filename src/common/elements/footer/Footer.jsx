@@ -24,13 +24,13 @@ const Footer = ({ bgColor, darkLogo, lightLogo }) => {
                 <h5 className='follow-title mb--0 mr--20'>Follow Me</h5>
                 <ul className='social-icon color-tertiary md-size justify-content-start'>
                   <li>
-                    <a href={SocialData.instagram.url}>
-                      <i className={SocialData.instagram.icon} />
+                    <a href={SocialData.linked.url}>
+                      <i className={SocialData.linked.icon} />
                     </a>
                   </li>
                   <li>
-                    <a href={SocialData.linked.url}>
-                      <i className={SocialData.linked.icon} />
+                    <a href={SocialData.github.url}>
+                      <i className={SocialData.github.icon} />
                     </a>
                   </li>
                 </ul>
