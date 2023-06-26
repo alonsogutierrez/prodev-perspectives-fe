@@ -2,21 +2,16 @@ import Footer from '../common/elements/footer/Footer';
 import { getAllPosts } from '../../lib/api';
 import HeaderThree from '../common/elements/header/HeaderThree';
 import HeadTitle from '../common/elements/head/HeadTitle';
-import { slugify, SortingByDate } from '../common/utils';
+import { SortingByDate } from '../common/utils';
 import PostSectionNine from '../common/components/post/PostSectionNine';
 import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
 const Portfolio = ({ allPosts }) => {
-  const techPost = allPosts.filter(
-    (post) =>
-      slugify(post.cate) === 'technology' || slugify(post.cate) === 'leadership'
-  );
-
   return (
     <>
       <HeadTitle pageTitle='Tech Blog' />
       <HeaderThree postData={allPosts} />
-      <PostSectionNine postData={techPost} />
+      <PostSectionNine postData={allPosts} />
       <CategoryListSlide cateData={allPosts} />
       <Footer />
     </>

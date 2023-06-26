@@ -8,8 +8,7 @@ import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
 const DevelopmentDomains = ({ allPosts }) => {
   const techPost = allPosts.filter(
-    (post) =>
-      slugify(post.cate) === 'technology' || slugify(post.cate) === 'leadership'
+    (post) => slugify(post.cate) === 'development-domains'
   );
 
   return (

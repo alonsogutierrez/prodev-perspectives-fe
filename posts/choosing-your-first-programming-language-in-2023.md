@@ -5,8 +5,8 @@ featureImg: '/images/posts/codes-images-post-01.png'
 videoLink: 'https://www.youtube.com/embed/U3v5yMF1hTs?origin=https://new.axilthemes.com/'
 featured: true
 date: 'Jun 26 2023'
+cate: 'programming-foundations'
 pCate: 'Programming Foundations'
-cate: 'Programming Foundations'
 cate_img: '/images/posts/codes-images-post-01.png'
 post_views: '300K Views'
 read_time: '5 min read'
@@ -24,8 +24,6 @@ tags:
   - Development
   - Developer Jr
 ---
-
-**Winners are recognized for outstanding app design, innovation, ingenuity, and technical achievement**
 
 Embarking on a journey to become a software developer is an exciting and fulfilling endeavor. However, with the plethora of programming languages available today, choosing the right first language can be a daunting task. Fear not! In this guide, we will explore key factors to consider when selecting your first programming language in 2023, empowering you to make an informed decision and set a strong foundation for your coding journey.
 
