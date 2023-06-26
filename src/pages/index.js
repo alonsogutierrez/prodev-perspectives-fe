@@ -7,16 +7,11 @@ import PostSectionNine from '../common/components/post/PostSectionNine';
 import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
 const HomeDefault = ({ allPosts }) => {
-  const techPost = allPosts.filter(
-    (post) =>
-      slugify(post.cate) === 'technology' || slugify(post.cate) === 'leadership'
-  );
-
   return (
     <>
       <HeadTitle pageTitle='Tech Blog' />
       <HeaderThree postData={allPosts} />
-      <PostSectionNine postData={techPost} />
+      <PostSectionNine postData={allPosts} />
       <CategoryListSlide cateData={allPosts} />
       <Footer />
     </>
