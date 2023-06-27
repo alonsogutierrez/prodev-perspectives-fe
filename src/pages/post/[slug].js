@@ -1,7 +1,7 @@
 import markdownToHtml from '../../../lib/markdownToHtml';
 import { getPostBySlug, getAllPosts } from '../../../lib/api';
 import HeadTitle from '../../common/elements/head/HeadTitle';
-import HeaderOne from '../../common/elements/header/HeaderOne';
+import SubHeader from '../../common/elements/header/SubHeader';
 import Footer from '../../common/elements/footer/Footer';
 import PostFormatStandard from '../../common/components/post/format/PostFormatStandard';
 import PostFormatVideo from '../../common/components/post/format/PostFormatVideo';
@@ -26,7 +26,7 @@ const PostDetails = ({ post, allPosts }) => {
 
   return (
     <>
-      <HeaderOne
+      <SubHeader
         postData={allPosts}
         pClass='header-light header-sticky header-with-shadow'
       />

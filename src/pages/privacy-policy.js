@@ -1,5 +1,5 @@
 import Footer from '../common/elements/footer/Footer';
-import HeaderOne from '../common/elements/header/HeaderOne';
+import SubHeader from '../common/elements/header/SubHeader';
 import { getFileContentBySlug, getAllPosts } from '../../lib/api';
 import markdownToHtml from '../../lib/markdownToHtml';
 import HeadTitle from '../common/elements/head/HeadTitle';
@@ -8,7 +8,7 @@ const PrivacyPolicy = ({ privacyData, allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Privacy Policy' />
-      <HeaderOne
+      <SubHeader
         postData={allPosts}
         pClass='header-light header-sticky header-with-shadow'
       />

@@ -1,6 +1,6 @@
 import BreadcrumbTwo from '../common/elements/breadcrumb/breadcrumbTwo';
 import Footer from '../common/elements/footer/Footer';
-import HeaderOne from '../common/elements/header/HeaderOne';
+import SubHeader from '../common/elements/header/SubHeader';
 import { getAllPosts } from '../../lib/api';
 import WidgetSocialShare from '../common/components/sidebar/WidgetSocialShare';
 import FormOne from '../common/components/form/FormOne';
@@ -11,7 +11,7 @@ const ContactUs = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Contact Us' />
-      <HeaderOne
+      <SubHeader
         postData={allPosts}
         pClass='header-light header-sticky header-with-shadow'
       />

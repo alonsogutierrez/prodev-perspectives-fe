@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '../common/elements/footer/Footer';
-import HeaderOne from '../common/elements/header/HeaderOne';
+import SubHeader from '../common/elements/header/SubHeader';
 import { getAllPosts } from '../../lib/api';
 import HeadTitle from '../common/elements/head/HeadTitle';
 
@@ -9,7 +9,7 @@ const Error404 = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='404 Not Found' />
-      <HeaderOne
+      <SubHeader
         postData={allPosts}
         pClass='header-light header-sticky header-with-shadow'
       />

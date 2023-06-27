@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { getAllPosts } from '../../../lib/api';
 import InstagramOne from '../../common/components/instagram/InstagramOne';
 import Footer from '../../common/elements/footer/Footer';
-import HeaderOne from '../../common/elements/header/HeaderOne';
+import SubHeader from '../../common/elements/header/SubHeader';
 import PostLayoutTwo from '../../common/components/post/layout/PostLayoutTwo';
 import SidebarOne from '../../common/components/sidebar/SidebarOne';
 import BreadcrumbOne from '../../common/elements/breadcrumb/breadcrumbOne';
@@ -15,7 +15,7 @@ const TagsArchive = ({ tagsData, allPosts }) => {
 
   return (
     <>
-      <HeaderOne postData={allPosts} />
+      <SubHeader postData={allPosts} />
       <BreadcrumbOne title={BreadCrumbTitle.replace('-', ' ')} />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
         <div className='container'>

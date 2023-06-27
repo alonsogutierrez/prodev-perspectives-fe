@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { getAllPosts } from '../../../lib/api';
 import InstagramOne from '../../common/components/instagram/InstagramOne';
 import Footer from '../../common/elements/footer/Footer';
-import HeaderOne from '../../common/elements/header/HeaderOne';
+import SubHeader from '../../common/elements/header/SubHeader';
 import PostLayoutTwo from '../../common/components/post/layout/PostLayoutTwo';
 import SidebarOne from '../../common/components/sidebar/SidebarOne';
 import { slugify } from '../../common/utils';
@@ -13,7 +13,7 @@ const AuthorArchive = ({ authorData, allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Author Archive' />
-      <HeaderOne postData={allPosts} />
+      <SubHeader postData={allPosts} />
       <div className='axil-author-area axil-author-banner bg-color-grey'>
         <div className='container'>
           <div className='row'>

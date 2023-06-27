@@ -3,7 +3,7 @@ import PostLayoutTwo from '../../common/components/post/layout/PostLayoutTwo';
 import BreadcrumbOne from '../../common/elements/breadcrumb/breadcrumbOne';
 import Footer from '../../common/elements/footer/Footer';
 import HeadTitle from '../../common/elements/head/HeadTitle';
-import HeaderOne from '../../common/elements/header/HeaderOne';
+import SubHeader from '../../common/elements/header/SubHeader';
 import SidebarOne from '../../common/components/sidebar/SidebarOne';
 import { slugify } from '../../common/utils';
 
@@ -11,7 +11,7 @@ const PostCategory = ({ postData, allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Category Archive' />
-      <HeaderOne postData={allPosts} />
+      <SubHeader postData={allPosts} />
       <BreadcrumbOne title={postData[0].cate} />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
         <div className='container'>

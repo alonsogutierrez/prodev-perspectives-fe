@@ -1,6 +1,6 @@
 import BreadcrumbTwo from '../common/elements/breadcrumb/breadcrumbTwo';
 import Footer from '../common/elements/footer/Footer';
-import HeaderOne from '../common/elements/header/HeaderOne';
+import SubHeader from '../common/elements/header/SubHeader';
 import { getAllPosts } from '../../lib/api';
 import WidgetSocialShare from '../common/components/sidebar/WidgetSocialShare';
 import HeadTitle from '../common/elements/head/HeadTitle';
@@ -9,7 +9,7 @@ const AboutUs = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='About Me' />
-      <HeaderOne postData={allPosts} />
+      <SubHeader postData={allPosts} />
       <BreadcrumbTwo
         title='About Me'
         bgImae="url('images/bg/show a programe 0.png')"

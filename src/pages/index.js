@@ -1,6 +1,6 @@
 import Footer from '../common/elements/footer/Footer';
 import { getAllPosts } from '../../lib/api';
-import HeaderThree from '../common/elements/header/HeaderThree';
+import SubHeader from '../common/elements/header/SubHeader';
 import HeadTitle from '../common/elements/head/HeadTitle';
 import { slugify, SortingByDate } from '../common/utils';
 import PostSectionNine from '../common/components/post/PostSectionNine';
@@ -10,7 +10,7 @@ const HomeDefault = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Tech Blog' />
-      <HeaderThree postData={allPosts} />
+      <SubHeader postData={allPosts} />
       <PostSectionNine postData={allPosts} />
       <CategoryListSlide cateData={allPosts} />
       <Footer />
