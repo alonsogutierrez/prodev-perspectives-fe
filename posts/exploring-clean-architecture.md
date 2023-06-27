@@ -29,13 +29,13 @@ Clean Architecture, popularized by Uncle Bob (Robert C. Martin), is a software a
 
 ## Benefits of Clean Architecture
 
-Maintainability: Clean Architecture promotes code that is decoupled and independent of external frameworks or dependencies. This enhances maintainability as changes in one layer do not affect the others, making it easier to update or replace components without causing widespread disruptions.
+**Maintainability**: Clean Architecture promotes code that is decoupled and independent of external frameworks or dependencies. This enhances maintainability as changes in one layer do not affect the others, making it easier to update or replace components without causing widespread disruptions.
 
-Testability: Clear boundaries between layers in Clean Architecture enable comprehensive unit testing. By isolating business logic, testing becomes simpler, allowing for thorough test coverage and easy mocking of dependencies. This leads to higher code quality and fewer bugs.
+**Testability**: Clear boundaries between layers in Clean Architecture enable comprehensive unit testing. By isolating business logic, testing becomes simpler, allowing for thorough test coverage and easy mocking of dependencies. This leads to higher code quality and fewer bugs.
 
-Scalability: Clean Architecture facilitates scalability by separating concerns and making dependencies explicit. It allows for independent scaling of components, making it easier to handle increased load or incorporate new features without disrupting the overall system's stability.
+**Scalability**: Clean Architecture facilitates scalability by separating concerns and making dependencies explicit. It allows for independent scaling of components, making it easier to handle increased load or incorporate new features without disrupting the overall system's stability.
 
-Flexibility and Adaptability: With Clean Architecture, the core business logic is shielded from external influences. This separation enables easier adaptation to changing requirements and the ability to swap out components when needed. It ensures long-term flexibility and future-proofing of the software.
+**Flexibility and Adaptability**: With Clean Architecture, the core business logic is shielded from external influences. This separation enables easier adaptation to changing requirements and the ability to swap out components when needed. It ensures long-term flexibility and future-proofing of the software.
 
 ## Pros and Cons of Clean Architecture
 
@@ -58,31 +58,27 @@ Finding the right balance between abstraction and simplicity can be challenging 
 
 To apply Clean Architecture in your projects, consider the following folder structure:
 
-Adapters: This layer acts as the interface between the external world and the Use Cases layer. It includes components such as controllers, presenters, and UI-related code. For example, in a web application, the Adapters layer could contain the controllers responsible for handling HTTP requests and presenting data to the user.
+**Adapters**: This layer acts as the interface between the external world and the Use Cases layer. It includes components such as controllers, presenters, and UI-related code. For example, in a web application, the Adapters layer could contain the controllers responsible for handling HTTP requests and presenting data to the user.
 
-Domain: The Domain layer contains the core business logic and entities. It should be independent of any external dependencies and frameworks. This layer defines the fundamental concepts and rules of your application. For instance, in an e-commerce application, the Domain layer would encapsulate the logic for managing products, orders, and user authentication.
+**Domain**: The Domain layer contains the core business logic and entities. It should be independent of any external dependencies and frameworks. This layer defines the fundamental concepts and rules of your application. For instance, in an e-commerce application, the Domain layer would encapsulate the logic for managing products, orders, and user authentication.
 
-Use Cases: The Use Cases layer represents the application-specific business rules and orchestrates the interactions between the Adapters and the Domain layer. It encapsulates the application's use cases, application services, and business workflows. A use case could be something like "Place Order" or "Authenticate User."
+**Use Cases**: The Use Cases layer represents the application-specific business rules and orchestrates the interactions between the Adapters and the Domain layer. It encapsulates the application's use cases, application services, and business workflows. A use case could be something like "Place Order" or "Authenticate User."
 
-Infrastructure: The Infrastructure layer deals with external tools, frameworks, databases, and other infrastructure-related concerns. It provides implementations for interfaces defined in the Domain layer and acts as the outermost layer of the system. In a backend application, the Infrastructure layer could contain database access code, external API integrations, and caching mechanisms.
+**Infrastructure**: The Infrastructure layer deals with external tools, frameworks, databases, and other infrastructure-related concerns. It provides implementations for interfaces defined in the Domain layer and acts as the outermost layer of the system. In a backend application, the Infrastructure layer could contain database access code, external API integrations, and caching mechanisms.
 
 ## Real-World Examples from GitHub
 
 Clean Architecture has gained popularity, and you can find numerous examples of its implementation on GitHub. Some notable repositories include:
 
-[Clean Architecture Example (by unclebob)](https://github.com/unclebob/CC_Survival_Guide/tree/master/code)
+[FrontEnd Clean Architecture](https://github.com/bespoyasov/frontend-clean-architecture/tree/master/src)
 
-[Django Clean Architecture Example (by marsam007)](https://github.com/marsam007/django-clean-architecture-example)
+[Python Clean Architecture](https://github.com/t-tiger/Python-CleanArchitecture-Example/blob/master/src)
 
-[Clean Architecture with Node.js and TypeScript (by nusr/expressjs-clean-architecture-boilerplate)](https://github.com/nusr/expressjs-clean-architecture-boilerplate)
+[Clean Architecture with Node.js](https://github.com/jbuget/nodejs-clean-architecture-app/tree/master/lib)
 
-[Clean Architecture Example with React and Redux (by imranhsayed/react-clean-architecture)](https://github.com/nusr/expressjs-clean-architecture-boilerplate)
+## Books
 
-[Clean Architecture Example (by donghyeon0729)](https://github.com/donghyeon0729/CleanArchitectureExample)
-
-[Clean Architecture (by golang-standards)](https://github.com/golang-standards/project-layout)
-
-[Clean Architecture Sample (by tsubasaxZZZ)](https://github.com/tsubasaxZZZ/clean-architecture-sample)
+[Clean Architecture: A Craftsman’s Guide to Software Structure and Design](https://www.oreilly.com/library/view/clean-architecture-a/9780134494272/)
 
 ### Conclusion
 
