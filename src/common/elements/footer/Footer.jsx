@@ -49,19 +49,13 @@ const Footer = ({ bgColor, darkLogo, lightLogo }) => {
               <div className='copyright-left'>
                 <div className='logo'>
                   <Link href='/'>
-                    <a>
-                      <Image
-                        className='dark-logo'
-                        width={141}
-                        height={37}
-                        src={
-                          colorMode === 'Dark'
-                            ? lightLogo || '/images/logo/logo-white2.webp'
-                            : darkLogo || '/images/logo/logo-black.webp'
-                        }
-                        alt='Blogar logo'
-                      />
-                    </a>
+                    <Image
+                      className='dark-logo'
+                      width={100}
+                      height={100}
+                      src='/images/logo/prodev-02.png'
+                      alt='Blogar logo'
+                    />
                   </Link>
                 </div>
                 <ul className='mainmenu justify-content-start'>

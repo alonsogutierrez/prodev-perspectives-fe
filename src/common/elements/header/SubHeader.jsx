@@ -23,20 +23,13 @@ const SubHeader = ({ darkLogo, lightLogo, postData }) => {
               <div className='col-lg-3 col-md-4 col-sm-6'>
                 <div className='logo'>
                   <Link href='/'>
-                    <a>
-                      <Image
-                        className='dark-logo'
-                        width={141}
-                        height={37}
-                        src={
-                          (colorMode === 'Dark'
-                            ? lightLogo || '/images/logo/logo-white2.webp'
-                            : darkLogo || '/images/logo/logo-black.webp') ||
-                          '/images/logo/logo-black.webp'
-                        }
-                        alt='Blogar logo'
-                      />
-                    </a>
+                    <Image
+                      className='dark-logo'
+                      width={130}
+                      height={130}
+                      src='/images/logo/prodev-02.png'
+                      alt='Blogar logo'
+                    />
                   </Link>
                 </div>
               </div>

@@ -31,10 +31,7 @@ const PrivacyPolicy = ({ privacyData, allPosts }) => {
         </div>
       </div>
 
-      <Footer
-        bgColor='bg-color-black'
-        darkLogo='/images/logo/logo-white2.webp'
-      />
+      <Footer bgColor='bg-color-black' darkLogo='/images/logo/prodev-02.png' />
     </>
   );
 };

@@ -18,20 +18,13 @@ const Maintenance = () => {
               <div className='content'>
                 <div className='logo'>
                   <Link href='/'>
-                    <a>
-                      <Image
-                        className='dark-logo'
-                        width={153}
-                        height={40}
-                        src={
-                          (colorMode === 'Dark'
-                            ? '/images/logo/logo-white2.webp'
-                            : '/images/logo/logo-black.webp') ||
-                          '/images/logo/logo-black.webp'
-                        }
-                        alt='Blogar logo'
-                      />
-                    </a>
+                    <Image
+                      className='dark-logo'
+                      width={120}
+                      height={120}
+                      src='/images/logo/prodev-02.png'
+                      alt='Blogar logo'
+                    />
                   </Link>
                 </div>
                 <h1 className='title'>This project is under construction</h1>
