@@ -7,6 +7,7 @@ const HeadTitle = ({ pageTitle }) => {
       <title>{`${pageTitle} | ${title}`}</title>
       <meta name='description' content={title} />
       <meta property='og:title' content={`${pageTitle} | ${title}`} />
+      <meta name='robots' content='index,follow' />
       <meta charSet='utf-8' />
       <meta httpEquiv='x-ua-compatible' content='ie=edge' />
       <meta
