@@ -1,45 +1,34 @@
 import Footer from '../common/elements/footer/Footer';
-import { getAllPosts } from '../../lib/api';
 import SubHeader from '../common/elements/header/SubHeader';
 import HeadTitle from '../common/elements/head/HeadTitle';
-import { SortingByDate } from '../common/utils';
-import PostSectionNine from '../common/components/post/PostSectionNine';
-import CategoryListSlide from '../common/components/category/CategoryListSlide';
+import PostSectionPortafolio from '../common/components/post/PostSectionPortafolio';
 
 const Portfolio = ({ allPosts }) => {
+  const projects = [
+    {
+      title: 'Todo o Nada Ecommerce',
+      technologies: [
+        'Javascript',
+        'ReactJS',
+        'NodeJS',
+        'MongoDB',
+        'ElasticSearch',
+      ],
+      description:
+        'Ecommerce builded with an layered architecture with FE developed in ReactJS, BFF developed with NodeJS, database with MongoDB and searches with ElasticSearch',
+      maitainers: ['Alonso Gutiérrez'],
+      url: 'https://todoonadatattooart.cl',
+      cloud: ['AWS', 'Heroku'],
+    },
+  ];
   return (
     <>
       <HeadTitle pageTitle='Tech Blog' />
       <SubHeader postData={allPosts} />
-      <PostSectionNine postData={allPosts} />
-      <CategoryListSlide cateData={allPosts} />
+      <PostSectionPortafolio portafolioData={projects} />
       <Footer />
     </>
   );
 };
 
 export default Portfolio;
-
-export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'postFormat',
-    'title',
-    'featureImg',
-    'featured',
-    'date',
-    'slug',
-    'pCate',
-    'cate',
-    'cate_img',
-    'author_img',
-    'author_name',
-    'post_views',
-    'read_time',
-    'author_social',
-  ]);
-
-  SortingByDate(allPosts);
-  return {
-    props: { allPosts },
-  };
-}

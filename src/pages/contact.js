@@ -3,9 +3,7 @@ import Footer from '../common/elements/footer/Footer';
 import SubHeader from '../common/elements/header/SubHeader';
 import { getAllPosts } from '../../lib/api';
 import WidgetSocialShare from '../common/components/sidebar/WidgetSocialShare';
-import FormOne from '../common/components/form/FormOne';
 import HeadTitle from '../common/elements/head/HeadTitle';
-import Link from 'next/link';
 
 const ContactUs = ({ allPosts }) => {
   return (
@@ -16,8 +14,8 @@ const ContactUs = ({ allPosts }) => {
         pClass='header-light header-sticky header-with-shadow'
       />
       <BreadcrumbTwo
-        title='Contact Us'
-        paragraph='Wherever &amp; whenever you need us. We are here for you – contact us for all your support needs.<br /> be it technical, general queries or information support.'
+        title='Contact Me'
+        paragraph="Wherever &amp; whenever you need me. I'm here for you – contact me for all your support needs.<br /> be it technical, general queries or information support."
         bgImae="url('images/bg/show a programe 0.png')"
       />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
@@ -33,12 +31,6 @@ const ContactUs = ({ allPosts }) => {
                   </p>
                   <p>Email: alonsogutierrez@prodevperspectives.com</p>
                   <p>
-                    LinkedIn:{' '}
-                    <Link href='https://www.linkedin.com/in/alonso-guti%C3%A9rrez-b27370126/'>
-                      Link
-                    </Link>
-                  </p>
-                  <p>
                     I&apos;m open to collaborations, speaking engagements, and
                     any inquiries related to the content on my website. If you
                     have any questions, feedback, or suggestions, I would love
@@ -49,7 +41,6 @@ const ContactUs = ({ allPosts }) => {
                     Alonso Gutiérrez, ProDev Perspectives{' '}
                   </p>
                 </div>
-                <FormOne />
               </div>
               {/* End About Area  */}
             </div>
