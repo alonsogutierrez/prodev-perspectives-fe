@@ -8,7 +8,7 @@ import HeadTitle from '../common/elements/head/HeadTitle';
 const ContactUs = ({ allPosts }) => {
   return (
     <>
-      <HeadTitle pageTitle='Contact Us' />
+      <HeadTitle pageTitle='Contact Me' />
       <SubHeader
         postData={allPosts}
         pClass='header-light header-sticky header-with-shadow'

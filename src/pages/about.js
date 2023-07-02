@@ -58,6 +58,7 @@ const AboutUs = ({ allPosts }) => {
                     ever-evolving world of software development and strive to
                     become experts in our field. Thank you for your support!{' '}
                   </p>
+                  <p>This site was build with NextJS!</p>
                 </div>
               </div>
               {/* End About Area  */}

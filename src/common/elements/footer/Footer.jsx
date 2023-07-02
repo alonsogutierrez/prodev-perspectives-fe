@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SocialData from '../../../data/social/SocialData.json';
 
-const Footer = ({ bgColor, darkLogo, lightLogo }) => {
+const Footer = ({ bgColor }) => {
   if (typeof window !== 'undefined') {
     var colorMode = window.localStorage.getItem('color-mode');
   }
@@ -63,16 +63,7 @@ const Footer = ({ bgColor, darkLogo, lightLogo }) => {
                     <Link href='/contact'>
                       <a className='hover-flip-item-wrapper'>
                         <span className='hover-flip-item'>
-                          <span data-text='Contact Us'>Contact Me</span>
-                        </span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/privacy-policy'>
-                      <a className='hover-flip-item-wrapper'>
-                        <span className='hover-flip-item'>
-                          <span data-text='Privacy Policy'>Privacy Policy</span>
+                          <span data-text='Contact Me'>Contact Me</span>
                         </span>
                       </a>
                     </Link>
