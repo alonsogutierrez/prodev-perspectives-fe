@@ -23,7 +23,7 @@ const Portfolio = ({ allPosts }) => {
   ];
   return (
     <>
-      <HeadTitle pageTitle='Tech Blog' />
+      <HeadTitle pageTitle='Portfolio' />
       <SubHeader postData={allPosts} />
       <PostSectionPortafolio portafolioData={projects} />
       <Footer />

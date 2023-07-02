@@ -13,7 +13,7 @@ const ProfessionalGrowth = ({ allPosts }) => {
 
   return (
     <>
-      <HeadTitle pageTitle='Tech Blog' />
+      <HeadTitle pageTitle='Professional Growth' />
       <SubHeader postData={allPosts} />
       <PostSectionNine postData={techPost} />
       <CategoryListSlide cateData={allPosts} />

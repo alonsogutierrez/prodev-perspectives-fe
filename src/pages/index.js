@@ -9,7 +9,7 @@ import CategoryListSlide from '../common/components/category/CategoryListSlide';
 const HomeDefault = ({ allPosts }) => {
   return (
     <>
-      <HeadTitle pageTitle='Tech Blog' />
+      <HeadTitle pageTitle='Home' />
       <SubHeader postData={allPosts} />
       <PostSectionNine postData={allPosts} />
       <CategoryListSlide cateData={allPosts} />

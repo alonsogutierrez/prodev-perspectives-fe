@@ -13,7 +13,7 @@ const SoftwareArchitecture = ({ allPosts }) => {
 
   return (
     <>
-      <HeadTitle pageTitle='Tech Blog' />
+      <HeadTitle pageTitle='Software Architecture' />
       <SubHeader postData={allPosts} />
       <PostSectionNine postData={techPost} />
       <CategoryListSlide cateData={allPosts} />

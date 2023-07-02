@@ -13,7 +13,7 @@ const DevelopmentDomains = ({ allPosts }) => {
 
   return (
     <>
-      <HeadTitle pageTitle='Tech Blog' />
+      <HeadTitle pageTitle='Development Domains' />
       <SubHeader postData={allPosts} />
       <PostSectionNine postData={techPost} />
       <CategoryListSlide cateData={allPosts} />

@@ -1,14 +1,14 @@
 import Head from 'next/head';
 
 const HeadTitle = ({ pageTitle }) => {
-  const title = 'Alonso Gutiérrez Blog Personal';
+  const title = 'ProDev Perspectives - Alonso G. Blog';
   return (
     <Head>
+      <title>{`${pageTitle} | ${title}`}</title>
+      <meta name='description' content={title} />
+      <meta property='og:title' content={`${pageTitle} | ${title}`} />
       <meta charSet='utf-8' />
       <meta httpEquiv='x-ua-compatible' content='ie=edge' />
-      <title>{`${pageTitle} || ${title}`}</title>
-      <meta name='robots' content='noindex, follow' />
-      <meta name='description' content={title} />
       <meta
         name='viewport'
         content='width=device-width, initial-scale=1, shrink-to-fit=no'
