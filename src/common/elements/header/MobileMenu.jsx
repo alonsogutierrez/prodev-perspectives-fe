@@ -4,10 +4,6 @@ import Link from 'next/link';
 import MenuData from '../../../data/mobilemenu/MenuData.json';
 
 const MobileMenu = ({ menuShow, menuHide }) => {
-  if (typeof window !== 'undefined') {
-    var colorMode = window.localStorage.getItem('color-mode');
-  }
-
   const MenuToggleHandler = (e) => {
     let selectElm = e.target.nextSibling;
     if (!selectElm.classList.contains('open')) {

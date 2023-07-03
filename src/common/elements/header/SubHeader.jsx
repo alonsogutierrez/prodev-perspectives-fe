@@ -5,10 +5,6 @@ import MobileMenu from './MobileMenu';
 import Nav from './Nav';
 
 const SubHeader = ({ darkLogo, lightLogo, postData }) => {
-  if (typeof window !== 'undefined') {
-    var colorMode = window.localStorage.getItem('color-mode');
-  }
-
   const [showMMenu, SetShowMMenu] = useState(false);
 
   const MobileShowHandler = () => SetShowMMenu(true);

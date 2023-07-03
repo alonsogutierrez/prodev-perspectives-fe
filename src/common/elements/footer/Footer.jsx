@@ -4,10 +4,6 @@ import Image from 'next/image';
 import SocialData from '../../../data/social/SocialData.json';
 
 const Footer = ({ bgColor }) => {
-  if (typeof window !== 'undefined') {
-    var colorMode = window.localStorage.getItem('color-mode');
-  }
-
   return (
     <div
       className={`axil-footer-area axil-footer-style-1 ${

@@ -4,10 +4,6 @@ import SocialData from '../data/social/SocialData.json';
 import HeadTitle from '../common/elements/head/HeadTitle';
 
 const Maintenance = () => {
-  if (typeof window !== 'undefined') {
-    var colorMode = window.localStorage.getItem('color-mode');
-  }
-
   return (
     <>
       <HeadTitle pageTitle='Coming Soon' />
