@@ -50,7 +50,7 @@ const Footer = ({ bgColor }) => {
                       width={100}
                       height={100}
                       src='/images/logo/prodev-02.png'
-                      alt='Blogar logo'
+                      alt='ProDev Perspectives logo'
                     />
                   </Link>
                 </div>

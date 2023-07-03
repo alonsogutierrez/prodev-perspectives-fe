@@ -4,7 +4,7 @@ import Link from 'next/link';
 import MobileMenu from './MobileMenu';
 import Nav from './Nav';
 
-const SubHeader = ({ darkLogo, lightLogo, postData }) => {
+const SubHeader = ({ postData }) => {
   const [showMMenu, SetShowMMenu] = useState(false);
 
   const MobileShowHandler = () => SetShowMMenu(true);
@@ -24,7 +24,7 @@ const SubHeader = ({ darkLogo, lightLogo, postData }) => {
                       width={130}
                       height={130}
                       src='/images/logo/prodev-02.png'
-                      alt='Blogar logo'
+                      alt='ProDev Perspectives logo'
                     />
                   </Link>
                 </div>
