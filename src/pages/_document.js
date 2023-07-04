@@ -21,6 +21,11 @@ const Document = () => {
           rel='stylesheet'
         />
         <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
+          crossOrigin='anonymous'
+        />
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
