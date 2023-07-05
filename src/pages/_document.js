@@ -1,5 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 
+import * as gtag from '../lib/gtag';
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 const Document = () => {
