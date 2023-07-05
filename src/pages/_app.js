@@ -5,13 +5,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/style.scss';
 import * as gtag from '../lib/gtag';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const App = ({ Component, pageProps }) => {
   const router = useRouter();
   useEffect(() => {
     document.body.classList.add('active-dark-mode');
     document.body.classList.remove('active-light-mode');
     const handleRouteChange = (url) => {
-      gtag.pageview(url);
+      /* invoke analytics function only for production */
+      if (isProduction) gtag.pageview(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => {

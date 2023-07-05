@@ -2,6 +2,8 @@ import { Html, Head, Main, NextScript } from 'next/document';
 import Script from 'next/script';
 import * as gtag from '../lib/gtag';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const Document = () => {
   return (
     <Html>
@@ -20,30 +22,35 @@ const Document = () => {
           href='https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&display=swap'
           rel='stylesheet'
         />
+
+        {/* Google AdSense */}
         <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
           crossOrigin='anonymous'
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', '${gtag.GA_TRACKING_ID}', {
-                page_path: window.location.pathname,
-              });
-            `,
-          }}
-        />
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <Script
-          strategy='afterInteractive'
-          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        />
       </Head>
+
+      {/* enable analytics script only for production */}
+      {isProduction && (
+        <>
+          {/* Global Site Tag (gtag.js) - Google Analytics */}
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+            strategy='afterInteractive'
+          />
+          <Script id='google-analytics' strategy='afterInteractive'>
+            {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gtag.GA_TRACKING_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+          </Script>
+        </>
+      )}
       <body>
         <Main />
         <NextScript />
