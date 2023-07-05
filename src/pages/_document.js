@@ -4,6 +4,8 @@ import * as gtag from '../lib/gtag';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+console.log('gtag.GADSENSE_CLIENT: ', gtag.GADSENSE_CLIENT);
+
 const Document = () => {
   return (
     <Html>

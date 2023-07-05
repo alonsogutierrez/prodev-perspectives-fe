@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/style.scss';
 import * as gtag from '../lib/gtag';
 
+console.log('gtag.GA_TRACKING_ID: ', gtag.GA_TRACKING_ID);
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 const App = ({ Component, pageProps }) => {
