@@ -1,6 +1,4 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
-import * as gtag from '../lib/gtag';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -21,30 +19,6 @@ const Document = () => {
           rel='stylesheet'
         />
       </Head>
-
-      {/* enable analytics script only for production */}
-      {isProduction && (
-        <>
-          {/* Global Site Tag (gtag.js) - Google Analytics */}
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-          />
-          <Script id='google-analytics'>
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gtag.GA_TRACKING_ID}');
-            `}
-          </Script>
-          {/* Google AdSense */}
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
-            crossOrigin='anonymous'
-          />
-        </>
-      )}
       <body>
         <Main />
         <NextScript />

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/style.scss';
@@ -21,8 +22,33 @@ const App = ({ Component, pageProps }) => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [router.events]);
+  console.log('GA_TRACKING_ID: ', gtag.GA_TRACKING_ID);
+  console.log('GADSENSE_CLIENT: ', gtag.GADSENSE_CLIENT);
   return (
     <>
+      {/* enable analytics script only for production */}
+      {isProduction && (
+        <>
+          {/* Global Site Tag (gtag.js) - Google Analytics */}
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+          />
+          <Script id='google-analytics'>
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gtag.GA_TRACKING_ID}');
+            `}
+          </Script>
+          {/* Google AdSense */}
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
+            crossOrigin='anonymous'
+          />
+        </>
+      )}
       <Component {...pageProps} />
     </>
   );
