@@ -37,17 +37,14 @@ const Document = () => {
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-            strategy='afterInteractive'
           />
-          <Script id='google-analytics' strategy='afterInteractive'>
+          <Script id='google-analytics'>
             {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gtag.GA_TRACKING_ID}', {
-                  page_path: window.location.pathname,
-                });
-              `}
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gtag.GA_TRACKING_ID}');
+            `}
           </Script>
         </>
       )}
