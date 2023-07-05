@@ -22,8 +22,6 @@ const App = ({ Component, pageProps }) => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [router.events]);
-  console.log('GA_TRACKING_ID: ', gtag.GA_TRACKING_ID);
-  console.log('GADSENSE_CLIENT: ', gtag.GADSENSE_CLIENT);
   return (
     <>
       {/* enable analytics script only for production */}
@@ -47,12 +45,6 @@ const App = ({ Component, pageProps }) => {
             });
           `,
             }}
-          />
-          {/* Google AdSense */}
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
-            crossOrigin='anonymous'
           />
         </>
       )}
