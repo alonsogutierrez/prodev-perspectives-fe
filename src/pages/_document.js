@@ -11,9 +11,7 @@ const Document = () => {
         <link
           rel='stylesheet'
           href={`${
-            process.env.NODE_ENV === 'production'
-              ? process.env.NEXT_PUBLIC_BASEPATH ?? ''
-              : ''
+            isProduction ? process.env.NEXT_PUBLIC_BASEPATH ?? '' : ''
           }/css/font-awesome.css`}
         />
         <link rel='preconnect' href='https://fonts.googleapis.com' />
@@ -21,13 +19,6 @@ const Document = () => {
         <link
           href='https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&display=swap'
           rel='stylesheet'
-        />
-
-        {/* Google AdSense */}
-        <script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
-          crossOrigin='anonymous'
         />
       </Head>
 
@@ -46,6 +37,12 @@ const Document = () => {
               gtag('config', '${gtag.GA_TRACKING_ID}');
             `}
           </Script>
+          {/* Google AdSense */}
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
+            crossOrigin='anonymous'
+          />
         </>
       )}
       <body>
