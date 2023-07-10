@@ -1,5 +1,7 @@
 import Head from 'next/head';
 
+import * as gtag from './../../../lib/gtag';
+
 const HeadTitle = ({ pageTitle }) => {
   const title = 'ProDev Perspectives - Alonso G. Blog';
   return (
@@ -22,6 +24,17 @@ const HeadTitle = ({ pageTitle }) => {
             ? process.env.NEXT_PUBLIC_BASEPATH ?? ''
             : ''
         }/favicon.ico`}
+      />
+      {/* Google Search Console */}
+      <meta
+        name='google-site-verification'
+        content='Lu8zeIDoCYQidTR9ZCXXxCFu9zYde5BDKNX2u0GFgT0'
+      />
+      {/* Google AdSense */}
+      <script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
+        crossOrigin='anonymous'
       />
     </Head>
   );
