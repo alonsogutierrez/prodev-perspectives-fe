@@ -14,7 +14,7 @@ const ProgrammingFoundations = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Programming Foundations' />
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <PostSectionNine postData={techPost} />
       <CategoryListSlide cateData={allPosts} />
       <Footer />

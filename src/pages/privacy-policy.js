@@ -1,17 +1,14 @@
 import Footer from '../common/elements/footer/Footer';
 import SubHeader from '../common/elements/header/SubHeader';
-import { getFileContentBySlug, getAllPosts } from '../../lib/api';
+import { getFileContentBySlug } from '../../lib/api';
 import markdownToHtml from '../../lib/markdownToHtml';
 import HeadTitle from '../common/elements/head/HeadTitle';
 
-const PrivacyPolicy = ({ privacyData, allPosts }) => {
+const PrivacyPolicy = ({ privacyData }) => {
   return (
     <>
       <HeadTitle pageTitle='Privacy Policy' />
-      <SubHeader
-        postData={allPosts}
-        pClass='header-light header-sticky header-with-shadow'
-      />
+      <SubHeader pClass='header-light header-sticky header-with-shadow' />
       <div className='axil-privacy-area axil-section-gap bg-color-white'>
         <div className='container'>
           <div className='row'>
@@ -39,7 +36,6 @@ const PrivacyPolicy = ({ privacyData, allPosts }) => {
 export default PrivacyPolicy;
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts(['title', 'featureImg', 'slug', 'cate']);
   const privacyData = getFileContentBySlug('PrivacyPolicy', 'src/data/privacy');
 
   const content = await markdownToHtml(privacyData.content || '');
@@ -50,7 +46,6 @@ export async function getStaticProps() {
         ...privacyData,
         content,
       },
-      allPosts,
     },
   };
 }

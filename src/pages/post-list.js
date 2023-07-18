@@ -25,10 +25,7 @@ const PostListPage = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Post Archive' />
-      <SubHeader
-        postData={allPosts}
-        pClass='header-light header-sticky header-with-shadow'
-      />
+      <SubHeader pClass='header-light header-sticky header-with-shadow' />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
         <div className='container'>
           <div className='row'>

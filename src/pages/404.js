@@ -2,17 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '../common/elements/footer/Footer';
 import SubHeader from '../common/elements/header/SubHeader';
-import { getAllPosts } from '../../lib/api';
 import HeadTitle from '../common/elements/head/HeadTitle';
 
-const Error404 = ({ allPosts }) => {
+const Error404 = ({}) => {
   return (
     <>
       <HeadTitle pageTitle='404 Not Found' />
-      <SubHeader
-        postData={allPosts}
-        pClass='header-light header-sticky header-with-shadow'
-      />
+      <SubHeader pClass='header-light header-sticky header-with-shadow' />
       <div
         className='error-area bg-color-grey'
         style={{ backgroundImage: "url('/images/bg/bg-image-4.webp')" }}
@@ -54,11 +50,3 @@ const Error404 = ({ allPosts }) => {
 };
 
 export default Error404;
-
-export async function getStaticProps() {
-  const allPosts = getAllPosts(['title', 'featureImg', 'slug', 'cate']);
-
-  return {
-    props: { allPosts },
-  };
-}

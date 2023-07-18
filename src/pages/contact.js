@@ -1,18 +1,14 @@
 import BreadcrumbTwo from '../common/elements/breadcrumb/breadcrumbTwo';
 import Footer from '../common/elements/footer/Footer';
 import SubHeader from '../common/elements/header/SubHeader';
-import { getAllPosts } from '../../lib/api';
 import WidgetSocialShare from '../common/components/sidebar/WidgetSocialShare';
 import HeadTitle from '../common/elements/head/HeadTitle';
 
-const ContactUs = ({ allPosts }) => {
+const ContactUs = ({}) => {
   return (
     <>
       <HeadTitle pageTitle='Contact Me' />
-      <SubHeader
-        postData={allPosts}
-        pClass='header-light header-sticky header-with-shadow'
-      />
+      <SubHeader pClass='header-light header-sticky header-with-shadow' />
       <BreadcrumbTwo
         title='Contact Me'
         paragraph="Wherever &amp; whenever you need me. I'm here for you – contact me for all your support needs.<br /> be it technical, general queries or information support."
@@ -58,23 +54,3 @@ const ContactUs = ({ allPosts }) => {
 };
 
 export default ContactUs;
-
-export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'id',
-    'title',
-    'featureImg',
-    'featured',
-    'date',
-    'slug',
-    'cate',
-    'cate_img',
-    'author_img',
-    'author_name',
-    'post_views',
-  ]);
-
-  return {
-    props: { allPosts },
-  };
-}

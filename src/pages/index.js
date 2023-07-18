@@ -10,7 +10,7 @@ const HomeDefault = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Home' />
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <PostSectionNine postData={allPosts} />
       <CategoryListSlide cateData={allPosts} />
       <Footer />

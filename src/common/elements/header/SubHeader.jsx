@@ -4,7 +4,7 @@ import Link from 'next/link';
 import MobileMenu from './MobileMenu';
 import Nav from './Nav';
 
-const SubHeader = ({ postData }) => {
+const SubHeader = ({}) => {
   const [showMMenu, SetShowMMenu] = useState(false);
 
   const MobileShowHandler = () => SetShowMMenu(true);
@@ -39,7 +39,7 @@ const SubHeader = ({ postData }) => {
               <div className='col-xl-7 col-12'>
                 <div className='mainmenu-wrapper d-none d-xl-block'>
                   <nav className='mainmenu-nav'>
-                    <Nav posts={postData} />
+                    <Nav />
                   </nav>
                 </div>
               </div>

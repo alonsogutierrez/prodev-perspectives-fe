@@ -14,7 +14,7 @@ const DevelopmentDomains = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Development Domains' />
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <PostSectionNine postData={techPost} />
       <CategoryListSlide cateData={allPosts} />
       <Footer />

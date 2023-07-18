@@ -3,7 +3,7 @@ import SubHeader from '../common/elements/header/SubHeader';
 import HeadTitle from '../common/elements/head/HeadTitle';
 import PostSectionPortafolio from '../common/components/post/PostSectionPortafolio';
 
-const Portfolio = ({ allPosts }) => {
+const Portfolio = ({}) => {
   const projects = [
     {
       title: 'Todo o Nada Ecommerce',
@@ -24,7 +24,7 @@ const Portfolio = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Portfolio' />
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <PostSectionPortafolio portafolioData={projects} />
       <Footer />
     </>

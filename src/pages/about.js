@@ -1,15 +1,14 @@
 import BreadcrumbTwo from '../common/elements/breadcrumb/breadcrumbTwo';
 import Footer from '../common/elements/footer/Footer';
 import SubHeader from '../common/elements/header/SubHeader';
-import { getAllPosts } from '../../lib/api';
 import WidgetSocialShare from '../common/components/sidebar/WidgetSocialShare';
 import HeadTitle from '../common/elements/head/HeadTitle';
 
-const AboutUs = ({ allPosts }) => {
+const AboutUs = ({}) => {
   return (
     <>
       <HeadTitle pageTitle='About Me' />
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <BreadcrumbTwo
         title='About Me'
         bgImae="url('images/bg/show a programe 0.png')"
@@ -77,23 +76,3 @@ const AboutUs = ({ allPosts }) => {
 };
 
 export default AboutUs;
-
-export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'id',
-    'title',
-    'featureImg',
-    'featured',
-    'date',
-    'slug',
-    'cate',
-    'cate_img',
-    'author_img',
-    'author_name',
-    'post_views',
-  ]);
-
-  return {
-    props: { allPosts },
-  };
-}

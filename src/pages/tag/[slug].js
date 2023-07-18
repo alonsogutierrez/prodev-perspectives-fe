@@ -14,7 +14,7 @@ const TagsArchive = ({ tagsData, allPosts }) => {
 
   return (
     <>
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <BreadcrumbOne title={BreadCrumbTitle.replace('-', ' ')} />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
         <div className='container'>

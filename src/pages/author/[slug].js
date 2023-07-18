@@ -12,7 +12,7 @@ const AuthorArchive = ({ authorData, allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Author' />
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <div className='axil-author-area axil-author-banner bg-color-grey'>
         <div className='container'>
           <div className='row'>

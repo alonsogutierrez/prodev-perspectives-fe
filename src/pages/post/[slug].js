@@ -26,10 +26,7 @@ const PostDetails = ({ post, allPosts }) => {
 
   return (
     <>
-      <SubHeader
-        postData={allPosts}
-        pClass='header-light header-sticky header-with-shadow'
-      />
+      <SubHeader pClass='header-light header-sticky header-with-shadow' />
       <HeadTitle pageTitle={post.title} />
       <PostFormatHandler />
       <Footer />

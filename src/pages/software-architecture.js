@@ -14,7 +14,7 @@ const SoftwareArchitecture = ({ allPosts }) => {
   return (
     <>
       <HeadTitle pageTitle='Software Architecture' />
-      <SubHeader postData={allPosts} />
+      <SubHeader />
       <PostSectionNine postData={techPost} />
       <CategoryListSlide cateData={allPosts} />
       <Footer />
