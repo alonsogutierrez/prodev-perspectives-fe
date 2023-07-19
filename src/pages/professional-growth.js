@@ -8,7 +8,7 @@ import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
 const ProfessionalGrowth = ({ allPosts }) => {
   const techPost = allPosts.filter(
-    (post) => slugify(post.cate) === 'professional-growth'
+    (post) => slugify(post.category) === 'professional-growth'
   );
 
   return (

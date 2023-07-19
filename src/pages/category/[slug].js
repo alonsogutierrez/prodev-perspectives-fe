@@ -12,12 +12,12 @@ const PostCategory = ({ postData, allPosts }) => {
     <>
       <HeadTitle pageTitle='Category Archive' />
       <SubHeader />
-      <BreadcrumbOne title={postData[0].cate} />
+      <BreadcrumbOne title={postData[0].category} />
       <div className='axil-post-list-area axil-section-gap bg-color-white'>
         <div className='container'>
           <div className='row'>
             <div className='col-lg-8 col-xl-8'>
-              <PostLayoutTwo dataPost={postData} show='5' />
+              <PostLayoutTwo dataPost={postData} show='4' />
             </div>
             <div className='col-lg-4 col-xl-4 mt_md--40 mt_sm--40'>
               <SidebarOne dataPost={allPosts} />
@@ -35,21 +35,10 @@ export default PostCategory;
 export async function getStaticProps({ params }) {
   const postParams = params.slug;
 
-  const allPosts = getAllPosts([
-    'slug',
-    'cate',
-    'cate_img',
-    'title',
-    'featureImg',
-    'date',
-    'post_views',
-    'read_time',
-    'author_name',
-    'author_social',
-  ]);
+  const allPosts = await getAllPosts();
 
   const getCategoryData = allPosts.filter(
-    (post) => slugify(post.cate) === postParams
+    (post) => slugify(post.category) === postParams
   );
   const postData = getCategoryData;
 
@@ -62,11 +51,11 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['cate']);
+  const posts = await getAllPosts();
 
   const paths = posts.map((post) => ({
     params: {
-      slug: slugify(post.cate),
+      slug: slugify(post.category),
     },
   }));
 

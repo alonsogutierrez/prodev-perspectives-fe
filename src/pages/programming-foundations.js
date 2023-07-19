@@ -8,7 +8,7 @@ import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
 const ProgrammingFoundations = ({ allPosts }) => {
   const techPost = allPosts.filter(
-    (post) => slugify(post.cate) === 'programming-foundations'
+    (post) => slugify(post.category) === 'programming-foundations'
   );
 
   return (

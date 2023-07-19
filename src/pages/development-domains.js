@@ -6,9 +6,9 @@ import { slugify } from '../common/utils';
 import PostSectionNine from '../common/components/post/PostSectionNine';
 import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
-const DevelopmentDomains = ({ categoryPostsData }) => {
+const DevelopmentDomains = ({ allPosts }) => {
   const techPost = allPosts.filter(
-    (post) => slugify(post.cate) === 'development-domains'
+    (post) => slugify(post.category) === 'development-domains'
   );
 
   return (
@@ -16,7 +16,7 @@ const DevelopmentDomains = ({ categoryPostsData }) => {
       <HeadTitle pageTitle='Development Domains' />
       <SubHeader />
       <PostSectionNine allPosts={techPost} />
-      <CategoryListSlide categoryPostsData={categoryPostsData} />
+      <CategoryListSlide categoryPostsData={allPosts} />
       <Footer />
     </>
   );
