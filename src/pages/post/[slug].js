@@ -37,43 +37,12 @@ const PostDetails = ({ post, allPosts }) => {
 export default PostDetails;
 
 export async function getStaticProps({ params }) {
-  const post = getPostBySlug(params.slug, [
-    'title',
-    'featureImg',
-    'postFormat',
-    'gallery',
-    'videoLink',
-    'audio',
-    'date',
-    'slug',
-    'cate',
-    'author_name',
-    'author_img',
-    'author_designation',
-    'author_bio',
-    'author_social',
-    'post_views',
-    'content',
-    'tags',
-  ]);
-  const content = await markdownToHtml(post.content || '');
+  const post = await getPostBySlug(params.slug);
+  const content = await markdownToHtml(
+    post.content.replace(/\\n/g, '\n').replace(/\\n/g, '\n') || ''
+  );
 
-  const allPosts = getAllPosts([
-    'id',
-    'title',
-    'featureImg',
-    'postFormat',
-    'featured',
-    'date',
-    'slug',
-    'cate',
-    'cate_img',
-    'author_img',
-    'author_name',
-    'post_views',
-    'read_time',
-    'author_social',
-  ]);
+  const allPosts = await getAllPosts();
 
   return {
     props: {
@@ -87,7 +56,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug']);
+  const posts = await getAllPosts();
 
   const paths = posts.map((post) => ({
     params: {

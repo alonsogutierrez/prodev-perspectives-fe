@@ -2,7 +2,6 @@ import Footer from '../common/elements/footer/Footer';
 import { getAllPosts } from '../../lib/api';
 import SubHeader from '../common/elements/header/SubHeader';
 import HeadTitle from '../common/elements/head/HeadTitle';
-import { SortingByDate } from '../common/utils';
 import PostSectionNine from '../common/components/post/PostSectionNine';
 import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
