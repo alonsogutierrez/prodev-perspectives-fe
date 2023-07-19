@@ -38,18 +38,7 @@ export default TagsArchive;
 export async function getStaticProps({ params }) {
   const pageParams = params.slug;
 
-  const allPosts = getAllPosts([
-    'slug',
-    'cate',
-    'cate_img',
-    'title',
-    'featureImg',
-    'date',
-    'read_time',
-    'author_name',
-    'author_social',
-    'tags',
-  ]);
+  const allPosts = await getAllPosts();
 
   let tagsData = [];
 
@@ -73,7 +62,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const postData = getAllPosts(['tags']);
+  const postData = await getAllPosts();
 
   let tags = [];
 

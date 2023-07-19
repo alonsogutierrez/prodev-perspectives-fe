@@ -63,26 +63,7 @@ const PostListPage = ({ allPosts }) => {
 export default PostListPage;
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'id',
-    'title',
-    'featureImg',
-    'featured',
-    'sticky',
-    'postFormat',
-    'playBtn',
-    'date',
-    'slug',
-    'cate',
-    'cate_img',
-    'author_img',
-    'author_name',
-    'post_views',
-    'read_time',
-    'author_social',
-  ]);
-
-  SortingByDate(allPosts);
+  const allPosts = await getAllPosts();
   return {
     props: { allPosts },
   };

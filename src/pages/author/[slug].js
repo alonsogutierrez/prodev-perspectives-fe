@@ -23,8 +23,8 @@ const AuthorArchive = ({ authorData, allPosts }) => {
                     <Link href='#'>
                       <a>
                         <Image
-                          src={authorData[0].author_img}
-                          alt={authorData[0].author_name}
+                          src={authorData[0].authorImg}
+                          alt={authorData[0].authorName}
                           height={105}
                           width={105}
                           priority={true}
@@ -34,17 +34,17 @@ const AuthorArchive = ({ authorData, allPosts }) => {
                   </div>
                   <div className='media-body'>
                     <div className='author-info'>
-                      <h1 className='title'>{authorData[0].author_name}</h1>
+                      <h1 className='title'>{authorData[0].authorName}</h1>
                       <span className='b3 subtitle'>
-                        {authorData[0].author_designation}
+                        {authorData[0].authorDesignation}
                       </span>
                     </div>
                     <div className='content'>
                       <p className='b1 description'>
-                        {authorData[0].author_bio}
+                        {authorData[0].authorBio}
                       </p>
                       <ul className='social-share-transparent size-md'>
-                        {authorData[0].author_social.map((social) => (
+                        {authorData[0].authorSocial.map((social) => (
                           <li key={social.url}>
                             <a href={social.url}>
                               <i className={social.icon} />
@@ -88,23 +88,10 @@ export default AuthorArchive;
 export async function getStaticProps({ params }) {
   const postParams = params.slug;
 
-  const allPosts = getAllPosts([
-    'slug',
-    'cate',
-    'cate_img',
-    'title',
-    'featureImg',
-    'date',
-    'read_time',
-    'author_name',
-    'author_img',
-    'author_designation',
-    'author_bio',
-    'author_social',
-  ]);
+  const allPosts = await getAllPosts();
 
   const getCategoryData = allPosts.filter(
-    (post) => slugify(post.author_name) === postParams
+    (post) => slugify(post.authorName) === postParams
   );
   const authorData = getCategoryData;
 
@@ -117,11 +104,11 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['author_name']);
+  const posts = await getAllPosts();
 
   const paths = posts.map((post) => ({
     params: {
-      slug: slugify(post.author_name),
+      slug: slugify(post.authorName),
     },
   }));
 
