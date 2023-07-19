@@ -46,6 +46,13 @@ const App = ({ Component, pageProps }) => {
           `,
             }}
           />
+          {/* Google AdSense */}
+          <Script
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
+            strategy='afterInteractive'
+            crossOrigin='anonymous'
+            async
+          />
         </>
       )}
       <Component {...pageProps} />

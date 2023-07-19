@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { slugify } from '../../utils';
 
-const PostSectionNine = ({ postData, bgColor }) => {
-  const firstPost = postData[0];
+const PostSectionNine = ({ allPosts, bgColor }) => {
+  const firstPost = allPosts[0];
 
   return (
     <>
@@ -33,11 +33,11 @@ const PostSectionNine = ({ postData, bgColor }) => {
                   <div className='post-content'>
                     <div className='post-cat'>
                       <div className='post-cat-list'>
-                        <Link href={`/category/${slugify(firstPost.cate)}`}>
+                        <Link href={`/category/${slugify(firstPost.category)}`}>
                           <a className='hover-flip-item-wrapper'>
                             <span className='hover-flip-item'>
-                              <span data-text={firstPost.cate}>
-                                {firstPost.cate}
+                              <span data-text={firstPost.category}>
+                                {firstPost.category}
                               </span>
                             </span>
                           </a>
@@ -55,7 +55,7 @@ const PostSectionNine = ({ postData, bgColor }) => {
             </div>
             <div className='col-xl-6 col-lg-6 col-md-12 col-md-6 col-12'>
               <div className='row'>
-                {postData.slice(1, 5).map((data) => (
+                {allPosts.slice(1, allPosts.length).map((data) => (
                   <div
                     className='col-lg-6 col-md-6 col-sm-6 col-12 mt--30'
                     key={data.slug}
@@ -81,10 +81,12 @@ const PostSectionNine = ({ postData, bgColor }) => {
                       <div className='post-content'>
                         <div className='post-cat'>
                           <div className='post-cat-list'>
-                            <Link href={`/category/${slugify(data.cate)}`}>
+                            <Link href={`/category/${slugify(data.category)}`}>
                               <a className='hover-flip-item-wrapper'>
                                 <span className='hover-flip-item'>
-                                  <span data-text={data.cate}>{data.cate}</span>
+                                  <span data-text={data.category}>
+                                    {data.category}
+                                  </span>
                                 </span>
                               </a>
                             </Link>

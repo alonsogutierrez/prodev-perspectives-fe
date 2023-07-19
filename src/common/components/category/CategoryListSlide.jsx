@@ -4,8 +4,8 @@ import { SectionTitleTwo } from '../../elements/sectionTitle/SectionTitle';
 import { removeDuplicates, slugify } from '../../utils';
 import Slider from 'react-slick';
 
-const CategoryListSlide = ({ cateData }) => {
-  const uniqueCategory = removeDuplicates(cateData, 'cate');
+const CategoryListSlide = ({ categoryPostsData }) => {
+  const uniqueCategory = removeDuplicates(categoryPostsData, 'category');
 
   function SlickNextArrow(props) {
     const { className, onClick } = props;
@@ -75,18 +75,18 @@ const CategoryListSlide = ({ cateData }) => {
               {uniqueCategory.map((data, index) => (
                 <div className='single-cat' key={index}>
                   <div className='inner'>
-                    <Link href={`/category/${slugify(data.cate)}`}>
+                    <Link href={`/category/${slugify(data.category)}`}>
                       <a>
                         <div className='thumbnail'>
                           <Image
-                            src={data.cate_img}
-                            alt={data.cate}
+                            src={data.categoryImg}
+                            alt={data.category}
                             height={180}
                             width={180}
                           />
                         </div>
                         <div className='content'>
-                          <h5 className='title'>{data.cate}</h5>
+                          <h5 className='title'>{data.category}</h5>
                         </div>
                       </a>
                     </Link>

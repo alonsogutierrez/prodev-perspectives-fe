@@ -30,12 +30,6 @@ const HeadTitle = ({ pageTitle }) => {
         name='google-site-verification'
         content='Lu8zeIDoCYQidTR9ZCXXxCFu9zYde5BDKNX2u0GFgT0'
       />
-      {/* Google AdSense */}
-      <script
-        async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${gtag.GADSENSE_CLIENT}`}
-        crossOrigin='anonymous'
-      />
     </Head>
   );
 };

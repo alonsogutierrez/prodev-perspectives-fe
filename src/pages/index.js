@@ -11,8 +11,8 @@ const HomeDefault = ({ allPosts }) => {
     <>
       <HeadTitle pageTitle='Home' />
       <SubHeader />
-      <PostSectionNine postData={allPosts} />
-      <CategoryListSlide cateData={allPosts} />
+      <PostSectionNine allPosts={allPosts} />
+      <CategoryListSlide categoryPostsData={allPosts} />
       <Footer />
     </>
   );
@@ -21,24 +21,7 @@ const HomeDefault = ({ allPosts }) => {
 export default HomeDefault;
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'postFormat',
-    'title',
-    'featureImg',
-    'featured',
-    'date',
-    'slug',
-    'pCate',
-    'cate',
-    'cate_img',
-    'author_img',
-    'author_name',
-    'post_views',
-    'read_time',
-    'author_social',
-  ]);
-
-  SortingByDate(allPosts);
+  const allPosts = await getAllPosts();
   return {
     props: { allPosts },
   };

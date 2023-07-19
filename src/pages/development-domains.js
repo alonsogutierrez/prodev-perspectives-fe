@@ -6,7 +6,7 @@ import { slugify, SortingByDate } from '../common/utils';
 import PostSectionNine from '../common/components/post/PostSectionNine';
 import CategoryListSlide from '../common/components/category/CategoryListSlide';
 
-const DevelopmentDomains = ({ allPosts }) => {
+const DevelopmentDomains = ({ categoryPostsData }) => {
   const techPost = allPosts.filter(
     (post) => slugify(post.cate) === 'development-domains'
   );
@@ -15,8 +15,8 @@ const DevelopmentDomains = ({ allPosts }) => {
     <>
       <HeadTitle pageTitle='Development Domains' />
       <SubHeader />
-      <PostSectionNine postData={techPost} />
-      <CategoryListSlide cateData={allPosts} />
+      <PostSectionNine allPosts={techPost} />
+      <CategoryListSlide categoryPostsData={categoryPostsData} />
       <Footer />
     </>
   );
@@ -25,24 +25,7 @@ const DevelopmentDomains = ({ allPosts }) => {
 export default DevelopmentDomains;
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'postFormat',
-    'title',
-    'featureImg',
-    'featured',
-    'date',
-    'slug',
-    'pCate',
-    'cate',
-    'cate_img',
-    'author_img',
-    'author_name',
-    'post_views',
-    'read_time',
-    'author_social',
-  ]);
-
-  SortingByDate(allPosts);
+  const allPosts = await getAllPosts();
   return {
     props: { allPosts },
   };
