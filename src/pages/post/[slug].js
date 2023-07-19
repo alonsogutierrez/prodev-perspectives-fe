@@ -9,7 +9,7 @@ import PostFormatGallery from '../../common/components/post/format/PostFormatGal
 import PostFormatAudio from '../../common/components/post/format/PostFormatAudio';
 import PostFormatQuote from '../../common/components/post/format/PostFormatQuote';
 
-const PostDetails = ({ post, allPosts }) => {
+const PostDetails = ({ post, allPosts = [] }) => {
   const PostFormatHandler = () => {
     if (post.postFormat === 'video') {
       return <PostFormatVideo postData={post} allData={allPosts} />;
@@ -20,7 +20,7 @@ const PostDetails = ({ post, allPosts }) => {
     } else if (post.postFormat === 'quote') {
       return <PostFormatQuote postData={post} allData={allPosts} />;
     } else {
-      return <PostFormatStandard postData={post} allData={allPosts} />;
+      return <PostFormatStandard postData={post} />;
     }
   };
 
@@ -42,15 +42,12 @@ export async function getStaticProps({ params }) {
     post.content.replace(/\\n/g, '\n').replace(/\\n/g, '\n') || ''
   );
 
-  const allPosts = await getAllPosts();
-
   return {
     props: {
       post: {
         ...post,
         content,
       },
-      allPosts,
     },
   };
 }
