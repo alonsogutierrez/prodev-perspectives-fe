@@ -64,6 +64,24 @@ const Footer = ({ bgColor }) => {
                       </a>
                     </Link>
                   </li>
+                  <li>
+                    <Link href='/privacy-policy'>
+                      <a className='hover-flip-item-wrapper'>
+                        <span className='hover-flip-item'>
+                          <span data-text='Privacy Policy'>Privacy Policy</span>
+                        </span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href='/web-terms'>
+                      <a className='hover-flip-item-wrapper'>
+                        <span className='hover-flip-item'>
+                          <span data-text='Website Terms'>Website Terms</span>
+                        </span>
+                      </a>
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>

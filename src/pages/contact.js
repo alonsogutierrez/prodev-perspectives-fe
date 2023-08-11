@@ -25,7 +25,7 @@ const ContactUs = ({}) => {
                     Thank you for your interest in connecting with me. Please
                     feel free to reach out using any of the methods below:{' '}
                   </p>
-                  <p>Email: alonsogutierrez@prodevperspectives.com</p>
+                  <p>Email: contact@prodevperspectives.com</p>
                   <p>
                     I&apos;m open to collaborations, speaking engagements, and
                     any inquiries related to the content on my website. If you
