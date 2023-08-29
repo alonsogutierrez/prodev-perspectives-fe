@@ -1,7 +1,5 @@
 import Head from 'next/head';
 
-import * as gtag from './../../../lib/gtag';
-
 const HeadTitle = ({ pageTitle }) => {
   const title = 'ProDev Perspectives - Alonso G. Blog';
   return (
