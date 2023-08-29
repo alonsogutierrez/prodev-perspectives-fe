@@ -24,7 +24,7 @@ const Portfolio = ({}) => {
       title: 'Path Finder Visualizer',
       technologies: ['Javascript', 'ReactJS', 'NextJS', 'SCSS'],
       description:
-        'Project inspired in Clement Mihailescu Path Finder Visualizer, the main is idea es show how different path finder algorithms works, his advantages and disanvantages',
+        'Project inspired in Clement Mihailescu Path Finder Visualizer, the main idea is show how different path finder algorithms works, his advantages and disanvantages',
       maitainers: ['Alonso Gutiérrez'],
       url: 'https://prodevperspectives.com/path-finder-visualizer',
       cloud: ['Algorithms', 'Data structures'],
