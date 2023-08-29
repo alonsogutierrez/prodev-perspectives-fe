@@ -15,10 +15,19 @@ const Portfolio = ({}) => {
         'ElasticSearch',
       ],
       description:
-        'Ecommerce builded with an layered architecture with FE developed in ReactJS, BFF developed with NodeJS, database with MongoDB and searches with ElasticSearch',
+        'Ecommerce builded with an layered architecture with FE developed in ReactJS, BFF developed with NodeJS, database with MongoDB and searches with ElasticSearch using a CQRS pattern to improve our user experience and have low latencies in searching experience',
       maitainers: ['Alonso Gutiérrez'],
       url: 'https://todoonadatattooart.cl',
       cloud: ['AWS', 'Heroku'],
+    },
+    {
+      title: 'Path Finder Visualizer',
+      technologies: ['Javascript', 'ReactJS', 'NextJS', 'SCSS'],
+      description:
+        'Project inspired in Clement Mihailescu Path Finder Visualizer, the main is idea es show how different path finder algorithms works, his advantages and disanvantages',
+      maitainers: ['Alonso Gutiérrez'],
+      url: 'https://prodevperspectives.com/path-finder-visualizer',
+      cloud: ['Algorithms', 'Data structures'],
     },
   ];
   return (
