@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Node from './node/node';
+import {
+  dijkstra,
+  getNodesInShortestPathOrder,
+} from '../../../lib/algorithms/dijkstra';
 
 const START_ROW = 5;
 const START_COL = 10;
@@ -13,6 +17,10 @@ const createNode = (row, column) => {
     column,
     isStart: row === START_ROW && column === START_COL,
     isEnd: row === END_ROW && column === END_COL,
+    distance: Infinity,
+    isVisited: false,
+    isWall: false,
+    previousNode: null,
   };
 };
 
@@ -28,30 +36,123 @@ const getInitialGrid = () => {
   return grid;
 };
 
+const getNewGridWithWallToggled = (grid, row, col) => {
+  const newGrid = grid.slice();
+  const node = newGrid[row][col];
+  const newNode = {
+    ...node,
+    isWall: !node.isWall,
+  };
+  newGrid[row][col] = newNode;
+  return newGrid;
+};
+
+const animateDijkstra = (visitedNodesInOrder, nodesInShortestPathOrder) => {
+  for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+    if (i === visitedNodesInOrder.length) {
+      setTimeout(() => {
+        animateShortestPath(nodesInShortestPathOrder);
+      }, 10 * i);
+      return;
+    }
+    setTimeout(() => {
+      const node = visitedNodesInOrder[i];
+      // Mark node as visited
+      document.getElementById(`node-${node.row}-${node.column}`).className =
+        'node node-visited';
+    }, 10 * i);
+  }
+};
+
+const animateShortestPath = (nodesInShortestPathOrder) => {
+  for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+    setTimeout(() => {
+      const node = nodesInShortestPathOrder[i];
+      // Mark node as part in the shortest path
+      document.getElementById(`node-${node.row}-${node.column}`).className =
+        'node node-shortest-path';
+    }, 50 * i);
+  }
+};
+
 const PathFinder = () => {
-  const [grid] = useState(getInitialGrid());
+  const [grid, setGrid] = useState(getInitialGrid());
+  const [mouseIsPressed, setMouseIsPressed] = useState(false);
+
+  const visualizeDijkstra = () => {
+    const startNode = grid[START_ROW][START_COL];
+    const finishNode = grid[END_ROW][END_COL];
+    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+  };
+
+  const handleMouseDown = (row, col) => {
+    const newGrid = getNewGridWithWallToggled(grid, row, col);
+    setGrid(newGrid);
+    setMouseIsPressed(true);
+  };
+
+  const handleMouseEnter = (row, col) => {
+    if (!mouseIsPressed) return;
+    const newGrid = getNewGridWithWallToggled(grid, row, col);
+    setGrid(newGrid);
+  };
+
+  const handleMouseUp = () => {
+    setMouseIsPressed(false);
+  };
+
+  useEffect(() => {}, []);
 
   return (
-    <div className='grid'>
-      {grid.map((row, rowIdx) => {
-        return (
-          <div key={rowIdx}>
-            {row.map((node, nodeIdx) => {
-              const { row, column, isEnd, isStart } = node;
-              return (
-                <Node
-                  key={nodeIdx}
-                  row={row}
-                  col={column}
-                  isEnd={isEnd}
-                  isStart={isStart}
-                ></Node>
-              );
-            })}
+    <>
+      <div className='post-single-wrapper axil-section-gap bg-color-white'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-lg-8'>
+              <button
+                type='submit'
+                className='search-button'
+                onClick={() => visualizeDijkstra()}
+                style={{ color: 'white' }}
+              >
+                Visualize <i className='fal fa-search' />
+              </button>
+              <div className='grid'>
+                {grid.map((row, rowIdx) => {
+                  return (
+                    <div key={rowIdx}>
+                      {row.map((node, nodeIdx) => {
+                        const { row, column, isEnd, isStart, isWall } = node;
+                        return (
+                          <Node
+                            key={nodeIdx}
+                            row={row}
+                            col={column}
+                            isEnd={isEnd}
+                            isStart={isStart}
+                            isWall={isWall}
+                            mouseIsPressed={mouseIsPressed}
+                            onMouseDown={(row, col) =>
+                              handleMouseDown(row, col)
+                            }
+                            onMouseEnter={(row, col) =>
+                              handleMouseEnter(row, col)
+                            }
+                            onMouseUp={() => handleMouseUp()}
+                          ></Node>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-        );
-      })}
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 
