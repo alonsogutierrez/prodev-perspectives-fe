@@ -18,7 +18,7 @@ const Portfolio = ({}) => {
         'Ecommerce builded with an layered architecture with FE developed in ReactJS, BFF developed with NodeJS, database with MongoDB and searches with ElasticSearch using a CQRS pattern to improve our user experience and have low latencies in searching experience',
       maitainers: ['Alonso Gutiérrez'],
       url: 'https://todoonadatattooart.cl',
-      cloud: ['AWS', 'Heroku'],
+      cloud: ['Ecommerce', 'FullStack'],
     },
     {
       title: 'Path Finder Visualizer',

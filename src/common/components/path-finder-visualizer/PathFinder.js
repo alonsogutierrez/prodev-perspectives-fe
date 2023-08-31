@@ -24,11 +24,12 @@ const createNode = (row, column) => {
   };
 };
 
+// TODO: Depending os screen size, we should define the height and weight of board
 const getInitialGrid = () => {
   const grid = [];
-  for (let row = 0; row < 20; row++) {
+  for (let row = 0; row < 30; row++) {
     const currentRow = [];
-    for (let column = 0; column < 20; column++) {
+    for (let column = 0; column < 30; column++) {
       currentRow.push(createNode(row, column));
     }
     grid.push(currentRow);
@@ -103,53 +104,90 @@ const PathFinder = () => {
     setMouseIsPressed(false);
   };
 
-  useEffect(() => {}, []);
+  const resetBoard = () => {
+    const elements = document.querySelectorAll('.node');
+    elements.forEach((element) => {
+      const id = element.id;
+      const rowId = parseInt(id.split('-')[1]);
+      const colId = parseInt(id.split('-')[2]);
+      const isStart = rowId === START_ROW && colId === START_COL;
+      const isEnd = rowId === END_ROW && colId === END_COL;
+      element.classList.remove('node-visited');
+      element.classList.remove('node-shortest-path');
+      element.classList.add('node', 'node');
+      if (isStart) {
+        element.classList.add('node', 'node-start');
+      }
+      if (isEnd) {
+        element.classList.add('node', 'node-end');
+      }
+    });
+    setGrid(getInitialGrid());
+    return;
+  };
+
+  useEffect(() => {}, [grid]);
 
   return (
     <>
       <div className='post-single-wrapper axil-section-gap bg-color-white'>
         <div className='container'>
           <div className='row'>
-            <div className='col-lg-8'>
-              <button
-                type='submit'
-                className='search-button'
-                onClick={() => visualizeDijkstra()}
-                style={{ color: 'white' }}
-              >
-                Visualize <i className='fal fa-search' />
-              </button>
-              <div className='grid'>
-                {grid.map((row, rowIdx) => {
+            <div className='mainmenu-wrapper d-none d-xl-block'>
+              <nav className='mainmenu-nav'>
+                <ul className='mainmenu'>
+                  <li className='menu-item-has-children'>
+                    <p>Select algorithm: Dijkstra</p>
+                  </li>
+                  <li className='menu-item-has-children'>
+                    <button
+                      type='submit'
+                      className='search-button'
+                      onClick={() => visualizeDijkstra()}
+                      style={{ color: 'white' }}
+                    >
+                      Visualize algorithm <i className='fal fa-search' />
+                    </button>
+                  </li>
+                  <li className='menu-item-has-children'>
+                    <button
+                      type='submit'
+                      className='search-button'
+                      onClick={() => resetBoard()}
+                      style={{ color: 'white' }}
+                    >
+                      Reset board <i className='fal fa-trash-restore' />
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div className='grid'>
+          {grid.map((row, rowIdx) => {
+            return (
+              <div key={rowIdx} style={{ marginBottom: '-8px' }}>
+                {row.map((node, nodeIdx) => {
+                  const { row, column, isEnd, isStart, isWall } = node;
                   return (
-                    <div key={rowIdx}>
-                      {row.map((node, nodeIdx) => {
-                        const { row, column, isEnd, isStart, isWall } = node;
-                        return (
-                          <Node
-                            key={nodeIdx}
-                            row={row}
-                            col={column}
-                            isEnd={isEnd}
-                            isStart={isStart}
-                            isWall={isWall}
-                            mouseIsPressed={mouseIsPressed}
-                            onMouseDown={(row, col) =>
-                              handleMouseDown(row, col)
-                            }
-                            onMouseEnter={(row, col) =>
-                              handleMouseEnter(row, col)
-                            }
-                            onMouseUp={() => handleMouseUp()}
-                          ></Node>
-                        );
-                      })}
-                    </div>
+                    <Node
+                      key={nodeIdx}
+                      row={row}
+                      col={column}
+                      isEnd={isEnd}
+                      isStart={isStart}
+                      isWall={isWall}
+                      mouseIsPressed={mouseIsPressed}
+                      onMouseDown={(row, col) => handleMouseDown(row, col)}
+                      onMouseEnter={(row, col) => handleMouseEnter(row, col)}
+                      onMouseUp={() => handleMouseUp()}
+                    ></Node>
                   );
                 })}
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </>
