@@ -11,6 +11,29 @@ const START_COL = 10;
 const END_ROW = 8;
 const END_COL = 17;
 
+const allAlgorithms = [
+  {
+    id: 1,
+    name: 'Dijkstra Search',
+    value: 'dijkstra',
+  },
+  {
+    id: 2,
+    name: 'A* Search',
+    value: 'A*',
+  },
+  {
+    id: 3,
+    name: 'Breadth-first Search',
+    value: 'bfs',
+  },
+  {
+    id: 4,
+    name: 'Depth-first Search',
+    value: 'dfs',
+  },
+];
+
 const createNode = (row, column) => {
   return {
     row,
@@ -79,6 +102,7 @@ const animateShortestPath = (nodesInShortestPathOrder) => {
 const PathFinder = () => {
   const [grid, setGrid] = useState(getInitialGrid());
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
+  const [algorithmSelected, setAlgorithmSelected] = useState('');
 
   const visualizeDijkstra = () => {
     const startNode = grid[START_ROW][START_COL];
@@ -126,7 +150,11 @@ const PathFinder = () => {
     return;
   };
 
-  useEffect(() => {}, [grid]);
+  const onChangeAlgorithm = (algSelected) => {
+    setAlgorithmSelected(algSelected);
+  };
+
+  useEffect(() => {}, [grid, algorithmSelected]);
 
   return (
     <>
@@ -137,26 +165,56 @@ const PathFinder = () => {
               <nav className='mainmenu-nav'>
                 <ul className='mainmenu'>
                   <li className='menu-item-has-children'>
-                    <p>Select algorithm: Dijkstra</p>
+                    <select
+                      name='select_algorithm'
+                      className='select_algorithm'
+                      onChange={(e) => onChangeAlgorithm(e.target.value)}
+                      tabIndex={-1}
+                      aria-hidden='true'
+                      style={{ color: 'white' }}
+                    >
+                      <option value=' ' selected='selected'>
+                        Algorithm
+                      </option>
+                      {allAlgorithms.map((algorithmData) => {
+                        const { id, name, value } = algorithmData;
+                        return (
+                          <option
+                            key={id}
+                            value={value}
+                            style={{ color: 'black' }}
+                          >
+                            {name}
+                          </option>
+                        );
+                      })}
+                    </select>
                   </li>
                   <li className='menu-item-has-children'>
                     <button
                       type='submit'
-                      className='search-button'
+                      className='btn btn-primary'
                       onClick={() => visualizeDijkstra()}
-                      style={{ color: 'white' }}
                     >
-                      Visualize algorithm <i className='fal fa-search' />
+                      Visualize algorithm{' '}
+                      <i
+                        className='fal fa-search'
+                        style={{ marginLeft: '3px', fontWeight: 'bold' }}
+                      />
                     </button>
                   </li>
                   <li className='menu-item-has-children'>
                     <button
                       type='submit'
-                      className='search-button'
+                      className='btn btn-info'
                       onClick={() => resetBoard()}
                       style={{ color: 'white' }}
                     >
-                      Reset board <i className='fal fa-trash-restore' />
+                      Reset board{' '}
+                      <i
+                        className='fal fa-trash-restore'
+                        style={{ marginLeft: '3px', fontWeight: 'bold' }}
+                      />
                     </button>
                   </li>
                 </ul>
