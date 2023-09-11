@@ -168,17 +168,27 @@ const PathFinder = (props) => {
     useState(null);
   const [algoDone, setAlgoDone] = useState(false);
 
-  const addShortestPath = () => {
+  const addShortestPath = (endNodeId, startNodeId, object) => {
     let currentNode = nodes[nodes[endNodeId].previousNode];
     if (object) {
       while (currentNode.id !== startNodeId) {
-        objectShortestPathNodesToAnimate.unshift(currentNode);
+        setObjectShortestPathNodesToAnimate(
+          (objectShortestPathNodesToAnimate) => [
+            currentNode,
+            ...objectShortestPathNodesToAnimate,
+          ]
+        );
         currentNode.relatesToObject = true;
         currentNode = nodes[currentNode.previousNode];
       }
     } else {
       while (currentNode.id !== startNodeId) {
-        shortestPathNodesToAnimate.unshift(currentNode);
+        setObjectShortestPathNodesToAnimate(
+          (objectShortestPathNodesToAnimate) => [
+            currentNode,
+            ...objectShortestPathNodesToAnimate,
+          ]
+        );
         currentNode = nodes[currentNode.previousNode];
       }
     }
@@ -189,15 +199,25 @@ const PathFinder = (props) => {
     currentNode = nodes[nodes[endNodeId].previousNode];
     if (object) {
       while (currentNode.id !== startNodeId) {
-        objectShortestPathNodesToAnimate.unshift(currentNode);
+        setObjectShortestPathNodesToAnimate(
+          (objectShortestPathNodesToAnimate) => [
+            currentNode,
+            ...objectShortestPathNodesToAnimate,
+          ]
+        );
         currentNode = nodes[currentNode.previousNode];
       }
     } else {
       while (currentNode.id !== startNodeId) {
-        shortestPathNodesToAnimate.unshift(currentNode);
+        setObjectShortestPathNodesToAnimate(
+          (objectShortestPathNodesToAnimate) => [
+            currentNode,
+            ...objectShortestPathNodesToAnimate,
+          ]
+        );
         document.getElementById(
           currentNode.id
-        ).className = `node-shortest-path`;
+        ).className = `node node-shortest-path`;
         currentNode = nodes[currentNode.previousNode];
       }
     }
@@ -231,24 +251,32 @@ const PathFinder = (props) => {
       currentNode.heuristicDistance = null;
       currentNode.storedDirection = currentNode.direction;
       currentNode.direction = null;
-      let relevantStatuses = [
-        'node-wall',
-        'node-start',
-        'node-end',
-        'node-unvisited',
-      ];
+      let relevantStatuses = ['node-wall', 'node-start', 'node-end', 'object'];
       if (!relevantStatuses.includes(currentNode.status)) {
         currentNode.status = 'node-unvisited';
       }
     });
   };
 
-  const launchAnimations = () => {
-    console.log('REFACTOR THIS METHOD');
-    let nodes = object
+  const reset = (objectNotTransparent) => {
+    nodes[start].status = 'node-start';
+    document.getElementById(start).className = 'node startTransparent';
+    nodes[end].status = 'node-end';
+    if (object) {
+      nodes[object].status = 'object';
+      if (objectNotTransparent) {
+        document.getElementById(object).className = 'node visitedObjectNode';
+      } else {
+        document.getElementById(object).className = 'node objectTransparent';
+      }
+    }
+  };
+
+  const launchAnimations = (success, type, objectParam) => {
+    let nodes = objectParam
       ? objectNodesToAnimate.slice(0)
       : nodesToAnimate.slice(0);
-    const speedToChangeAnimation = 'average';
+    const speedToChangeAnimation = 'fast';
     let speed =
       speedToChangeAnimation === 'fast'
         ? 0
@@ -258,15 +286,13 @@ const PathFinder = (props) => {
     let shortestNodes;
 
     const timeout = (index) => {
-      let success = null;
-      console.log('timeout !!!');
       setTimeout(function () {
         if (index === nodes.length) {
           console.log('final node');
-          if (object) {
+          if (objectParam) {
             objectNodesToAnimate = [];
-            console.log('here 1');
             if (success) {
+              // TODO: Review this logic
               addShortestPath(object, start, 'object');
               clearNodeStatuses();
               let newSuccess;
@@ -290,8 +316,9 @@ const PathFinder = (props) => {
                 //   algorithm
                 // );
               }
-              document.getElementById(object).className = 'visitedObjectNode';
-              launchAnimations(board, newSuccess, type);
+              document.getElementById(object).className =
+                'node visitedObjectNode';
+              launchAnimations(newSuccess, type, false);
               return;
             } else {
               console.log('Failure.');
@@ -300,12 +327,15 @@ const PathFinder = (props) => {
               return;
             }
           } else {
-            nodesToAnimate = [];
+            setNodesToAnimate([]);
             if (success) {
               if (
-                document.getElementById(end).className !== 'visitedendNodeBlue'
+                !document
+                  .getElementById(end)
+                  .className.includes('visitedendNodeBlue')
               ) {
-                document.getElementById(end).className = 'visitedendNodeBlue';
+                document.getElementById(end).className =
+                  'node visitedendNodeBlue';
               }
               if (isObject) {
                 addShortestPath(end, object);
@@ -314,9 +344,10 @@ const PathFinder = (props) => {
                 shortestPathNodesToAnimate = [];
                 reset('objectNotTransparent');
               } else {
+                // TODO: Review this logic
                 drawShortestPathTimeout(end, start, type);
-                objectShortestPathNodesToAnimate = [];
-                shortestPathNodesToAnimate = [];
+                setShortesPathNodesToAnimate([]);
+                setObjectShortestPathNodesToAnimate([]);
                 reset();
               }
               shortestNodes = objectShortestPathNodesToAnimate.concat(
@@ -326,25 +357,26 @@ const PathFinder = (props) => {
             } else {
               console.log('Failure.');
               reset();
-              toggleButtons();
+              // toggleButtons();
               return;
             }
           }
         } else if (index === 0) {
-          console.log('start node');
           if (object) {
-            document.getElementById(start).className = 'visitedStartNodePurple';
+            document.getElementById(start).className =
+              'node visitedStartNodePurple';
           } else {
             if (
-              document.getElementById(start).className !==
-              'visitedStartNodePurple'
+              !document
+                .getElementById(start)
+                .className.includes('visitedStartNodePurple')
             ) {
-              document.getElementById(start).className = 'visitedStartNodeBlue';
+              document.getElementById(start).className =
+                'node visitedStartNodeBlue';
             }
           }
           change(nodes[index]);
         } else {
-          console.log('traversing normal nodes');
           change(nodes[index], nodes[index - 1]);
         }
         timeout(index + 1);
@@ -355,27 +387,30 @@ const PathFinder = (props) => {
       console.log('change!');
       let currentHTMLNode = document.getElementById(currentNode.id);
       let relevantClassNames = [
-        'node-start',
-        'node-end',
-        'node-unvisited',
-        'visitedStartNodeBlue',
-        'visitedStartNodePurple',
-        'visitedObjectNode',
-        'visitedendNodePurple',
-        'visitedendNodeBlue',
+        'node node-start',
+        'node node-end',
+        'node object',
+        'node visitedStartNodeBlue',
+        'node visitedStartNodePurple',
+        'node visitedObjectNode',
+        'node visitedendNodePurple',
+        'node visitedendNodeBlue',
       ];
+      console.log('currentHTMLNode.className: ', currentHTMLNode.className);
       if (!relevantClassNames.includes(currentHTMLNode.className)) {
-        currentHTMLNode.className = !bidirectional
-          ? 'node-current'
-          : currentNode.weight === 15
-          ? 'node-visited weight'
-          : 'node-visited';
+        currentHTMLNode.className =
+          currentNode.weight === 15
+            ? 'node node-visited weight'
+            : 'node node-visited';
       }
-      if (currentHTMLNode.className === 'visitedStartNodePurple' && !object) {
-        currentHTMLNode.className = 'visitedStartNodeBlue';
+      if (
+        currentHTMLNode.className.includes('visitedStartNodePurple') &&
+        !object
+      ) {
+        currentHTMLNode.className = 'node visitedStartNodeBlue';
       }
-      if (currentHTMLNode.className === 'end' && object) {
-        currentHTMLNode.className = 'visitedendNodePurple';
+      if (currentHTMLNode.className.includes('node-end') && object) {
+        currentHTMLNode.className = 'node visitedendNodePurple';
       }
       if (previousNode) {
         let previousHTMLNode = document.getElementById(previousNode.id);
@@ -383,20 +418,19 @@ const PathFinder = (props) => {
           if (object) {
             previousHTMLNode.className =
               previousNode.weight === 15
-                ? 'visitedobject weight'
-                : 'visitedobject';
+                ? 'node visitedobject weight'
+                : 'node visitedobject';
           } else {
             previousHTMLNode.className =
               previousNode.weight === 15
-                ? 'node-visited weight'
-                : 'node-visited';
+                ? 'node node-visited weight'
+                : 'node node-visited';
           }
         }
       }
     };
 
     const shortestPathTimeout = (index) => {
-      console.log('shortestPathTimeout!!!');
       setTimeout(function () {
         if (index === shortestNodes.length) {
           reset();
@@ -425,7 +459,7 @@ const PathFinder = (props) => {
               //   algorithm
               // );
             }
-            launchAnimations(board, newSuccess, type);
+            launchAnimations(newSuccess, type, false);
             return;
           } else {
             shortestPathChange(nodes[end], shortestNodes[index - 1]);
@@ -446,26 +480,26 @@ const PathFinder = (props) => {
       console.log('shortestPathChange: ');
       let currentHTMLNode = document.getElementById(currentNode.id);
       if (type === 'unweighted') {
-        currentHTMLNode.className = 'shortest-path-unweighted';
+        currentHTMLNode.className = 'node shortest-path-unweighted';
       } else {
         if (currentNode.direction === 'up') {
-          currentHTMLNode.className = 'shortest-path-up';
+          currentHTMLNode.className = 'node shortest-path-up';
         } else if (currentNode.direction === 'down') {
-          currentHTMLNode.className = 'shortest-path-down';
+          currentHTMLNode.className = 'node shortest-path-down';
         } else if (currentNode.direction === 'right') {
-          currentHTMLNode.className = 'shortest-path-right';
+          currentHTMLNode.className = 'node shortest-path-right';
         } else if (currentNode.direction === 'left') {
-          currentHTMLNode.className = 'shortest-path-left';
+          currentHTMLNode.className = 'node shortest-path-left';
         } else if ((currentNode.direction = 'down-right')) {
-          currentHTMLNode.className = 'wall';
+          currentHTMLNode.className = 'node node-wall';
         }
       }
       if (previousNode) {
         let previousHTMLNode = document.getElementById(previousNode.id);
-        previousHTMLNode.className = 'shortest-path';
+        previousHTMLNode.className = 'node shortest-path';
       } else {
         let element = document.getElementById(start);
-        element.className = 'shortest-path';
+        element.className = 'node shortest-path';
         element.removeAttribute('style');
       }
     };
@@ -505,7 +539,7 @@ const PathFinder = (props) => {
           algorithmSelected
         );
         console.log('success: ', success);
-        launchAnimations(success, 'weighted');
+        launchAnimations(success, 'weighted', false);
         console.log('after launch animation');
       } else {
         setIsObject(true);
@@ -518,13 +552,7 @@ const PathFinder = (props) => {
           algorithmSelected
         );
 
-        launchAnimations(
-          success,
-          'weighted',
-          'object',
-          algorithmSelected,
-          currentHeuristic
-        );
+        launchAnimations(success, 'weighted', 'object');
       }
       // visualize nodes
     } else if (unweightedAlgorithmsNames.includes(algorithmSelected)) {
@@ -676,49 +704,44 @@ const PathFinder = (props) => {
     function shortestPathChange(currentNode, previousNode) {
       let currentHTMLNode = document.getElementById(currentNode.id);
       if (type === 'unweighted') {
-        currentHTMLNode.className = 'shortest-path-unweighted';
+        currentHTMLNode.className = 'node shortest-path-unweighted';
       } else {
         if (currentNode.direction === 'up') {
-          currentHTMLNode.className = 'shortest-path-up';
+          currentHTMLNode.className = 'node shortest-path-up';
         } else if (currentNode.direction === 'down') {
-          currentHTMLNode.className = 'shortest-path-down';
+          currentHTMLNode.className = 'node shortest-path-down';
         } else if (currentNode.direction === 'right') {
-          currentHTMLNode.className = 'shortest-path-right';
+          currentHTMLNode.className = 'node shortest-path-right';
         } else if (currentNode.direction === 'left') {
-          currentHTMLNode.className = 'shortest-path-left';
+          currentHTMLNode.className = 'node shortest-path-left';
         }
       }
       if (previousNode) {
         let previousHTMLNode = document.getElementById(previousNode.id);
         previousHTMLNode.className =
           previousNode.weight === 15
-            ? 'instantshortest-path weight'
-            : 'instantshortest-path';
+            ? 'node instantshortest-path weight'
+            : 'node instantshortest-path';
       } else {
         let element = document.getElementById(start);
-        element.className = 'startTransparent';
+        element.className = 'node startTransparent';
       }
     }
   };
 
   const clearPath = (clickedButton) => {
-    console.log('nodes: ', nodes);
-    console.log('start: ', start);
-    console.log('end: ', end);
-    console.log('object: ', object);
-    console.log('numberOfObjects: ', numberOfObjects);
     if (clickedButton) {
       let startNode = nodes[start];
       let endNode = nodes[end];
       let objectNode = numberOfObjects ? nodes[object] : null;
-      console.log('objectNode: ', objectNode);
       startNode.status = 'node-start';
-      document.getElementById(startNode.id).className = 'node-start';
+      document.getElementById(startNode.id).className = 'node node-start';
       endNode.status = 'node-end';
-      document.getElementById(endNode.id).className = 'node-end';
+      document.getElementById(endNode.id).className = 'node node-end';
       if (objectNode) {
         objectNode.status = 'node-unvisited';
-        document.getElementById(objectNode.id).className = 'node-unvisited';
+        document.getElementById(objectNode.id).className =
+          'node node-unvisited';
       }
     }
 
@@ -746,17 +769,16 @@ const PathFinder = (props) => {
         'node-end',
         'node-unvisited',
       ];
-      console.log('currentNode.status: ', currentNode.status);
       if (
         (!relevantStatuses.includes(currentNode.status) ||
-          currentHTMLNode.className === 'visitedobject') &&
+          currentHTMLNode.className.includes('visitedobject')) &&
         currentNode.weight !== 15
       ) {
         currentNode.status = 'node-unvisited';
-        currentHTMLNode.className = 'node-unvisited';
+        currentHTMLNode.className = 'node node-unvisited';
       } else if (currentNode.weight === 15) {
         currentNode.status = 'node-unvisited';
-        currentHTMLNode.className = 'node-unvisited weight';
+        currentHTMLNode.className = 'node node-unvisited weight';
       }
     });
   };
@@ -877,11 +899,13 @@ const PathFinder = (props) => {
     if (keyDown) {
       if (!relevantStatuses.includes(currentNode.status)) {
         currentElement.className =
-          currentNode.status !== 'node-wall' ? 'node-wall' : 'node-unvisited';
+          currentNode.status !== 'node-wall'
+            ? 'node node-wall'
+            : 'node node-unvisited';
         currentNode.status =
           currentElement.className !== 'node-wall'
-            ? 'node-unvisited'
-            : 'node-wall';
+            ? 'node node-unvisited'
+            : 'node node-wall';
         currentNode.weight = 0;
       }
     } else if (
@@ -890,9 +914,12 @@ const PathFinder = (props) => {
     ) {
       if (!relevantStatuses.includes(currentNode.status)) {
         currentElement.className =
-          currentNode.weight !== 15 ? 'node weight' : 'node-unvisited';
-        currentNode.weight =
-          currentElement.className !== 'node weight' ? 0 : 15;
+          currentNode.weight !== 15
+            ? 'node node-weight'
+            : 'node node-unvisited';
+        currentNode.weight = !currentElement.className.includes('node-weight')
+          ? 0
+          : 15;
         currentNode.status = 'node-unvisited';
       }
     }
@@ -904,15 +931,15 @@ const PathFinder = (props) => {
     if (previouslySwitchedNode)
       previousElement = document.getElementById(previouslySwitchedNode.id);
     if (
-      currentNode.status !== 'end' &&
-      currentNode.status !== 'start' &&
+      currentNode.status !== 'node-end' &&
+      currentNode.status !== 'node-start' &&
       currentNode.status !== 'object'
     ) {
       if (previouslySwitchedNode) {
         previouslySwitchedNode.status = previouslyPressedNodeStatus;
         previouslySwitchedNode.className =
           previouslySwitchedNodeWeight === 15
-            ? 'node weight'
+            ? 'node node-weight'
             : previouslyPressedNodeStatus;
         previouslySwitchedNode.weight =
           previouslySwitchedNodeWeight === 15 ? 15 : 0;
@@ -933,13 +960,12 @@ const PathFinder = (props) => {
   };
 
   const handleMouseDown = (nodeId) => {
-    console.log('handleMouseDown: ', nodeId);
     if (buttonsOn) {
       setMouseDown(true);
       const currentNode = getNode(nodeId);
       if (
-        currentNode.status === 'start' ||
-        currentNode.status === 'end' ||
+        currentNode.status === 'node-start' ||
+        currentNode.status === 'node-end' ||
         currentNode.status === 'object'
       ) {
         setPressedNodeStatus(currentNode.status);
@@ -953,9 +979,9 @@ const PathFinder = (props) => {
   const handleMouseUp = (nodeId) => {
     if (buttonsOn) {
       setMouseDown(false);
-      if (pressedNodeStatus === 'end') {
+      if (pressedNodeStatus === 'node-end') {
         setEnd(nodeId);
-      } else if (pressedNodeStatus === 'start') {
+      } else if (pressedNodeStatus === 'node-start') {
         setStart(nodeId);
       } else if (pressedNodeStatus === 'object') {
         setObject(nodeId);
@@ -971,12 +997,12 @@ const PathFinder = (props) => {
       const currentNode = getNode(nodeId);
       if (mouseDown && pressedNodeStatus !== 'normal') {
         setChangeSpecialNode(currentNode);
-        if (pressedNodeStatus === 'end') {
+        if (pressedNodeStatus === 'node-end') {
           setEnd(nodeId);
           if (algoDone) {
             redoAlgorithm();
           }
-        } else if (pressedNodeStatus === 'start') {
+        } else if (pressedNodeStatus === 'node-start') {
           setStart(nodeId);
           if (algoDone) {
             redoAlgorithm();
