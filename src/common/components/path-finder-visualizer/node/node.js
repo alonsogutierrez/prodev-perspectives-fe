@@ -1,28 +1,17 @@
 import React from 'react';
 
-const Node = ({
-  row,
-  col,
-  isEnd,
-  isStart,
-  isWall,
-  onMouseDown,
-  onMouseEnter,
-  onMouseUp,
-}) => {
-  const extraClassName = isEnd
-    ? 'node-end'
-    : isStart
-    ? 'node-start'
-    : isWall
-    ? 'node-wall'
-    : 'node';
+const Node = ({ id, status, isWall, onMouseDown, onMouseEnter, onMouseUp }) => {
+  const idNode = id;
+  let extraClassName = `node ${status}`;
+  if (isWall) {
+    extraClassName = `node node-wall`;
+  }
   return (
     <div
-      id={`node-${row}-${col}`}
-      className={`node ${extraClassName}`}
-      onMouseDown={() => onMouseDown(row, col)}
-      onMouseEnter={() => onMouseEnter(row, col)}
+      id={idNode}
+      className={extraClassName}
+      onMouseDown={() => onMouseDown(id)}
+      onMouseEnter={() => onMouseEnter(id)}
       onMouseUp={() => onMouseUp()}
     />
   );

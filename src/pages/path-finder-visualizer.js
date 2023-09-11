@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import HeadTitle from '../common/elements/head/HeadTitle';
 import SubHeader from '../common/elements/header/SubHeader';
@@ -8,6 +8,8 @@ import Footer from '../common/elements/footer/Footer';
 import PathFinder from '../common/components/path-finder-visualizer/PathFinder';
 
 const PathFinderVisualizer = () => {
+  const [heigth, setHeight] = useState(30);
+  const [width, setWIdth] = useState(20);
   return (
     <>
       <HeadTitle pageTitle='Post Archive' />
@@ -17,7 +19,10 @@ const PathFinderVisualizer = () => {
           <div className='row'>
             <div className='col-lg-8 col-xl-8'>
               <h3>Path Finder Visualizer</h3>
-              <PathFinder></PathFinder>
+              <PathFinder
+                heightByProp={heigth}
+                widthByProp={width}
+              ></PathFinder>
             </div>
           </div>
         </div>

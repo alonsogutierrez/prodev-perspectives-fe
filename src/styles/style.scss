@@ -31,6 +31,7 @@
 	|	|___ Navigation 
 	|	|___ Banner
 	|	|___ Footer
+	|   |___ PathFinder
 	|
 	|
 	|___ END STYLESHEET INDEXING
@@ -51,9 +52,6 @@
 @import 'default/common';
 @import 'default/forms';
 
-
-
-
 /**************************************
 	Elements Styles
 ***************************************/
@@ -70,9 +68,6 @@
 @import 'elements/contact';
 @import 'elements/pagination';
 
-
-
-
 /**************************************
 	Header Styles
 ***************************************/
@@ -81,8 +76,10 @@
 @import 'header/subscribe';
 @import 'header/mobilemenu';
 
-
-
+/**************************************
+	PathFInder Styles
+***************************************/
+@import 'path_finder/pathfinder';
 
 /**************************************
 	Post Styles
@@ -93,7 +90,6 @@
 @import 'post/post-format';
 @import 'post/post-stories';
 @import 'post/comment';
-
 
 /**************************************
 	Template Styles
@@ -106,7 +102,6 @@
 @import 'template/error';
 @import 'template/maintanence';
 
-
 /**************************************
 	Footer Styles
 ***************************************/
@@ -117,5 +112,3 @@
 	Rtl Styles
 ***************************************/
 // @import 'rtl/rtl';
-
-
