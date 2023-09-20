@@ -140,7 +140,7 @@ const PathFinder = (props) => {
   const [object, setObject] = useState(null);
   const [nodes, setNodes] = useState(getBoardInitValues.nodes);
   const [grid, setGrid] = useState(getBoardInitValues.grid);
-  const [buttonsOn, setButtonsOn] = useState(false);
+  const [buttonsOn, setButtonsOn] = useState(true);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
   const [pressedNodeStatus, setPressedNodeStatus] = useState('normal');
   const [keyDown, setKeyDown] = useState(false);
@@ -889,7 +889,7 @@ const PathFinder = (props) => {
 
   const changeNormalNode = (currentNode) => {
     let currentElement = document.getElementById(currentNode.id);
-    const relevantStatuses = ['node-start', 'node-end', 'node-unvisited'];
+    const relevantStatuses = ['node-start', 'node-end', 'object'];
     const unweightAlgorithms = ['dfs', 'bfs'];
     if (keyDown) {
       if (!relevantStatuses.includes(currentNode.status)) {
@@ -899,8 +899,8 @@ const PathFinder = (props) => {
             : 'node node-unvisited';
         currentNode.status =
           currentElement.className !== 'node node-wall'
-            ? 'node node-unvisited'
-            : 'node node-wall';
+            ? 'node-unvisited'
+            : 'node-wall';
         currentNode.weight = 0;
       }
     } else if (
@@ -969,6 +969,7 @@ const PathFinder = (props) => {
         changeNormalNode(currentNode);
       }
     }
+    setKeyDown(!keyDown);
   };
 
   const handleMouseUp = (nodeId) => {
@@ -988,8 +989,8 @@ const PathFinder = (props) => {
   const handleMouseEnter = (nodeId) => {
     if (buttonsOn) {
       const currentNode = getNode(nodeId);
-      if (mouseDown && pressedNodeStatus !== 'normal') {
-        setChangeSpecialNode(currentNode);
+      if (keyDown && pressedNodeStatus !== 'normal') {
+        changeSpecialNode(currentNode);
         if (pressedNodeStatus === 'node-end') {
           setEnd(nodeId);
           if (algoDone) {
@@ -1006,7 +1007,7 @@ const PathFinder = (props) => {
             redoAlgorithm();
           }
         }
-      } else if (mouseDown) {
+      } else if (keyDown) {
         changeNormalNode(currentNode);
       }
     }
@@ -1072,9 +1073,10 @@ const PathFinder = (props) => {
                       status={status}
                       isWall={isWall}
                       mouseIsPressed={mouseIsPressed}
-                      onMouseDown={(nodeId) => handleMouseDown(nodeId)}
                       onMouseEnter={(nodeId) => handleMouseEnter(nodeId)}
+                      onMouseDown={(nodeId) => handleMouseDown(nodeId)}
                       onMouseUp={() => handleMouseUp()}
+                      onMouseLeave={() => handleMouseLeave()}
                     ></Node>
                   );
                 })}
