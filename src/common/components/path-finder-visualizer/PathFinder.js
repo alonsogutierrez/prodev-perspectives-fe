@@ -165,6 +165,7 @@ const PathFinder = (props) => {
   const [previouslyPressedNodeStatus, setPreviouslyPressedNodeStatus] =
     useState(null);
   const [algoDone, setAlgoDone] = useState(false);
+  const [isVisibleBoard, setIsVisibleBoard] = useState(true);
 
   const addShortestPath = (endNodeId, startNodeId, object) => {
     let currentNode = nodes[nodes[endNodeId].previousNode];
@@ -271,7 +272,7 @@ const PathFinder = (props) => {
   };
 
   const launchAnimations = (success, type, objectParam) => {
-    let nodes = objectParam
+    let nodesToAnimateCopy = objectParam
       ? objectNodesToAnimate.slice(0)
       : nodesToAnimate.slice(0);
     const speedToChangeAnimation = 'fast';
@@ -285,9 +286,9 @@ const PathFinder = (props) => {
 
     const timeout = (index) => {
       setTimeout(function () {
-        if (index === nodes.length) {
+        if (index === nodesToAnimateCopy.length) {
           if (objectParam) {
-            objectNodesToAnimate = [];
+            setObjectNodesToAnimate([]);
             if (success) {
               // TODO: Review this logic
               addShortestPath(object, start, 'object');
@@ -300,8 +301,7 @@ const PathFinder = (props) => {
                   end,
                   nodesToAnimate,
                   grid,
-                  algorithm,
-                  heuristic
+                  algorithm
                 );
               } else {
                 // newSuccess = unweightedSearchAlgorithm(
@@ -335,7 +335,6 @@ const PathFinder = (props) => {
                   'node visitedendNodeBlue';
               }
               if (isObject) {
-                console.log('here');
                 addShortestPath(end, object);
                 drawShortestPathTimeout(end, object, type, 'object');
                 setObjectShortestPathNodesToAnimate([]);
@@ -374,9 +373,9 @@ const PathFinder = (props) => {
                 'node visitedStartNodeBlue';
             }
           }
-          change(nodes[index]);
+          change(nodesToAnimateCopy[index]);
         } else {
-          change(nodes[index], nodes[index - 1]);
+          change(nodesToAnimateCopy[index], nodesToAnimateCopy[index - 1]);
         }
         timeout(index + 1);
       }, speed);
@@ -402,13 +401,12 @@ const PathFinder = (props) => {
         'node visitedendNodePurple',
         'node visitedendNodeBlue',
       ];
-      console.log('currentHTMLNode.className: ', currentHTMLNode.className);
       if (!relevantClassNames.includes(currentHTMLNode.className)) {
         currentHTMLNode.className = 'node current';
       }
       if (
         currentHTMLNode.className.includes('visitedStartNodePurple') &&
-        !object
+        !objectParam
       ) {
         currentHTMLNode.className = 'node visitedStartNodeBlue';
       }
@@ -517,6 +515,7 @@ const PathFinder = (props) => {
     // Algorithm selected, call to renderAlgorithm function
     // 1st clear the actual board
     clearPath('clickedBtn');
+
     // 2st call to toggleButtons feature flag on
     // toggleButtons();
     const weightedAlgorithmsNames = algorithmsData['weighted'].map(
@@ -528,6 +527,21 @@ const PathFinder = (props) => {
     if (weightedAlgorithmsNames.includes(algorithmSelected)) {
       // Call to weighted algorithm
       if (!numberOfObjects) {
+        setTimeout(() => {
+          const success = weightedSearchAlgorithm(
+            nodes,
+            start,
+            end,
+            nodesToAnimate,
+            grid,
+            algorithmSelected
+          );
+          setTimeout(() => {
+            launchAnimations(success, 'weighted', false);
+          }, 250);
+        }, 500);
+      } else {
+        setIsObject(true);
         const success = weightedSearchAlgorithm(
           nodes,
           start,
@@ -536,18 +550,6 @@ const PathFinder = (props) => {
           grid,
           algorithmSelected
         );
-        launchAnimations(success, 'weighted', false);
-      } else {
-        setIsObject(true);
-        success = weightedSearchAlgorithm(
-          nodes,
-          start,
-          end,
-          nodesToAnimate,
-          grid,
-          algorithmSelected
-        );
-
         launchAnimations(success, 'weighted', 'object');
       }
       // visualize nodes
@@ -613,7 +615,7 @@ const PathFinder = (props) => {
         return;
       }
     } else {
-      nodesToAnimate = [];
+      setNodesToAnimate([]);
       if (success) {
         if (isObject) {
           drawShortestPath(end, object);
@@ -744,8 +746,6 @@ const PathFinder = (props) => {
           'node node-unvisited';
       }
     }
-
-    // On click start algorithm??
 
     // clear nodes into board states
     setAlgoDone(false);
@@ -1057,34 +1057,41 @@ const PathFinder = (props) => {
   };
 
   const renderBoard = () => {
-    return (
-      <div id='board' className='grid'>
-        {grid.map((row, rowIdx) => {
-          return (
-            <div key={rowIdx} style={{ marginBottom: '-8px' }}>
-              {row.map((node, nodeIdx) => {
-                const { id, status, isWall } = node;
-                return (
-                  <Node
-                    key={nodeIdx}
-                    id={id}
-                    status={status}
-                    isWall={isWall}
-                    mouseIsPressed={mouseIsPressed}
-                    onMouseDown={(nodeId) => handleMouseDown(nodeId)}
-                    onMouseEnter={(nodeId) => handleMouseEnter(nodeId)}
-                    onMouseUp={() => handleMouseUp()}
-                  ></Node>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    );
+    if (isVisibleBoard) {
+      return (
+        <div id='board' className='grid'>
+          {grid.map((row, rowIdx) => {
+            return (
+              <div key={rowIdx} style={{ marginBottom: '-8px' }}>
+                {row.map((node, nodeIdx) => {
+                  const { id, status, isWall } = node;
+                  return (
+                    <Node
+                      key={nodeIdx}
+                      id={id}
+                      status={status}
+                      isWall={isWall}
+                      mouseIsPressed={mouseIsPressed}
+                      onMouseDown={(nodeId) => handleMouseDown(nodeId)}
+                      onMouseEnter={(nodeId) => handleMouseEnter(nodeId)}
+                      onMouseUp={() => handleMouseUp()}
+                    ></Node>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    return <div>Loading...</div>;
   };
 
-  useEffect(() => {}, [algorithmSelected, mazeAndPatternsSelected]);
+  useEffect(() => {}, [
+    algorithmSelected,
+    mazeAndPatternsSelected,
+    isVisibleBoard,
+  ]);
 
   const allAlgorithmsComboBoxData = [];
   Object.keys(algorithmsData).forEach((algorithmType) => {
@@ -1110,11 +1117,9 @@ const PathFinder = (props) => {
                       tabIndex={-1}
                       aria-hidden='true'
                       style={{ color: 'white' }}
-                      defaultValue=''
+                      defaultValue='Algorithm'
                     >
-                      <option value=' ' selected='selected'>
-                        Algorithm
-                      </option>
+                      <option value='Algorithm'>Algorithm</option>
                       {allAlgorithmsComboBoxData.map((algoData) => {
                         const { id, value, name } = algoData;
                         return (
@@ -1153,11 +1158,9 @@ const PathFinder = (props) => {
                       tabIndex={-1}
                       aria-hidden='true'
                       style={{ color: 'white' }}
-                      defaultValue=''
+                      defaultValue='Maze & patterns'
                     >
-                      <option value=' ' selected='selected'>
-                        Maze & patterns
-                      </option>
+                      <option value='Maze & patterns'>Maze & patterns</option>
                       {allMazeAndPatterns.map((maze) => {
                         const { id, name, value } = maze;
                         return (

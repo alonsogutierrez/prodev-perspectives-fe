@@ -4,7 +4,7 @@ const Node = ({ id, status, isWall, onMouseDown, onMouseEnter, onMouseUp }) => {
   const idNode = id;
   let extraClassName = `node ${status}`;
   if (isWall) {
-    extraClassName = `node node-wall`;
+    extraClassName = 'node node-wall';
   }
   return (
     <div

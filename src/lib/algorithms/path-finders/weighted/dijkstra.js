@@ -3,7 +3,6 @@
 // previous node, effectively allowing us to compute the shortest path
 // by backtracking from the finish node.
 export const dijkstra = (nodes, start, end, nodesToAnimate, grid) => {
-  console.log('starting dijkstra');
   if (!start || !end || start === end) {
     return false;
   }
@@ -55,21 +54,25 @@ const getUnvisitedNeighbors = (currentNodeId, nodes, grid) => {
   let y = parseInt(coordinates[1]);
   const neighbors = [];
   let potentialNeighbor;
+  // look up
   if (grid[x - 1] && grid[x - 1][y]) {
     potentialNeighbor = `${(x - 1).toString()}-${y.toString()}`;
     if (nodes[potentialNeighbor].status !== 'node-wall')
       neighbors.push(potentialNeighbor);
   }
+  // look down
   if (grid[x + 1] && grid[x + 1][y]) {
     potentialNeighbor = `${(x + 1).toString()}-${y.toString()}`;
     if (nodes[potentialNeighbor].status !== 'node-wall')
       neighbors.push(potentialNeighbor);
   }
+  // look left
   if (grid[x][y - 1]) {
     potentialNeighbor = `${x.toString()}-${(y - 1).toString()}`;
     if (nodes[potentialNeighbor].status !== 'node-wall')
       neighbors.push(potentialNeighbor);
   }
+  // look right
   if (grid[x][y + 1]) {
     potentialNeighbor = `${x.toString()}-${(y + 1).toString()}`;
     if (nodes[potentialNeighbor].status !== 'node-wall')
