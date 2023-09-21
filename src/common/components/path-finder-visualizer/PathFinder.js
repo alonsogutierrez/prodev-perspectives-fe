@@ -1189,7 +1189,7 @@ const PathFinder = () => {
   return (
     <>
       <div
-        style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center', padding: '50px' }}
         className='post-single-wrapper axil-section-gap bg-color-white'
       >
         <div className='container'>

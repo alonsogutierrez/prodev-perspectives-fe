@@ -12,14 +12,14 @@
 @media screen and (max-width: 769px) {
   .rowGridNodes {
     margin-bottom: -14px;
-    height: 30px;
+    height: 25px;
   }
 }
 
 @media screen and (max-width: 380px) {
   .rowGridNodes {
     margin-bottom: -19px;
-    height: 10px;
+    height: 8px;
   }
 }
 
@@ -44,8 +44,8 @@
 
 @media screen and (max-width: 769px) {
   .node {
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
     outline: 0.2px solid rgb(175, 216, 248);
     display: inline-block;
     background-color: gray;
@@ -55,8 +55,8 @@
 
 @media screen and (max-width: 380px) {
   .node {
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     outline: 0.08px solid rgb(175, 216, 248);
     display: inline-block;
     background-color: gray;
@@ -459,6 +459,30 @@
 
 .grid {
   margin: 35px 0 0;
+}
+
+@media screen and (max-width: 1500px) {
+  .grid {
+    margin: 35px -10px 0;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .grid {
+    margin: 35px -15px 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .grid {
+    margin: 35px -83px 0;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .grid {
+    margin: 35px -15px 0;
+  }
 }
 
 .instantshortest-path-up {
