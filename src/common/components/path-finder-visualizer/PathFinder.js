@@ -76,23 +76,26 @@ const createNode = (id, status) => {
   };
 };
 
-const getInitialGrid = (height, width) => {
+const getInitialGrid = (totalRows, totalColumns) => {
   const grid = [];
   let start = '';
   let end = '';
   let nodes = {};
-  for (let row = 0; row < height; row++) {
+  for (let row = 0; row < totalRows; row++) {
     const currentRow = [];
-    for (let column = 0; column < width; column++) {
+    for (let column = 0; column < totalColumns; column++) {
       let newNodeId = `${row}-${column}`;
       let status = '';
-      let heightDividedByTwo = Math.floor(height / 2);
-      if (row === heightDividedByTwo && column === Math.floor(width / 4)) {
+      let heightDividedByTwo = Math.floor(totalRows / 2);
+      if (
+        row === heightDividedByTwo &&
+        column === Math.floor(totalColumns / 4)
+      ) {
         status = 'node-start';
         start = newNodeId;
       } else if (
         row === heightDividedByTwo &&
-        column === Math.floor((3 * width) / 4)
+        column === Math.floor((3 * totalColumns) / 4)
       ) {
         status = 'node-end';
         end = newNodeId;
@@ -131,9 +134,9 @@ const animateShortestPath = (nodesInShortestPathOrder) => {
   }
 };
 
-const PathFinder = (props) => {
-  const [height, setHeight] = useState(props.heightByProp);
-  const [width, setWidth] = useState(props.widthByProp);
+const PathFinder = ({ heightByProp, widthByProp }) => {
+  const [height, setHeight] = useState(heightByProp);
+  const [width, setWidth] = useState(widthByProp);
   const [getBoardInitValues] = useState(getInitialGrid(height, width));
   const [start, setStart] = useState(getBoardInitValues.start);
   const [end, setEnd] = useState(getBoardInitValues.end);
@@ -1140,7 +1143,7 @@ const PathFinder = (props) => {
   const renderBoard = () => {
     if (isVisibleBoard) {
       return (
-        <div id='board' className='grid'>
+        <div id='board' className='grid' style={{ display: 'inline-block' }}>
           {grid.map((row, rowIdx) => {
             return (
               <div key={rowIdx} style={{ marginBottom: '-8px' }}>
@@ -1185,10 +1188,13 @@ const PathFinder = (props) => {
 
   return (
     <>
-      <div className='post-single-wrapper axil-section-gap bg-color-white'>
+      <div
+        style={{ textAlign: 'center' }}
+        className='post-single-wrapper axil-section-gap bg-color-white'
+      >
         <div className='container'>
           <div className='row'>
-            <div className='mainmenu-wrapper d-none d-xl-block'>
+            <div className='mainmenu-wrapper d-xl-block'>
               <nav className='mainmenu-nav'>
                 <ul className='mainmenu'>
                   <li className='menu-item-has-children'>
