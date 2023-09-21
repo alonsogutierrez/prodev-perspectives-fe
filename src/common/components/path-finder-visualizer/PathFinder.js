@@ -134,9 +134,9 @@ const animateShortestPath = (nodesInShortestPathOrder) => {
   }
 };
 
-const PathFinder = ({ heightByProp, widthByProp }) => {
-  const [height, setHeight] = useState(heightByProp);
-  const [width, setWidth] = useState(widthByProp);
+const PathFinder = () => {
+  const [height, setHeight] = useState(20);
+  const [width, setWidth] = useState(30);
   const [getBoardInitValues] = useState(getInitialGrid(height, width));
   const [start, setStart] = useState(getBoardInitValues.start);
   const [end, setEnd] = useState(getBoardInitValues.end);
@@ -1146,7 +1146,7 @@ const PathFinder = ({ heightByProp, widthByProp }) => {
         <div id='board' className='grid' style={{ display: 'inline-block' }}>
           {grid.map((row, rowIdx) => {
             return (
-              <div key={rowIdx} style={{ marginBottom: '-8px' }}>
+              <div key={rowIdx} className='rowGridNodes'>
                 {row.map((node, nodeIdx) => {
                   const { id, status, isWall } = node;
                   return (
