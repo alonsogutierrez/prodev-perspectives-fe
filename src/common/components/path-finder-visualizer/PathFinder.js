@@ -222,23 +222,104 @@ const PathFinder = (props) => {
     }
   };
 
-  const drawShortestPathTimeout = (endNodeId, startNodeId, object) => {
+  const drawShortestPathTimeout = (endNodeId, startNodeId, type) => {
     let currentNode;
     let currentNodesToAnimate;
 
+    // We are going to iterate from end node until start node
+    // iterating with the pointer to the previousNode that has every Node
     currentNode = nodes[nodes[endNodeId].previousNode];
-    if (object) {
-      objectShortestPathNodesToAnimate.push('object');
-      currentNodesToAnimate = objectShortestPathNodesToAnimate.concat(
-        shortestPathNodesToAnimate
-      );
-    } else {
-      currentNodesToAnimate = [];
-      while (currentNode.id !== startNodeId) {
-        currentNodesToAnimate.unshift(currentNode);
-        currentNode = nodes[currentNode.previousNode];
-      }
+    currentNodesToAnimate = [];
+    while (currentNode.id !== startNodeId) {
+      // Insert at the beginning of the array
+      currentNodesToAnimate.unshift(currentNode);
+      // update currentNode var poiting to the previousPrevious node
+      currentNode = nodes[currentNode.previousNode];
     }
+
+    const timeout = (index) => {
+      if (!currentNodesToAnimate.length)
+        currentNodesToAnimate.push(nodes[start]);
+      setTimeout(() => {
+        if (index === 0) {
+          shortestPathChange(currentNodesToAnimate[index]);
+        } else if (index < currentNodesToAnimate.length) {
+          shortestPathChange(
+            currentNodesToAnimate[index],
+            currentNodesToAnimate[index - 1]
+          );
+        } else if (index === currentNodesToAnimate.length) {
+          shortestPathChange(
+            nodes[end],
+            currentNodesToAnimate[index - 1],
+            'isActualTarget'
+          );
+        }
+        if (index > currentNodesToAnimate.length) {
+          // toggleButtons();
+          return;
+        }
+        timeout(index + 1);
+      }, 40);
+    };
+
+    const shortestPathChange = (currentNode, previousNode, isActualTarget) => {
+      if (currentNode === 'object') {
+        let element = document.getElementById(object);
+        element.className = 'node objectTransparent';
+      } else if (currentNode.id !== start) {
+        if (
+          currentNode.id !== end ||
+          (currentNode.id === end && isActualTarget)
+        ) {
+          let currentHTMLNode = document.getElementById(currentNode.id);
+          if (type === 'unweighted') {
+            currentHTMLNode.className = 'node shortest-path-unweighted';
+          } else {
+            let direction;
+            if (
+              currentNode.relatesToObject &&
+              !currentNode.overwriteObjectRelation &&
+              currentNode.id !== end
+            ) {
+              direction = 'storedDirection';
+              currentNode.overwriteObjectRelation = true;
+            } else {
+              direction = 'direction';
+            }
+            if (currentNode[direction] === 'up') {
+              currentHTMLNode.className = 'node shortest-path-up';
+            } else if (currentNode[direction] === 'down') {
+              currentHTMLNode.className = 'node shortest-path-down';
+            } else if (currentNode[direction] === 'right') {
+              currentHTMLNode.className = 'node shortest-path-right';
+            } else if (currentNode[direction] === 'left') {
+              currentHTMLNode.className = 'node shortest-path-left';
+            } else {
+              currentHTMLNode.className = 'node shortest-path';
+            }
+          }
+        }
+      }
+      if (previousNode) {
+        if (
+          previousNode !== 'object' &&
+          previousNode.id !== end &&
+          previousNode.id !== start
+        ) {
+          let previousHTMLNode = document.getElementById(previousNode.id);
+          previousHTMLNode.className =
+            previousNode.weight === 15
+              ? 'node shortest-path weight'
+              : 'node shortest-path';
+        }
+      } else {
+        let element = document.getElementById(start);
+        element.className = 'node startTransparent';
+      }
+    };
+
+    timeout(0);
   };
 
   const clearNodeStatuses = () => {
@@ -341,7 +422,6 @@ const PathFinder = (props) => {
                 setShortesPathNodesToAnimate([]);
                 reset('objectNotTransparent');
               } else {
-                console.log('there');
                 // TODO: Review this logic
                 drawShortestPathTimeout(end, start, type);
                 setObjectShortestPathNodesToAnimate([]);
