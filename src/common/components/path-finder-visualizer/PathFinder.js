@@ -1,147 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
-import Node from './node/node';
+import Grid from './Grid';
+import {
+  drawShortestPath,
+  addShortestPath,
+  drawShortestPathTimeout,
+  reset,
+} from './Animations';
+import { algorithmsData } from './helpers/algorithms';
+import { allMazeAndPatterns } from './helpers/mazeAndPatterns';
+import { getInitialGrid } from './helpers/grid';
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
 
-const algorithmsData = {
-  weighted: [
-    {
-      id: 1,
-      name: 'Dijkstra Search',
-      value: 'dijkstra',
-    },
-    {
-      id: 2,
-      name: 'A* Search',
-      value: 'astart',
-    },
-  ],
-  unweighted: [
-    {
-      id: 3,
-      name: 'Breadth-first Search',
-      value: 'bfs',
-    },
-    {
-      id: 4,
-      name: 'Depth-first Search',
-      value: 'dfs',
-    },
-  ],
-};
-
-const allMazeAndPatterns = [
-  {
-    id: 1,
-    name: 'Recursive Division',
-    value: 'recursiveDivision',
-  },
-  {
-    id: 2,
-    name: 'Basic Random Maze',
-    value: 'basicRandomMaze',
-  },
-  {
-    id: 3,
-    name: 'Recursive Division (horizontal skew)',
-    value: 'recurisveDivisionHorizontalS',
-  },
-];
-
-const createNode = (id, status) => {
-  return {
-    id: id,
-    status: status,
-    isWall: false,
-    previousNode: null,
-    path: null,
-    direction: null,
-    storedDirection: null,
-    distance: Infinity,
-    totalDistance: Infinity,
-    heuristicDistance: null,
-    weight: 0,
-    relatesToObject: false,
-    overwriteObjectRelation: false,
-    otherid: id,
-    otherstatus: status,
-    otherpreviousNode: null,
-    otherpath: null,
-    otherdirection: null,
-    otherstoredDirection: null,
-    otherdistance: Infinity,
-    otherweight: 0,
-    otherrelatesToObject: false,
-    otheroverwriteObjectRelation: false,
-  };
-};
-
-const getInitialGrid = (totalRows, totalColumns) => {
-  const grid = [];
-  let start = '';
-  let end = '';
-  let nodes = {};
-  for (let row = 0; row < totalRows; row++) {
-    const currentRow = [];
-    for (let column = 0; column < totalColumns; column++) {
-      let newNodeId = `${row}-${column}`;
-      let status = '';
-      let heightDividedByTwo = Math.floor(totalRows / 2);
-      if (
-        row === heightDividedByTwo &&
-        column === Math.floor(totalColumns / 4)
-      ) {
-        status = 'node-start';
-        start = newNodeId;
-      } else if (
-        row === heightDividedByTwo &&
-        column === Math.floor((3 * totalColumns) / 4)
-      ) {
-        status = 'node-end';
-        end = newNodeId;
-      } else {
-        status = 'node-unvisited';
-      }
-      const newNode = createNode(newNodeId, status);
-      currentRow.push(newNode);
-      nodes = { ...nodes, [newNodeId]: newNode };
-    }
-    grid.push(currentRow);
-  }
-  return { grid, nodes, start, end };
-};
-
-const getNewGridWithWallToggled = (grid, row, col) => {
-  const newGrid = grid.slice();
-  const node = newGrid[row][col];
-  const newNode = {
-    ...node,
-    isWall: !node.isWall,
-  };
-  newGrid[row][col] = newNode;
-  return newGrid;
-};
-
-const animateShortestPath = (nodesInShortestPathOrder) => {
-  for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
-    setTimeout(() => {
-      const node = nodesInShortestPathOrder[i];
-      const [row, column] = node.id.split('-');
-      // Mark node as part in the shortest path
-      document.getElementById(`node-${row}-${column}`).className =
-        'node node-shortest-path';
-    }, 50 * i);
-  }
-};
-
 const PathFinder = () => {
-  const [height, setHeight] = useState(20);
-  const [width, setWidth] = useState(30);
+  const [height] = useState(20);
+  const [width] = useState(30);
   const [getBoardInitValues] = useState(getInitialGrid(height, width));
   const [start, setStart] = useState(getBoardInitValues.start);
   const [end, setEnd] = useState(getBoardInitValues.end);
   const [object, setObject] = useState(null);
-  const [nodes, setNodes] = useState(getBoardInitValues.nodes);
+  const [nodes] = useState(getBoardInitValues.nodes);
   const [grid, setGrid] = useState(getBoardInitValues.grid);
   const [buttonsOn, setButtonsOn] = useState(true);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
@@ -170,161 +48,7 @@ const PathFinder = () => {
   const [algoDone, setAlgoDone] = useState(false);
   const [isVisibleBoard, setIsVisibleBoard] = useState(true);
 
-  const addShortestPath = (endNodeId, startNodeId, object) => {
-    let currentNode = nodes[nodes[endNodeId].previousNode];
-    if (object) {
-      while (currentNode.id !== startNodeId) {
-        setObjectShortestPathNodesToAnimate(
-          (objectShortestPathNodesToAnimate) => [
-            currentNode,
-            ...objectShortestPathNodesToAnimate,
-          ]
-        );
-        currentNode.relatesToObject = true;
-        currentNode = nodes[currentNode.previousNode];
-      }
-    } else {
-      while (currentNode.id !== startNodeId) {
-        setObjectShortestPathNodesToAnimate(
-          (objectShortestPathNodesToAnimate) => [
-            currentNode,
-            ...objectShortestPathNodesToAnimate,
-          ]
-        );
-        currentNode = nodes[currentNode.previousNode];
-      }
-    }
-  };
-
-  const drawShortestPath = (endNodeId, startNodeId, object) => {
-    let currentNode;
-    currentNode = nodes[nodes[endNodeId].previousNode];
-    if (object) {
-      while (currentNode.id !== startNodeId) {
-        setObjectShortestPathNodesToAnimate(
-          (objectShortestPathNodesToAnimate) => [
-            currentNode,
-            ...objectShortestPathNodesToAnimate,
-          ]
-        );
-        currentNode = nodes[currentNode.previousNode];
-      }
-    } else {
-      while (currentNode.id !== startNodeId) {
-        setObjectShortestPathNodesToAnimate(
-          (objectShortestPathNodesToAnimate) => [
-            currentNode,
-            ...objectShortestPathNodesToAnimate,
-          ]
-        );
-        document.getElementById(
-          currentNode.id
-        ).className = `node node-shortest-path`;
-        currentNode = nodes[currentNode.previousNode];
-      }
-    }
-  };
-
-  const drawShortestPathTimeout = (endNodeId, startNodeId, type) => {
-    let currentNode;
-    let currentNodesToAnimate;
-
-    // We are going to iterate from end node until start node
-    // iterating with the pointer to the previousNode that has every Node
-    currentNode = nodes[nodes[endNodeId].previousNode];
-    currentNodesToAnimate = [];
-    while (currentNode.id !== startNodeId) {
-      // Insert at the beginning of the array
-      currentNodesToAnimate.unshift(currentNode);
-      // update currentNode var poiting to the previousPrevious node
-      currentNode = nodes[currentNode.previousNode];
-    }
-
-    const timeout = (index) => {
-      if (!currentNodesToAnimate.length)
-        currentNodesToAnimate.push(nodes[start]);
-      setTimeout(() => {
-        if (index === 0) {
-          shortestPathChange(currentNodesToAnimate[index]);
-        } else if (index < currentNodesToAnimate.length) {
-          shortestPathChange(
-            currentNodesToAnimate[index],
-            currentNodesToAnimate[index - 1]
-          );
-        } else if (index === currentNodesToAnimate.length) {
-          shortestPathChange(
-            nodes[end],
-            currentNodesToAnimate[index - 1],
-            'isActualTarget'
-          );
-        }
-        if (index > currentNodesToAnimate.length) {
-          // toggleButtons();
-          return;
-        }
-        timeout(index + 1);
-      }, 40);
-    };
-
-    const shortestPathChange = (currentNode, previousNode, isActualTarget) => {
-      if (currentNode === 'object') {
-        let element = document.getElementById(object);
-        element.className = 'node objectTransparent';
-      } else if (currentNode.id !== start) {
-        if (
-          currentNode.id !== end ||
-          (currentNode.id === end && isActualTarget)
-        ) {
-          let currentHTMLNode = document.getElementById(currentNode.id);
-          if (type === 'unweighted') {
-            currentHTMLNode.className = 'node shortest-path-unweighted';
-          } else {
-            let direction;
-            if (
-              currentNode.relatesToObject &&
-              !currentNode.overwriteObjectRelation &&
-              currentNode.id !== end
-            ) {
-              direction = 'storedDirection';
-              currentNode.overwriteObjectRelation = true;
-            } else {
-              direction = 'direction';
-            }
-            if (currentNode[direction] === 'up') {
-              currentHTMLNode.className = 'node shortest-path-up';
-            } else if (currentNode[direction] === 'down') {
-              currentHTMLNode.className = 'node shortest-path-down';
-            } else if (currentNode[direction] === 'right') {
-              currentHTMLNode.className = 'node shortest-path-right';
-            } else if (currentNode[direction] === 'left') {
-              currentHTMLNode.className = 'node shortest-path-left';
-            } else {
-              currentHTMLNode.className = 'node shortest-path';
-            }
-          }
-        }
-      }
-      if (previousNode) {
-        if (
-          previousNode !== 'object' &&
-          previousNode.id !== end &&
-          previousNode.id !== start
-        ) {
-          let previousHTMLNode = document.getElementById(previousNode.id);
-          previousHTMLNode.className =
-            previousNode.weight === 15
-              ? 'node shortest-path weight'
-              : 'node shortest-path';
-        }
-      } else {
-        let element = document.getElementById(start);
-        element.className = 'node startTransparent';
-      }
-    };
-
-    timeout(0);
-  };
-
+  // Modify his own states, stay here
   const clearNodeStatuses = () => {
     Object.keys(nodes).forEach((id) => {
       let currentNode = nodes[id];
@@ -341,20 +65,7 @@ const PathFinder = () => {
     });
   };
 
-  const reset = (objectNotTransparent) => {
-    nodes[start].status = 'node-start';
-    document.getElementById(start).className = 'node startTransparent';
-    nodes[end].status = 'node-end';
-    if (object) {
-      nodes[object].status = 'object';
-      if (objectNotTransparent) {
-        document.getElementById(object).className = 'node visitedObjectNode';
-      } else {
-        document.getElementById(object).className = 'node objectTransparent';
-      }
-    }
-  };
-
+  // Modify dom, candidate to move to animations, depend on nodes to animate
   const launchAnimations = (success, type, objectParam) => {
     let nodesToAnimateCopy = objectParam
       ? objectNodesToAnimate.slice(0)
@@ -374,8 +85,13 @@ const PathFinder = () => {
           if (objectParam) {
             setObjectNodesToAnimate([]);
             if (success) {
-              // TODO: Review this logic
-              addShortestPath(object, start, 'object');
+              addShortestPath(
+                nodes,
+                setObjectShortestPathNodesToAnimate,
+                object,
+                start,
+                'object'
+              );
               clearNodeStatuses();
               let newSuccess;
               if (type === 'weighted') {
@@ -403,7 +119,7 @@ const PathFinder = () => {
               return;
             } else {
               console.log('Failure.');
-              reset();
+              reset(nodes, start, end, object);
               // toggleButtons();
               return;
             }
@@ -419,17 +135,21 @@ const PathFinder = () => {
                   'node visitedendNodeBlue';
               }
               if (isObject) {
-                addShortestPath(end, object);
-                drawShortestPathTimeout(end, object, type, 'object');
+                addShortestPath(
+                  nodes,
+                  setObjectShortestPathNodesToAnimate,
+                  end,
+                  object
+                );
+                drawShortestPathTimeout(nodes, end, object, type);
                 setObjectShortestPathNodesToAnimate([]);
                 setShortesPathNodesToAnimate([]);
-                reset('objectNotTransparent');
+                reset(nodes, start, end, object, 'objectNotTransparent');
               } else {
-                // TODO: Review this logic
-                drawShortestPathTimeout(end, start, type);
+                drawShortestPathTimeout(nodes, end, start, type);
                 setObjectShortestPathNodesToAnimate([]);
                 setShortesPathNodesToAnimate([]);
-                reset();
+                reset(nodes, start, end, object);
               }
               shortestNodes = objectShortestPathNodesToAnimate.concat(
                 shortestPathNodesToAnimate
@@ -437,7 +157,7 @@ const PathFinder = () => {
               return;
             } else {
               console.log('Failure.');
-              reset();
+              reset(nodes, start, end, object);
               // toggleButtons();
               return;
             }
@@ -517,7 +237,7 @@ const PathFinder = () => {
     const shortestPathTimeout = (index) => {
       setTimeout(function () {
         if (index === shortestNodes.length) {
-          reset();
+          reset(nodes, start, end, object);
           if (object) {
             shortestPathChange(nodes[end], shortestNodes[index - 1]);
             objectShortestPathNodesToAnimate = [];
@@ -590,6 +310,7 @@ const PathFinder = () => {
     timeout(0);
   };
 
+  // Orchestator, this logic is like use case, must stay here
   const handleVisualizeAlgorithmBtn = () => {
     if (!algorithmSelected) {
       // TODO: Show popup with message requesting the algorithm selection
@@ -644,6 +365,7 @@ const PathFinder = () => {
     setAlgoDone(true);
   };
 
+  // View when is called to analyze if need to move or erase
   const launchInstantAnimations = (
     success,
     type,
@@ -665,7 +387,13 @@ const PathFinder = () => {
     if (object) {
       objectNodesToAnimate = [];
       if (success) {
-        drawShortestPath(object, start, 'object');
+        drawShortestPath(
+          nodes,
+          setObjectShortestPathNodesToAnimate,
+          object,
+          start,
+          'object'
+        );
         clearNodeStatuses();
         let newSuccess;
         if (type === 'weighted') {
@@ -694,23 +422,33 @@ const PathFinder = () => {
         );
       } else {
         console.log('Failure.');
-        reset();
+        reset(nodes, start, end, object);
         return;
       }
     } else {
       setNodesToAnimate([]);
       if (success) {
         if (isObject) {
-          drawShortestPath(end, object);
+          drawShortestPath(
+            nodes,
+            setObjectShortestPathNodesToAnimate,
+            end,
+            object
+          );
         } else {
-          drawShortestPath(end, start);
+          drawShortestPath(
+            nodes,
+            setObjectShortestPathNodesToAnimate,
+            end,
+            start
+          );
         }
         shortestNodes = objectShortestPathNodesToAnimate.concat(
           shortestPathNodesToAnimate
         );
       } else {
         console.log('Failure');
-        reset();
+        reset(nodes, start, end, object);
         return;
       }
     }
@@ -723,7 +461,7 @@ const PathFinder = () => {
         shortestPathChange(shortestNodes[j], shortestNodes[j - 1]);
       }
     }
-    reset();
+    reset(nodes, start, end, object);
     if (object) {
       shortestPathChange(nodes[end], shortestNodes[j - 1]);
       objectShortestPathNodesToAnimate = [];
@@ -756,7 +494,7 @@ const PathFinder = () => {
       shortestPathNodesToAnimate = [];
     }
 
-    function change(currentNode, previousNode) {
+    const change = (currentNode, previousNode) => {
       let currentHTMLNode = document.getElementById(currentNode.id);
       let relevantClassNames = [
         'node-start',
@@ -784,9 +522,9 @@ const PathFinder = () => {
           }
         }
       }
-    }
+    };
 
-    function shortestPathChange(currentNode, previousNode) {
+    const shortestPathChange = (currentNode, previousNode) => {
       let currentHTMLNode = document.getElementById(currentNode.id);
       if (type === 'unweighted') {
         currentHTMLNode.className = 'node shortest-path-unweighted';
@@ -811,9 +549,10 @@ const PathFinder = () => {
         let element = document.getElementById(start);
         element.className = 'node startTransparent';
       }
-    }
+    };
   };
 
+  // Modify dom, should be moved to animations
   const clearPath = (clickedButton) => {
     if (clickedButton) {
       let startNode = nodes[start];
@@ -861,6 +600,7 @@ const PathFinder = () => {
     });
   };
 
+  // Orchestator must stay here
   const instantAlgorithm = () => {
     let weightedAlgorithms = Object.keys(algorithmsData.weighted).map(
       (algoType) => algorithmsData[algoType].map((alg) => alg.name)
@@ -965,11 +705,13 @@ const PathFinder = () => {
     }
   };
 
+  // orchestator must stay here
   const redoAlgorithm = () => {
     clearPath();
     instantAlgorithm();
   };
 
+  // Modify DOM move to animations, has keydown like dependency
   const changeNormalNode = (currentNode) => {
     let currentElement = document.getElementById(currentNode.id);
     const relevantStatuses = ['node-start', 'node-end', 'object'];
@@ -1003,6 +745,7 @@ const PathFinder = () => {
     }
   };
 
+  // Modify DOM move to animations, has keydown like dependency
   const changeSpecialNode = (currentNode) => {
     let currentElement = document.getElementById(currentNode.id);
     let previousElement = null;
@@ -1037,6 +780,7 @@ const PathFinder = () => {
     }
   };
 
+  // orchestator must be here
   const handleMouseDown = (nodeId) => {
     if (buttonsOn) {
       setMouseDown(true);
@@ -1055,6 +799,7 @@ const PathFinder = () => {
     setKeyDown(!keyDown);
   };
 
+  // orchestator must be here
   const handleMouseUp = (nodeId) => {
     if (buttonsOn) {
       setMouseDown(false);
@@ -1069,6 +814,7 @@ const PathFinder = () => {
     }
   };
 
+  // orchestator must be here
   const handleMouseEnter = (nodeId) => {
     if (buttonsOn) {
       const currentNode = getNode(nodeId);
@@ -1096,6 +842,7 @@ const PathFinder = () => {
     }
   };
 
+  // orchestator must be here
   const handleMouseLeave = (nodeId) => {
     if (buttonsOn) {
       if (mouseDown && pressedNodeStatus !== 'normal') {
@@ -1105,6 +852,7 @@ const PathFinder = () => {
     }
   };
 
+  // move to animations, moddify dom
   const resetBoard = () => {
     const elements = document.querySelectorAll('.node');
     elements.forEach((element) => {
@@ -1127,48 +875,37 @@ const PathFinder = () => {
     return;
   };
 
+  // stay here
   const onChangeAlgorithm = (algSelected) => {
     setAlgorithmSelected(algSelected);
   };
 
+  // stay here
   const onChangeMazeAndPatterns = (mazeSelected) => {
     setMazeAndPatternsSelected(mazeSelected);
   };
 
+  // stay here
   const getNode = (nodeId) => {
     const [row, column] = nodeId.split('-');
     return grid[row][column];
   };
 
+  // stay here
   const renderBoard = () => {
     if (isVisibleBoard) {
       return (
-        <div id='board' className='grid' style={{ display: 'inline-block' }}>
-          {grid.map((row, rowIdx) => {
-            return (
-              <div key={rowIdx} className='rowGridNodes'>
-                {row.map((node, nodeIdx) => {
-                  const { id, status, isWall } = node;
-                  return (
-                    <Node
-                      key={nodeIdx}
-                      id={id}
-                      status={status}
-                      isWall={isWall}
-                      mouseIsPressed={mouseIsPressed}
-                      onMouseEnter={(nodeId) => handleMouseEnter(nodeId)}
-                      onMouseDown={(nodeId) => handleMouseDown(nodeId)}
-                      onMouseUp={() => handleMouseUp()}
-                      onMouseLeave={() => handleMouseLeave()}
-                    ></Node>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
+        <Grid
+          grid={grid}
+          mouseIsPressed={mouseIsPressed}
+          handleMouseEnter={handleMouseEnter}
+          handleMouseDown={handleMouseDown}
+          handleMouseUp={handleMouseUp}
+          handleMouseLeave={handleMouseLeave}
+        ></Grid>
       );
     }
+    // TODO: Change by a loader animation
     return <div>Loading...</div>;
   };
 
