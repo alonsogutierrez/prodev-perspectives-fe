@@ -1,13 +1,32 @@
 import React from 'react';
 
+import { resetBoard } from './Animations';
+
 const Nav = (props) => {
-  const { onChangeAlgorithm } = props;
+  const {
+    onChangeAlgorithm,
+    algorithmsData,
+    handleVisualizeAlgorithmBtn,
+    onChangeMazeAndPatterns,
+    allMazeAndPatterns,
+    onChangeVelocity,
+    velocitySelected,
+    allVelocities,
+  } = props;
+  const allAlgorithmsComboBoxData = [];
+  Object.keys(algorithmsData).forEach((algorithmType) => {
+    const algorithmSelecteds = algorithmsData[algorithmType];
+    algorithmSelecteds.map((algorithmData) => {
+      allAlgorithmsComboBoxData.push(algorithmData);
+    });
+  });
   return (
     <div className='container'>
       <div className='row'>
         <div className='mainmenu-wrapper d-xl-block'>
           <nav className='mainmenu-nav'>
             <ul className='mainmenu'>
+              <li style={{ width: '8vh' }}>Algorithm: </li>
               <li className='menu-item-has-children'>
                 <select
                   name='select_algorithm'
@@ -15,10 +34,9 @@ const Nav = (props) => {
                   onChange={(e) => onChangeAlgorithm(e.target.value)}
                   tabIndex={-1}
                   aria-hidden='true'
-                  style={{ color: 'white' }}
+                  style={{ color: 'white', width: '24vh' }}
                   defaultValue='Algorithm'
                 >
-                  <option value='Algorithm'>Algorithm</option>
                   {allAlgorithmsComboBoxData.map((algoData) => {
                     const { id, value, name } = algoData;
                     return (
@@ -34,8 +52,9 @@ const Nav = (props) => {
                   type='submit'
                   className='btn btn-primary'
                   onClick={() => handleVisualizeAlgorithmBtn()}
+                  style={{ width: '14vh' }}
                 >
-                  Visualize algorithm{' '}
+                  Visualize{' '}
                   <i
                     className='fal fa-search'
                     style={{ marginLeft: '3px', fontWeight: 'bold' }}
@@ -44,20 +63,21 @@ const Nav = (props) => {
               </li>
             </ul>
             <br />
+
             <ul className='mainmenu'>
+              <li style={{ width: '8vh' }}>Velocity: </li>
               <li className='menu-item-has-children'>
                 <select
-                  name='select_algorithm'
-                  className='select_algorithm'
-                  onChange={(e) => onChangeMazeAndPatterns(e.end.value)}
+                  name='select_velocity'
+                  className='select_velocity'
+                  onChange={(e) => onChangeVelocity(e.target.value)}
                   tabIndex={-1}
                   aria-hidden='true'
-                  style={{ color: 'white' }}
-                  defaultValue='Maze & patterns'
+                  style={{ color: 'white', width: '24vh' }}
+                  defaultValue={velocitySelected}
                 >
-                  <option value='Maze & patterns'>Maze & patterns</option>
-                  {allMazeAndPatterns.map((maze) => {
-                    const { id, name, value } = maze;
+                  {allVelocities.map((vel) => {
+                    const { id, name, value } = vel;
                     return (
                       <option key={id} value={value} style={{ color: 'black' }}>
                         {name}
@@ -71,15 +91,42 @@ const Nav = (props) => {
                   type='submit'
                   className='btn btn-info'
                   onClick={() => resetBoard()}
-                  style={{ color: 'white' }}
+                  style={{ color: 'white', width: '14vh' }}
                 >
-                  Reset board{' '}
+                  Reset{' '}
                   <i
                     className='fal fa-trash-restore'
                     style={{ marginLeft: '3px', fontWeight: 'bold' }}
                   />
                 </button>
               </li>
+            </ul>
+            <br></br>
+
+            <ul className='mainmenu'>
+              <li style={{ width: '8vh' }}>Maze and Patterns: </li>
+              <li className='menu-item-has-children'>
+                <select
+                  name='select_algorithm'
+                  className='select_algorithm'
+                  onChange={(e) => onChangeMazeAndPatterns(e.end.value)}
+                  tabIndex={-1}
+                  aria-hidden='true'
+                  style={{ color: 'white', width: '24vh' }}
+                  defaultValue='Maze & patterns'
+                >
+                  <option value='Maze & patterns'>Maze & patterns</option>
+                  {allMazeAndPatterns.map((maze) => {
+                    const { id, name, value } = maze;
+                    return (
+                      <option key={id} value={value} style={{ color: 'black' }}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </li>
+              <li></li>
             </ul>
           </nav>
         </div>

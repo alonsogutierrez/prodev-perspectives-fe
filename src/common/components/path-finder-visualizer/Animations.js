@@ -205,15 +205,15 @@ export const launchAnimations = (
     start,
     end,
     object,
+    velocitySelected,
   } = pathFinderData;
   let nodesToAnimateCopy = objectParam
     ? objectNodesToAnimate.slice(0)
     : nodesToAnimate.slice(0);
-  const speedToChangeAnimation = 'fast';
   let speed =
-    speedToChangeAnimation === 'fast'
+    velocitySelected === 'fast'
       ? 0
-      : speedToChangeAnimation === 'average'
+      : velocitySelected === 'average'
       ? 100
       : 500;
   let shortestNodes;

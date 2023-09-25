@@ -7,12 +7,30 @@ import {
   clearPath,
   changeNormalNode,
   changeSpecialNode,
-  resetBoard,
 } from './Animations';
 import { algorithmsData } from './helpers/algorithms';
 import { allMazeAndPatterns } from './helpers/mazeAndPatterns';
 import { getInitialGrid } from './helpers/grid';
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
+import Nav from './Nav';
+
+const allVelocities = [
+  {
+    id: 1,
+    value: 'fast',
+    name: 'Fast',
+  },
+  {
+    id: 2,
+    value: 'average',
+    name: 'Average',
+  },
+  {
+    id: 3,
+    value: 'slow',
+    name: 'Slow',
+  },
+];
 
 const PathFinder = () => {
   const [height] = useState(20);
@@ -40,8 +58,9 @@ const PathFinder = () => {
   const [wallsToAnimate, setWallsToAnimate] = useState([]);
   const [numberOfObjects, setNumberOfObjects] = useState(0);
   const [isObject, setIsObject] = useState(false);
-  const [algorithmSelected, setAlgorithmSelected] = useState(null);
+  const [algorithmSelected, setAlgorithmSelected] = useState('dijkstra');
   const [mazeAndPatternsSelected, setMazeAndPatternsSelected] = useState('');
+  const [velocitySelected, setVelocitySelected] = useState('fast');
   const [previouslySwitchedNode, setPreviouslySwitchedNode] = useState(null);
   const [previouslySwitchedNodeWeight, setPreviouslySwitchedNodeWeight] =
     useState(0);
@@ -327,6 +346,7 @@ const PathFinder = () => {
               start,
               end,
               object,
+              velocitySelected,
             };
             launchAnimations(pathFinderData, success, 'weighted', false);
           }, 250);
@@ -356,6 +376,7 @@ const PathFinder = () => {
           start,
           end,
           object,
+          velocitySelected,
         };
         launchAnimations(pathFinderData, success, 'weighted', 'object');
       }
@@ -464,19 +485,15 @@ const PathFinder = () => {
     setMazeAndPatternsSelected(mazeSelected);
   };
 
+  const onChangeVelocity = (velocity) => {
+    setVelocitySelected(velocity);
+  };
+
   useEffect(() => {}, [
     algorithmSelected,
     mazeAndPatternsSelected,
     isVisibleBoard,
   ]);
-
-  const allAlgorithmsComboBoxData = [];
-  Object.keys(algorithmsData).forEach((algorithmType) => {
-    const algorithmSelecteds = algorithmsData[algorithmType];
-    algorithmSelecteds.map((algorithmData) => {
-      allAlgorithmsComboBoxData.push(algorithmData);
-    });
-  });
 
   return (
     <>
@@ -484,106 +501,16 @@ const PathFinder = () => {
         style={{ textAlign: 'center', padding: '50px' }}
         className='post-single-wrapper axil-section-gap bg-color-white'
       >
-        <div className='container'>
-          <div className='row'>
-            <div className='mainmenu-wrapper d-xl-block'>
-              <nav className='mainmenu-nav'>
-                <ul className='mainmenu'>
-                  <li className='menu-item-has-children'>
-                    <select
-                      name='select_algorithm'
-                      className='select_algorithm'
-                      onChange={(e) => onChangeAlgorithm(e.target.value)}
-                      tabIndex={-1}
-                      aria-hidden='true'
-                      style={{ color: 'white' }}
-                      defaultValue='Algorithm'
-                    >
-                      <option value='Algorithm'>Algorithm</option>
-                      {allAlgorithmsComboBoxData.map((algoData) => {
-                        const { id, value, name } = algoData;
-                        return (
-                          <option
-                            key={id}
-                            value={value}
-                            style={{ color: 'black' }}
-                          >
-                            {name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </li>
-                  <li>
-                    <button
-                      type='submit'
-                      className='btn btn-primary'
-                      onClick={() => handleVisualizeAlgorithmBtn()}
-                    >
-                      Visualize algorithm{' '}
-                      <i
-                        className='fal fa-search'
-                        style={{ marginLeft: '3px', fontWeight: 'bold' }}
-                      />
-                    </button>
-                  </li>
-                </ul>
-                <br />
-                <ul className='mainmenu'>
-                  <li className='menu-item-has-children'>
-                    <select
-                      name='select_algorithm'
-                      className='select_algorithm'
-                      onChange={(e) => onChangeMazeAndPatterns(e.end.value)}
-                      tabIndex={-1}
-                      aria-hidden='true'
-                      style={{ color: 'white' }}
-                      defaultValue='Maze & patterns'
-                    >
-                      <option value='Maze & patterns'>Maze & patterns</option>
-                      {allMazeAndPatterns.map((maze) => {
-                        const { id, name, value } = maze;
-                        return (
-                          <option
-                            key={id}
-                            value={value}
-                            style={{ color: 'black' }}
-                          >
-                            {name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </li>
-                  <li>
-                    <button
-                      type='submit'
-                      className='btn btn-info'
-                      onClick={() =>
-                        resetBoard({
-                          START_ROW: 0,
-                          START_COL: 0,
-                          END_ROW: 0,
-                          END_COL: 0,
-                          setGrid,
-                          height,
-                          width,
-                        })
-                      }
-                      style={{ color: 'white' }}
-                    >
-                      Reset board{' '}
-                      <i
-                        className='fal fa-trash-restore'
-                        style={{ marginLeft: '3px', fontWeight: 'bold' }}
-                      />
-                    </button>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
+        <Nav
+          onChangeAlgorithm={onChangeAlgorithm}
+          algorithmsData={algorithmsData}
+          handleVisualizeAlgorithmBtn={handleVisualizeAlgorithmBtn}
+          onChangeMazeAndPatterns={onChangeMazeAndPatterns}
+          allMazeAndPatterns={allMazeAndPatterns}
+          onChangeVelocity={onChangeVelocity}
+          velocitySelected={velocitySelected}
+          allVelocities={allVelocities}
+        ></Nav>
         {isVisibleBoard ? (
           <Grid
             grid={grid}
