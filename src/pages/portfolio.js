@@ -30,11 +30,32 @@ const Portfolio = ({}) => {
       cloud: ['Algorithms', 'Data structures'],
     },
   ];
+  const certifications = [
+    {
+      title: 'AlgoExpert Certified - 100 Questions Completed',
+      skills: ['Javascript', 'Python'],
+      description:
+        'The ultimate resource to prepare for coding interviews. Everything you need, in one streamlined platform.',
+      url: 'https://www.algoexpert.io/product',
+      cloud: ['SoftwareEngineer', 'Interviews'],
+    },
+    {
+      title: 'SystemsExpert Certified - Systems Design',
+      skills: ['SystemDesign', 'Architect'],
+      description:
+        'An unparalleled course on large-scale distributed systems. Everything you need to ace the systems design interviews.',
+      url: 'https://www.algoexpert.io/systems/product',
+      cloud: ['SoftwareEngineer', 'Interviews'],
+    },
+  ];
   return (
     <>
       <HeadTitle pageTitle='Portfolio' />
       <SubHeader />
-      <PostSectionPortafolio portafolioData={projects} />
+      <PostSectionPortafolio
+        portafolioData={projects}
+        certifications={certifications}
+      />
       <Footer />
     </>
   );
