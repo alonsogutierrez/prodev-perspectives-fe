@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import Grid from './Grid';
 import {
-  drawShortestPath,
-  addShortestPath,
-  drawShortestPathTimeout,
-  reset,
   launchAnimations,
   launchInstantAnimations,
   clearPath,
+  changeNormalNode,
+  changeSpecialNode,
+  resetBoard,
 } from './Animations';
 import { algorithmsData } from './helpers/algorithms';
 import { allMazeAndPatterns } from './helpers/mazeAndPatterns';
@@ -51,7 +50,11 @@ const PathFinder = () => {
   const [algoDone, setAlgoDone] = useState(false);
   const [isVisibleBoard, setIsVisibleBoard] = useState(true);
 
-  // Modify his own states, stay here
+  const getNode = (nodeId) => {
+    const [row, column] = nodeId.split('-');
+    return grid[row][column];
+  };
+
   const clearNodeStatuses = () => {
     Object.keys(nodes).forEach((id) => {
       let currentNode = nodes[id];
@@ -68,102 +71,6 @@ const PathFinder = () => {
     });
   };
 
-  // Orchestator, this logic is like use case, must stay here
-  const handleVisualizeAlgorithmBtn = () => {
-    if (!algorithmSelected) {
-      // TODO: Show popup with message requesting the algorithm selection
-      return;
-    }
-    // Algorithm selected, call to renderAlgorithm function
-    // 1st clear the actual board
-    const pathFinderData = {
-      nodes,
-      start,
-      end,
-      numberOfObjects,
-      object,
-      setAlgoDone,
-    };
-    clearPath(pathFinderData, 'clickedBtn');
-
-    // 2st call to toggleButtons feature flag on
-    // toggleButtons();
-    const weightedAlgorithmsNames = algorithmsData['weighted'].map(
-      (algo) => algo.value
-    );
-    const unweightedAlgorithmsNames = algorithmsData['unweighted'].map(
-      (algo) => algo.name
-    );
-    if (weightedAlgorithmsNames.includes(algorithmSelected)) {
-      // Call to weighted algorithm
-      if (!numberOfObjects) {
-        setTimeout(() => {
-          const success = weightedSearchAlgorithm(
-            nodes,
-            start,
-            end,
-            nodesToAnimate,
-            grid,
-            algorithmSelected
-          );
-          setTimeout(() => {
-            const pathFinderData = {
-              nodesToAnimate,
-              objectNodesToAnimate,
-              setObjectNodesToAnimate,
-              clearNodeStatuses,
-              setNodesToAnimate,
-              setObjectShortestPathNodesToAnimate,
-              setShortesPathNodesToAnimate,
-              objectShortestPathNodesToAnimate,
-              shortestPathNodesToAnimate,
-              nodes,
-              isObject,
-              start,
-              end,
-              object,
-            };
-            launchAnimations(pathFinderData, success, 'weighted', false);
-          }, 250);
-        }, 500);
-      } else {
-        setIsObject(true);
-        const success = weightedSearchAlgorithm(
-          nodes,
-          start,
-          end,
-          nodesToAnimate,
-          grid,
-          algorithmSelected
-        );
-        const pathFinderData = {
-          nodesToAnimate,
-          objectNodesToAnimate,
-          setObjectNodesToAnimate,
-          clearNodeStatuses,
-          setNodesToAnimate,
-          setObjectShortestPathNodesToAnimate,
-          setShortesPathNodesToAnimate,
-          objectShortestPathNodesToAnimate,
-          shortestPathNodesToAnimate,
-          nodes,
-          isObject,
-          start,
-          end,
-          object,
-        };
-        launchAnimations(pathFinderData, success, 'weighted', 'object');
-      }
-      // visualize nodes
-    } else if (unweightedAlgorithmsNames.includes(algorithmSelected)) {
-      // Call to unweighted algorithm
-      // visualize nodes
-      //unweightedSearchAlgorithm(nodes, start, end, nodesToAnimate, grid, algorithmSelected)
-    }
-    setAlgoDone(true);
-  };
-
-  // Orchestator must stay here
   const instantAlgorithm = () => {
     let weightedAlgorithms = Object.keys(algorithmsData.weighted).map(
       (algoType) => algorithmsData[algoType].map((alg) => alg.name)
@@ -354,7 +261,6 @@ const PathFinder = () => {
     }
   };
 
-  // orchestator must stay here
   const redoAlgorithm = () => {
     const pathFinderData = {
       nodes,
@@ -368,76 +274,100 @@ const PathFinder = () => {
     instantAlgorithm();
   };
 
-  // Modify DOM move to animations, has keydown like dependency
-  const changeNormalNode = (currentNode) => {
-    let currentElement = document.getElementById(currentNode.id);
-    const relevantStatuses = ['node-start', 'node-end', 'object'];
-    const unweightAlgorithms = ['dfs', 'bfs'];
-    if (keyDown) {
-      if (!relevantStatuses.includes(currentNode.status)) {
-        currentElement.className =
-          currentNode.status !== 'node-wall'
-            ? 'node node-wall'
-            : 'node node-unvisited';
-        currentNode.status =
-          currentElement.className !== 'node node-wall'
-            ? 'node-unvisited'
-            : 'node-wall';
-        currentNode.weight = 0;
-      }
-    } else if (
-      keyDown === 87 &&
-      !unweightAlgorithms.includes(algorithmSelected)
-    ) {
-      if (!relevantStatuses.includes(currentNode.status)) {
-        currentElement.className =
-          currentNode.weight !== 15
-            ? 'node node-weight'
-            : 'node node-unvisited';
-        currentNode.weight = !currentElement.className.includes('node-weight')
-          ? 0
-          : 15;
-        currentNode.status = 'node-unvisited';
-      }
+  const handleVisualizeAlgorithmBtn = () => {
+    if (!algorithmSelected) {
+      // TODO: Show popup with message requesting the algorithm selection
+      return;
     }
+    // Algorithm selected, call to renderAlgorithm function
+    // 1st clear the actual board
+    const pathFinderData = {
+      nodes,
+      start,
+      end,
+      numberOfObjects,
+      object,
+      setAlgoDone,
+    };
+    clearPath(pathFinderData, 'clickedBtn');
+
+    // 2st call to toggleButtons feature flag on
+    // toggleButtons();
+    const weightedAlgorithmsNames = algorithmsData['weighted'].map(
+      (algo) => algo.value
+    );
+    const unweightedAlgorithmsNames = algorithmsData['unweighted'].map(
+      (algo) => algo.name
+    );
+    if (weightedAlgorithmsNames.includes(algorithmSelected)) {
+      // Call to weighted algorithm
+      if (!numberOfObjects) {
+        setTimeout(() => {
+          const success = weightedSearchAlgorithm(
+            nodes,
+            start,
+            end,
+            nodesToAnimate,
+            grid,
+            algorithmSelected
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              setObjectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              setShortesPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              nodes,
+              isObject,
+              start,
+              end,
+              object,
+            };
+            launchAnimations(pathFinderData, success, 'weighted', false);
+          }, 250);
+        }, 500);
+      } else {
+        setIsObject(true);
+        const success = weightedSearchAlgorithm(
+          nodes,
+          start,
+          end,
+          nodesToAnimate,
+          grid,
+          algorithmSelected
+        );
+        const pathFinderData = {
+          nodesToAnimate,
+          objectNodesToAnimate,
+          setObjectNodesToAnimate,
+          clearNodeStatuses,
+          setNodesToAnimate,
+          setObjectShortestPathNodesToAnimate,
+          setShortesPathNodesToAnimate,
+          objectShortestPathNodesToAnimate,
+          shortestPathNodesToAnimate,
+          nodes,
+          isObject,
+          start,
+          end,
+          object,
+        };
+        launchAnimations(pathFinderData, success, 'weighted', 'object');
+      }
+      // visualize nodes
+    } else if (unweightedAlgorithmsNames.includes(algorithmSelected)) {
+      // Call to unweighted algorithm
+      // visualize nodes
+      //unweightedSearchAlgorithm(nodes, start, end, nodesToAnimate, grid, algorithmSelected)
+    }
+    setAlgoDone(true);
   };
 
-  // Modify DOM move to animations, has keydown like dependency
-  const changeSpecialNode = (currentNode) => {
-    let currentElement = document.getElementById(currentNode.id);
-    let previousElement = null;
-    if (previouslySwitchedNode)
-      previousElement = document.getElementById(previouslySwitchedNode.id);
-    if (
-      currentNode.status !== 'node-end' &&
-      currentNode.status !== 'node-start' &&
-      currentNode.status !== 'object'
-    ) {
-      if (previouslySwitchedNode) {
-        previouslySwitchedNode.status = previouslyPressedNodeStatus;
-        previouslySwitchedNode.className =
-          previouslySwitchedNodeWeight === 15
-            ? 'node node-weight'
-            : previouslyPressedNodeStatus;
-        previouslySwitchedNode.weight =
-          previouslySwitchedNodeWeight === 15 ? 15 : 0;
-        setPreviouslySwitchedNode(null);
-        setPreviouslySwitchedNodeWeight(currentNode.weight);
-        currentElement.className = `node ${pressedNodeStatus}`;
-        currentNode.status = pressedNodeStatus;
-        currentNode.weight = 0;
-      }
-    } else if (currentNode.status !== pressedNodeStatus && !algoDone) {
-      previouslySwitchedNode.status = pressedNodeStatus;
-      previousElement.className = `node ${pressedNodeStatus}`;
-    } else if (currentNode.status === pressedNodeStatus) {
-      previouslySwitchedNode = currentNode;
-      currentElement.className = `node ${previouslyPressedNodeStatus}`;
-      currentNode.status = previouslyPressedNodeStatus;
-    }
-  };
-
-  // orchestator must be here
   const handleMouseDown = (nodeId) => {
     if (buttonsOn) {
       setMouseDown(true);
@@ -450,13 +380,16 @@ const PathFinder = () => {
         setPressedNodeStatus(currentNode.status);
       } else {
         setPressedNodeStatus('normal');
-        changeNormalNode(currentNode);
+        const pathFinderData = {
+          keyDown,
+          algorithmSelected,
+        };
+        changeNormalNode(pathFinderData, currentNode);
       }
     }
     setKeyDown(!keyDown);
   };
 
-  // orchestator must be here
   const handleMouseUp = (nodeId) => {
     if (buttonsOn) {
       setMouseDown(false);
@@ -471,12 +404,17 @@ const PathFinder = () => {
     }
   };
 
-  // orchestator must be here
   const handleMouseEnter = (nodeId) => {
     if (buttonsOn) {
       const currentNode = getNode(nodeId);
       if (keyDown && pressedNodeStatus !== 'normal') {
-        changeSpecialNode(currentNode);
+        const pathFinderData = {
+          previouslySwitchedNode,
+          setPreviouslySwitchedNode,
+          setPreviouslySwitchedNodeWeight,
+          previouslySwitchedNodeWeight,
+        };
+        changeSpecialNode(pathFinderData, currentNode);
         if (pressedNodeStatus === 'node-end') {
           setEnd(nodeId);
           if (algoDone) {
@@ -494,76 +432,36 @@ const PathFinder = () => {
           }
         }
       } else if (keyDown) {
-        changeNormalNode(currentNode);
+        const pathFinderData = {
+          keyDown,
+          algorithmSelected,
+        };
+        changeNormalNode(pathFinderData, currentNode);
       }
     }
   };
 
-  // orchestator must be here
   const handleMouseLeave = (nodeId) => {
     if (buttonsOn) {
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const currentNode = getNode(nodeId);
-        changeSpecialNode(currentNode);
+        const pathFinderData = {
+          previouslySwitchedNode,
+          setPreviouslySwitchedNode,
+          setPreviouslySwitchedNodeWeight,
+          previouslySwitchedNodeWeight,
+        };
+        changeSpecialNode(pathFinderData, currentNode);
       }
     }
   };
 
-  // move to animations, moddify dom
-  const resetBoard = () => {
-    const elements = document.querySelectorAll('.node');
-    elements.forEach((element) => {
-      const id = element.id;
-      const rowId = parseInt(id.split('-')[1]);
-      const colId = parseInt(id.split('-')[2]);
-      const isStart = rowId === START_ROW && colId === START_COL;
-      const isEnd = rowId === END_ROW && colId === END_COL;
-      element.classList.remove('node-visited');
-      element.classList.remove('node-shortest-path');
-      element.classList.add('node-unvisited', 'node-unvisited');
-      if (isStart) {
-        element.classList.add('node-unvisited', 'node-start');
-      }
-      if (isEnd) {
-        element.classList.add('node-unvisited', 'node-end');
-      }
-    });
-    setGrid(getInitialGrid(height, width));
-    return;
-  };
-
-  // stay here
   const onChangeAlgorithm = (algSelected) => {
     setAlgorithmSelected(algSelected);
   };
 
-  // stay here
   const onChangeMazeAndPatterns = (mazeSelected) => {
     setMazeAndPatternsSelected(mazeSelected);
-  };
-
-  // stay here
-  const getNode = (nodeId) => {
-    const [row, column] = nodeId.split('-');
-    return grid[row][column];
-  };
-
-  // stay here
-  const renderBoard = () => {
-    if (isVisibleBoard) {
-      return (
-        <Grid
-          grid={grid}
-          mouseIsPressed={mouseIsPressed}
-          handleMouseEnter={handleMouseEnter}
-          handleMouseDown={handleMouseDown}
-          handleMouseUp={handleMouseUp}
-          handleMouseLeave={handleMouseLeave}
-        ></Grid>
-      );
-    }
-    // TODO: Change by a loader animation
-    return <div>Loading...</div>;
   };
 
   useEffect(() => {}, [
@@ -661,7 +559,17 @@ const PathFinder = () => {
                     <button
                       type='submit'
                       className='btn btn-info'
-                      onClick={() => resetBoard()}
+                      onClick={() =>
+                        resetBoard({
+                          START_ROW: 0,
+                          START_COL: 0,
+                          END_ROW: 0,
+                          END_COL: 0,
+                          setGrid,
+                          height,
+                          width,
+                        })
+                      }
                       style={{ color: 'white' }}
                     >
                       Reset board{' '}
@@ -676,7 +584,18 @@ const PathFinder = () => {
             </div>
           </div>
         </div>
-        {renderBoard()}
+        {isVisibleBoard ? (
+          <Grid
+            grid={grid}
+            mouseIsPressed={mouseIsPressed}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseDown={handleMouseDown}
+            handleMouseUp={handleMouseUp}
+            handleMouseLeave={handleMouseLeave}
+          ></Grid>
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </>
   );

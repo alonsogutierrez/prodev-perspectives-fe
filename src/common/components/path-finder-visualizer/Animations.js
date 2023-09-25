@@ -693,3 +693,99 @@ export const clearPath = (pathFinderData, clickedButton) => {
     }
   });
 };
+
+export const changeNormalNode = (pathFinderData, currentNode) => {
+  const { keyDown, algorithmSelected } = pathFinderData;
+  let currentElement = document.getElementById(currentNode.id);
+  const relevantStatuses = ['node-start', 'node-end', 'object'];
+  const unweightAlgorithms = ['dfs', 'bfs'];
+  if (keyDown) {
+    if (!relevantStatuses.includes(currentNode.status)) {
+      currentElement.className =
+        currentNode.status !== 'node-wall'
+          ? 'node node-wall'
+          : 'node node-unvisited';
+      currentNode.status =
+        currentElement.className !== 'node node-wall'
+          ? 'node-unvisited'
+          : 'node-wall';
+      currentNode.weight = 0;
+    }
+  } else if (
+    keyDown === 87 &&
+    !unweightAlgorithms.includes(algorithmSelected)
+  ) {
+    if (!relevantStatuses.includes(currentNode.status)) {
+      currentElement.className =
+        currentNode.weight !== 15 ? 'node node-weight' : 'node node-unvisited';
+      currentNode.weight = !currentElement.className.includes('node-weight')
+        ? 0
+        : 15;
+      currentNode.status = 'node-unvisited';
+    }
+  }
+};
+
+export const changeSpecialNode = (pathFinderData, currentNode) => {
+  const {
+    previouslySwitchedNode,
+    setPreviouslySwitchedNode,
+    setPreviouslySwitchedNodeWeight,
+    previouslySwitchedNodeWeight,
+  } = pathFinderData;
+  let currentElement = document.getElementById(currentNode.id);
+  let previousElement = null;
+  if (previouslySwitchedNode)
+    previousElement = document.getElementById(previouslySwitchedNode.id);
+  if (
+    currentNode.status !== 'node-end' &&
+    currentNode.status !== 'node-start' &&
+    currentNode.status !== 'object'
+  ) {
+    if (previouslySwitchedNode) {
+      previouslySwitchedNode.status = previouslyPressedNodeStatus;
+      previouslySwitchedNode.className =
+        previouslySwitchedNodeWeight === 15
+          ? 'node node-weight'
+          : previouslyPressedNodeStatus;
+      previouslySwitchedNode.weight =
+        previouslySwitchedNodeWeight === 15 ? 15 : 0;
+      setPreviouslySwitchedNode(null);
+      setPreviouslySwitchedNodeWeight(currentNode.weight);
+      currentElement.className = `node ${pressedNodeStatus}`;
+      currentNode.status = pressedNodeStatus;
+      currentNode.weight = 0;
+    }
+  } else if (currentNode.status !== pressedNodeStatus && !algoDone) {
+    previouslySwitchedNode.status = pressedNodeStatus;
+    previousElement.className = `node ${pressedNodeStatus}`;
+  } else if (currentNode.status === pressedNodeStatus) {
+    previouslySwitchedNode = currentNode;
+    currentElement.className = `node ${previouslyPressedNodeStatus}`;
+    currentNode.status = previouslyPressedNodeStatus;
+  }
+};
+
+export const resetBoard = (pathFinderData) => {
+  const { START_ROW, START_COL, END_ROW, END_COL, setGrid, height, width } =
+    pathFinderData;
+  const elements = document.querySelectorAll('.node');
+  elements.forEach((element) => {
+    const id = element.id;
+    const rowId = parseInt(id.split('-')[1]);
+    const colId = parseInt(id.split('-')[2]);
+    const isStart = rowId === START_ROW && colId === START_COL;
+    const isEnd = rowId === END_ROW && colId === END_COL;
+    element.classList.remove('node-visited');
+    element.classList.remove('node-shortest-path');
+    element.classList.add('node-unvisited', 'node-unvisited');
+    if (isStart) {
+      element.classList.add('node-unvisited', 'node-start');
+    }
+    if (isEnd) {
+      element.classList.add('node-unvisited', 'node-end');
+    }
+  });
+  setGrid(getInitialGrid(height, width));
+  return;
+};
