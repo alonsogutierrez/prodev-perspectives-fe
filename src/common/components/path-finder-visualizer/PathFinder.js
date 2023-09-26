@@ -13,6 +13,7 @@ import { allMazeAndPatterns } from './helpers/mazeAndPatterns';
 import { getInitialGrid } from './helpers/grid';
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
 import Nav from './Nav';
+import Legends from './Legends';
 
 const allVelocities = [
   {
@@ -311,7 +312,7 @@ const PathFinder = () => {
     clearPath(pathFinderData, 'clickedBtn');
 
     // 2st call to toggleButtons feature flag on
-    // toggleButtons();
+    toggleButtons();
     const weightedAlgorithmsNames = algorithmsData['weighted'].map(
       (algo) => algo.value
     );
@@ -489,6 +490,11 @@ const PathFinder = () => {
     setVelocitySelected(velocity);
   };
 
+  const toggleButtons = () => {
+    console.log('calling to toggle buttons method');
+    return;
+  };
+
   useEffect(() => {}, [
     algorithmSelected,
     mazeAndPatternsSelected,
@@ -511,6 +517,7 @@ const PathFinder = () => {
           velocitySelected={velocitySelected}
           allVelocities={allVelocities}
         ></Nav>
+        <Legends></Legends>
         {isVisibleBoard ? (
           <Grid
             grid={grid}

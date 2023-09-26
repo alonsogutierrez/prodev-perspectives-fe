@@ -10,9 +10,9 @@ const Node = ({ id, status, isWall, onMouseDown, onMouseEnter, onMouseUp }) => {
     <div
       id={idNode}
       className={extraClassName}
-      onMouseDown={() => onMouseDown(id)}
-      onMouseEnter={() => onMouseEnter(id)}
-      onMouseUp={() => onMouseUp()}
+      onMouseDown={() => (onMouseDown ? onMouseDown(id) : null)}
+      onMouseEnter={() => (onMouseEnter ? onMouseEnter(id) : null)}
+      onMouseUp={() => (onMouseUp ? onMouseUp() : null)}
     />
   );
 };

@@ -1,3 +1,28 @@
+#mainText > ul li {
+  display: inline-block;
+  list-style: none;
+  padding: 0 28px 0 0;
+}
+
+#displayLegendsList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+}
+
+#displayLegendsList li {
+  margin-right: 0px;
+  padding: 0px 20px 0px 0px !important; /* Add some spacing between list items */
+}
+
+@media screen and (max-width: 500px) {
+  #displayLegendsList li {
+    margin-right: 0px;
+    padding: 0px 5px 0px 0px !important; /* Add some spacing between list items */
+  }
+}
+
 .rowGridNodes {
   margin-bottom: -8px;
 }
