@@ -12,6 +12,7 @@ const Nav = (props) => {
     onChangeVelocity,
     velocitySelected,
     allVelocities,
+    isToggleButtonOn,
   } = props;
   const allAlgorithmsComboBoxData = [];
   Object.keys(algorithmsData).forEach((algorithmType) => {
@@ -36,6 +37,7 @@ const Nav = (props) => {
                   aria-hidden='true'
                   style={{ color: 'white', width: '24vh' }}
                   defaultValue='Algorithm'
+                  disabled={!isToggleButtonOn}
                 >
                   {allAlgorithmsComboBoxData.map((algoData) => {
                     const { id, value, name } = algoData;
@@ -76,6 +78,7 @@ const Nav = (props) => {
                   aria-hidden='true'
                   style={{ color: 'white', width: '24vh' }}
                   defaultValue={velocitySelected}
+                  disabled={!isToggleButtonOn}
                 >
                   {allVelocities.map((vel) => {
                     const { id, name, value } = vel;
@@ -116,6 +119,7 @@ const Nav = (props) => {
                   aria-hidden='true'
                   style={{ color: 'white', width: '24vh' }}
                   defaultValue='Maze & patterns'
+                  disabled={!isToggleButtonOn}
                 >
                   <option value='Maze & patterns'>Maze & patterns</option>
                   {allMazeAndPatterns.map((maze) => {

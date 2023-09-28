@@ -301,8 +301,6 @@ const PathFinder = () => {
       // TODO: Show popup with message requesting the algorithm selection
       return;
     }
-    // Algorithm selected, call to renderAlgorithm function
-    // 1st clear the actual board
     const pathFinderData = {
       nodes,
       start,
@@ -311,10 +309,10 @@ const PathFinder = () => {
       object,
       setAlgoDone,
     };
-    clearPath(pathFinderData, 'clickedBtn');
 
-    // 2st call to toggleButtons feature flag on
+    clearPath(pathFinderData, 'clickedBtn');
     toggleButtonsAnimation(false, setIsToggleButtonOn);
+
     const weightedAlgorithmsNames = algorithmsData['weighted'].map(
       (algo) => algo.value
     );
@@ -322,7 +320,6 @@ const PathFinder = () => {
       (algo) => algo.name
     );
     if (weightedAlgorithmsNames.includes(algorithmSelected)) {
-      // Call to weighted algorithm
       if (!numberOfObjects) {
         setTimeout(() => {
           const success = weightedSearchAlgorithm(
@@ -385,10 +382,8 @@ const PathFinder = () => {
         };
         launchAnimations(pathFinderData, success, 'weighted', 'object');
       }
-      // visualize nodes
     } else if (unweightedAlgorithmsNames.includes(algorithmSelected)) {
       // Call to unweighted algorithm
-      // visualize nodes
       //unweightedSearchAlgorithm(nodes, start, end, nodesToAnimate, grid, algorithmSelected)
     }
     setAlgoDone(true);
@@ -516,7 +511,6 @@ const PathFinder = () => {
           velocitySelected={velocitySelected}
           allVelocities={allVelocities}
           isToggleButtonOn={isToggleButtonOn}
-          setIsToggleButtonOn={setIsToggleButtonOn}
         ></Nav>
         <Legends></Legends>
         {isVisibleBoard ? (
