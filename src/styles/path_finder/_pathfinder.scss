@@ -764,3 +764,10 @@
     background-color: rgba(0, 190, 218, 0.75);
   }
 }
+
+.btn-disabled {
+  pointer-events: none;
+  background-color: #ccc;
+  color: #888;
+  cursor: not-allowed;
+}

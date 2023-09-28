@@ -69,7 +69,8 @@ export const drawShortestPathTimeout = (
   nodes,
   endNodeId,
   startNodeId,
-  type
+  type,
+  setIsToggleButtonOn
 ) => {
   let currentNode;
   let currentNodesToAnimate;
@@ -104,7 +105,7 @@ export const drawShortestPathTimeout = (
         );
       }
       if (index > currentNodesToAnimate.length) {
-        // toggleButtons();
+        toggleButtonsAnimation(true, setIsToggleButtonOn);
         return;
       }
       timeout(index + 1);
@@ -206,6 +207,7 @@ export const launchAnimations = (
     end,
     object,
     velocitySelected,
+    setIsToggleButtonOn,
   } = pathFinderData;
   let nodesToAnimateCopy = objectParam
     ? objectNodesToAnimate.slice(0)
@@ -259,7 +261,7 @@ export const launchAnimations = (
           } else {
             console.log('Failure.');
             reset(nodes, start, end, object);
-            // toggleButtons();
+            toggleButtonsAnimation(true, setIsToggleButtonOn);
             return;
           }
         } else {
@@ -280,15 +282,28 @@ export const launchAnimations = (
                 end,
                 object
               );
-              drawShortestPathTimeout(nodes, end, object, type);
+              drawShortestPathTimeout(
+                nodes,
+                end,
+                object,
+                type,
+                setIsToggleButtonOn
+              );
               setObjectShortestPathNodesToAnimate([]);
               setShortesPathNodesToAnimate([]);
               reset(nodes, start, end, object, 'objectNotTransparent');
             } else {
-              drawShortestPathTimeout(nodes, end, start, type);
+              drawShortestPathTimeout(
+                nodes,
+                end,
+                start,
+                type,
+                setIsToggleButtonOn
+              );
               setObjectShortestPathNodesToAnimate([]);
               setShortesPathNodesToAnimate([]);
               reset(nodes, start, end, object);
+              toggleButtonsAnimation(true, setIsToggleButtonOn);
             }
             shortestNodes = objectShortestPathNodesToAnimate.concat(
               shortestPathNodesToAnimate
@@ -297,7 +312,7 @@ export const launchAnimations = (
           } else {
             console.log('Failure.');
             reset(nodes, start, end, object);
-            // toggleButtons();
+            toggleButtonsAnimation(true, setIsToggleButtonOn);
             return;
           }
         }
@@ -787,5 +802,23 @@ export const resetBoard = (pathFinderData) => {
     }
   });
   setGrid(getInitialGrid(height, width));
+  return;
+};
+
+export const toggleButtonsAnimation = (
+  isToggleButtonOn,
+  setIsToggleButtonOn
+) => {
+  if (!isToggleButtonOn) {
+    document.getElementById('btnClickVisualizeAlg').className =
+      'btn btn-primary btn-disabled';
+    document.getElementById('btnResetBoard').className =
+      'btn btn-info btn-disabled';
+    setIsToggleButtonOn(isToggleButtonOn);
+    return;
+  }
+  document.getElementById('btnClickVisualizeAlg').className = 'btn btn-primary';
+  document.getElementById('btnResetBoard').className = 'btn btn-info';
+  setIsToggleButtonOn(isToggleButtonOn);
   return;
 };

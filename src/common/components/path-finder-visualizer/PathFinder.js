@@ -7,6 +7,7 @@ import {
   clearPath,
   changeNormalNode,
   changeSpecialNode,
+  toggleButtonsAnimation,
 } from './Animations';
 import { algorithmsData } from './helpers/algorithms';
 import { allMazeAndPatterns } from './helpers/mazeAndPatterns';
@@ -69,6 +70,7 @@ const PathFinder = () => {
     useState(null);
   const [algoDone, setAlgoDone] = useState(false);
   const [isVisibleBoard, setIsVisibleBoard] = useState(true);
+  const [isToggleButtonOn, setIsToggleButtonOn] = useState(true);
 
   const getNode = (nodeId) => {
     const [row, column] = nodeId.split('-');
@@ -312,7 +314,7 @@ const PathFinder = () => {
     clearPath(pathFinderData, 'clickedBtn');
 
     // 2st call to toggleButtons feature flag on
-    toggleButtons();
+    toggleButtonsAnimation(false, setIsToggleButtonOn);
     const weightedAlgorithmsNames = algorithmsData['weighted'].map(
       (algo) => algo.value
     );
@@ -348,6 +350,7 @@ const PathFinder = () => {
               end,
               object,
               velocitySelected,
+              setIsToggleButtonOn,
             };
             launchAnimations(pathFinderData, success, 'weighted', false);
           }, 250);
@@ -378,6 +381,7 @@ const PathFinder = () => {
           end,
           object,
           velocitySelected,
+          setIsToggleButtonOn,
         };
         launchAnimations(pathFinderData, success, 'weighted', 'object');
       }
@@ -391,7 +395,7 @@ const PathFinder = () => {
   };
 
   const handleMouseDown = (nodeId) => {
-    if (buttonsOn) {
+    if (isToggleButtonOn) {
       setMouseDown(true);
       const currentNode = getNode(nodeId);
       if (
@@ -408,12 +412,12 @@ const PathFinder = () => {
         };
         changeNormalNode(pathFinderData, currentNode);
       }
+      setKeyDown(!keyDown);
     }
-    setKeyDown(!keyDown);
   };
 
   const handleMouseUp = (nodeId) => {
-    if (buttonsOn) {
+    if (isToggleButtonOn) {
       setMouseDown(false);
       if (pressedNodeStatus === 'node-end') {
         setEnd(nodeId);
@@ -427,7 +431,7 @@ const PathFinder = () => {
   };
 
   const handleMouseEnter = (nodeId) => {
-    if (buttonsOn) {
+    if (isToggleButtonOn) {
       const currentNode = getNode(nodeId);
       if (keyDown && pressedNodeStatus !== 'normal') {
         const pathFinderData = {
@@ -464,7 +468,7 @@ const PathFinder = () => {
   };
 
   const handleMouseLeave = (nodeId) => {
-    if (buttonsOn) {
+    if (isToggleButtonOn) {
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const currentNode = getNode(nodeId);
         const pathFinderData = {
@@ -490,11 +494,6 @@ const PathFinder = () => {
     setVelocitySelected(velocity);
   };
 
-  const toggleButtons = () => {
-    console.log('calling to toggle buttons method');
-    return;
-  };
-
   useEffect(() => {}, [
     algorithmSelected,
     mazeAndPatternsSelected,
@@ -516,6 +515,8 @@ const PathFinder = () => {
           onChangeVelocity={onChangeVelocity}
           velocitySelected={velocitySelected}
           allVelocities={allVelocities}
+          isToggleButtonOn={isToggleButtonOn}
+          setIsToggleButtonOn={setIsToggleButtonOn}
         ></Nav>
         <Legends></Legends>
         {isVisibleBoard ? (

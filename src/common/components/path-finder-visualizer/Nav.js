@@ -49,6 +49,7 @@ const Nav = (props) => {
               </li>
               <li>
                 <button
+                  id='btnClickVisualizeAlg'
                   type='submit'
                   className='btn btn-primary'
                   onClick={() => handleVisualizeAlgorithmBtn()}
@@ -88,6 +89,7 @@ const Nav = (props) => {
               </li>
               <li>
                 <button
+                  id='btnResetBoard'
                   type='submit'
                   className='btn btn-info'
                   onClick={() => resetBoard()}
