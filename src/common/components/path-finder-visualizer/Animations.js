@@ -1,3 +1,4 @@
+import { integer } from 'sharp/lib/is';
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
 import { getInitialGrid } from './helpers/grid';
 
@@ -791,17 +792,23 @@ export const resetBoard = (pathFinderData, start, end) => {
   const elements = document.querySelectorAll('.node');
   elements.forEach((element) => {
     const id = element.id;
-    const rowId = parseInt(id.split('-')[0]);
-    const colId = parseInt(id.split('-')[1]);
-    const isStart = rowId === START_ROW && colId === START_COL;
-    const isEnd = rowId === END_ROW && colId === END_COL;
-    element.className = 'node node-unvisited';
-    if (isStart) {
-      console.log('istart!!');
-      element.className = 'node node-start';
-    }
-    if (isEnd) {
-      element.className = 'node node-end';
+    if (
+      id.split('-').length === 2 &&
+      typeof parseInt(id.split('-')[0]) == 'number' &&
+      typeof parseInt(id.split('-')[1]) == 'number'
+    ) {
+      console.log('here');
+      const rowId = parseInt(id.split('-')[0]);
+      const colId = parseInt(id.split('-')[1]);
+      const isStart = rowId === START_ROW && colId === START_COL;
+      const isEnd = rowId === END_ROW && colId === END_COL;
+      element.className = 'node node-unvisited';
+      if (isStart) {
+        element.className = 'node node-start';
+      }
+      if (isEnd) {
+        element.className = 'node node-end';
+      }
     }
   });
   const newGrid = getInitialGrid(height, width);
