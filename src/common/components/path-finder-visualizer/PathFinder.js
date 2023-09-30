@@ -41,7 +41,7 @@ const PathFinder = () => {
   const [start, setStart] = useState(getBoardInitValues.start);
   const [end, setEnd] = useState(getBoardInitValues.end);
   const [object, setObject] = useState(null);
-  const [nodes] = useState(getBoardInitValues.nodes);
+  const [nodes, setNodes] = useState(getBoardInitValues.nodes);
   const [grid, setGrid] = useState(getBoardInitValues.grid);
   const [buttonsOn, setButtonsOn] = useState(true);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
@@ -502,6 +502,8 @@ const PathFinder = () => {
         className='post-single-wrapper axil-section-gap bg-color-white'
       >
         <Nav
+          start={start}
+          end={end}
           onChangeAlgorithm={onChangeAlgorithm}
           algorithmsData={algorithmsData}
           handleVisualizeAlgorithmBtn={handleVisualizeAlgorithmBtn}
@@ -511,6 +513,10 @@ const PathFinder = () => {
           velocitySelected={velocitySelected}
           allVelocities={allVelocities}
           isToggleButtonOn={isToggleButtonOn}
+          setGrid={setGrid}
+          setNodes={setNodes}
+          height={height}
+          width={width}
         ></Nav>
         <Legends></Legends>
         {isVisibleBoard ? (

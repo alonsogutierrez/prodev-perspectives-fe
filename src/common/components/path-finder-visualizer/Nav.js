@@ -4,6 +4,8 @@ import { resetBoard } from './Animations';
 
 const Nav = (props) => {
   const {
+    start,
+    end,
     onChangeAlgorithm,
     algorithmsData,
     handleVisualizeAlgorithmBtn,
@@ -13,6 +15,10 @@ const Nav = (props) => {
     velocitySelected,
     allVelocities,
     isToggleButtonOn,
+    setGrid,
+    setNodes,
+    height,
+    width,
   } = props;
   const allAlgorithmsComboBoxData = [];
   Object.keys(algorithmsData).forEach((algorithmType) => {
@@ -21,6 +27,12 @@ const Nav = (props) => {
       allAlgorithmsComboBoxData.push(algorithmData);
     });
   });
+  const pathFinderData = {
+    setGrid,
+    setNodes,
+    height,
+    width,
+  };
   return (
     <div className='container'>
       <div className='row'>
@@ -95,7 +107,7 @@ const Nav = (props) => {
                   id='btnResetBoard'
                   type='submit'
                   className='btn btn-info'
-                  onClick={() => resetBoard()}
+                  onClick={() => resetBoard(pathFinderData, start, end)}
                   style={{ color: 'white', width: '14vh' }}
                 >
                   Reset{' '}

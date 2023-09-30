@@ -1,4 +1,5 @@
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
+import { getInitialGrid } from './helpers/grid';
 
 export const drawShortestPath = (
   nodes,
@@ -781,27 +782,31 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
   }
 };
 
-export const resetBoard = (pathFinderData) => {
-  const { START_ROW, START_COL, END_ROW, END_COL, setGrid, height, width } =
-    pathFinderData;
+export const resetBoard = (pathFinderData, start, end) => {
+  const START_ROW = parseInt(start.split('-')[0]);
+  const START_COL = parseInt(start.split('-')[1]);
+  const END_ROW = parseInt(end.split('-')[0]);
+  const END_COL = parseInt(end.split('-')[1]);
+  const { setGrid, setNodes, height, width } = pathFinderData;
   const elements = document.querySelectorAll('.node');
   elements.forEach((element) => {
     const id = element.id;
-    const rowId = parseInt(id.split('-')[1]);
-    const colId = parseInt(id.split('-')[2]);
+    const rowId = parseInt(id.split('-')[0]);
+    const colId = parseInt(id.split('-')[1]);
     const isStart = rowId === START_ROW && colId === START_COL;
     const isEnd = rowId === END_ROW && colId === END_COL;
-    element.classList.remove('node-visited');
-    element.classList.remove('node-shortest-path');
-    element.classList.add('node-unvisited', 'node-unvisited');
+    element.className = 'node node-unvisited';
     if (isStart) {
-      element.classList.add('node-unvisited', 'node-start');
+      console.log('istart!!');
+      element.className = 'node node-start';
     }
     if (isEnd) {
-      element.classList.add('node-unvisited', 'node-end');
+      element.className = 'node node-end';
     }
   });
-  setGrid(getInitialGrid(height, width));
+  const newGrid = getInitialGrid(height, width);
+  setNodes(newGrid.nodes);
+  setGrid(newGrid.grid);
   return;
 };
 
