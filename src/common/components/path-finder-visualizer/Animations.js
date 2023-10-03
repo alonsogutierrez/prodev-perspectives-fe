@@ -792,14 +792,10 @@ export const resetBoard = (pathFinderData, start, end) => {
   const elements = document.querySelectorAll('.node');
   elements.forEach((element) => {
     const id = element.id;
-    if (
-      id.split('-').length === 2 &&
-      typeof parseInt(id.split('-')[0]) == 'number' &&
-      typeof parseInt(id.split('-')[1]) == 'number'
-    ) {
-      console.log('here');
-      const rowId = parseInt(id.split('-')[0]);
-      const colId = parseInt(id.split('-')[1]);
+    let [rowId, colId] = id.split('-');
+    if (!isNaN(rowId) && !isNaN(colId)) {
+      rowId = parseInt(rowId);
+      colId = parseInt(colId);
       const isStart = rowId === START_ROW && colId === START_COL;
       const isEnd = rowId === END_ROW && colId === END_COL;
       element.className = 'node node-unvisited';
