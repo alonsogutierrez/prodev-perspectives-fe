@@ -664,6 +664,7 @@ export const launchInstantAnimations = (
 };
 
 export const clearPath = (pathFinderData, clickedButton) => {
+  console.log('hereee pathFinderData: ', pathFinderData);
   const { nodes, start, end, numberOfObjects, object, setAlgoDone } =
     pathFinderData;
   if (clickedButton) {
@@ -820,13 +821,56 @@ export const toggleButtonsAnimation = (
   if (!isToggleButtonOn) {
     document.getElementById('btnClickVisualizeAlg').className =
       'btn btn-primary btn-disabled';
+    document.getElementById('btnHandleMazeAndPatterns').className =
+      'btn btn-primary btn-disabled';
     document.getElementById('btnResetBoard').className =
       'btn btn-info btn-disabled';
     setIsToggleButtonOn(isToggleButtonOn);
     return;
   }
   document.getElementById('btnClickVisualizeAlg').className = 'btn btn-primary';
+  document.getElementById('btnHandleMazeAndPatterns').className =
+    'btn btn-primary';
   document.getElementById('btnResetBoard').className = 'btn btn-info';
   setIsToggleButtonOn(isToggleButtonOn);
   return;
+};
+
+export const mazeGenerationAnimations = (
+  wallsToAnimate,
+  speedParam,
+  toggleButtonsAnimation,
+  setIsToggleButtonOn,
+  nodesParam
+) => {
+  let nodes = wallsToAnimate.slice(0);
+  let speed = speedParam === 'fast' ? 5 : speedParam === 'average' ? 25 : 75;
+  const timeout = (index) => {
+    setTimeout(function () {
+      if (index === nodes.length) {
+        wallsToAnimate = [];
+        toggleButtonsAnimation(true, setIsToggleButtonOn);
+        return;
+      }
+      nodes[index].className =
+        nodesParam[nodes[index].id].weight === 15
+          ? 'node node-unvisited weight'
+          : 'node node-wall';
+      timeout(index + 1);
+    }, speed);
+  };
+
+  timeout(0);
+};
+
+export const clearWalls = (nodes) => {
+  Object.keys(nodes).forEach((node) => {
+    let currentNode = nodes[node];
+    let currentHTMLNode = document.getElementById(node);
+    if (currentNode.status === 'node-wall' || currentNode.weight === 15) {
+      currentNode.status = 'node-unvisited';
+      currentNode.weight = 0;
+      currentHTMLNode.className = 'node node-unvisited';
+    }
+  });
 };

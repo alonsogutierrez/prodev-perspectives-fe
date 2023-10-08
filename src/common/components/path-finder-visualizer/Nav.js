@@ -19,6 +19,7 @@ const Nav = (props) => {
     setNodes,
     height,
     width,
+    handleVisualizeMazeAndPatterns,
   } = props;
   const allAlgorithmsComboBoxData = [];
   Object.keys(algorithmsData).forEach((algorithmType) => {
@@ -126,14 +127,13 @@ const Nav = (props) => {
                 <select
                   name='select_algorithm'
                   className='select_algorithm'
-                  onChange={(e) => onChangeMazeAndPatterns(e.end.value)}
+                  onChange={(e) => onChangeMazeAndPatterns(e.target.value)}
                   tabIndex={-1}
                   aria-hidden='true'
                   style={{ color: 'white', width: '24vh' }}
-                  defaultValue='Maze & patterns'
+                  defaultValue='Recursive Division'
                   disabled={!isToggleButtonOn}
                 >
-                  <option value='Maze & patterns'>Maze & patterns</option>
                   {allMazeAndPatterns.map((maze) => {
                     const { id, name, value } = maze;
                     return (
@@ -144,7 +144,21 @@ const Nav = (props) => {
                   })}
                 </select>
               </li>
-              <li></li>
+              <li>
+                <button
+                  id='btnHandleMazeAndPatterns'
+                  type='submit'
+                  className='btn btn-primary'
+                  onClick={() => handleVisualizeMazeAndPatterns()}
+                  style={{ color: 'white', width: '14vh' }}
+                >
+                  Visualize{' '}
+                  <i
+                    className='fal fa-search'
+                    style={{ marginLeft: '3px', fontWeight: 'bold' }}
+                  />
+                </button>
+              </li>
             </ul>
           </nav>
         </div>

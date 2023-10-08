@@ -8,9 +8,15 @@ import {
   changeNormalNode,
   changeSpecialNode,
   toggleButtonsAnimation,
+  mazeGenerationAnimations,
+  resetBoard,
+  clearWalls,
 } from './Animations';
 import { algorithmsData } from './helpers/algorithms';
-import { allMazeAndPatterns } from './helpers/mazeAndPatterns';
+import {
+  allMazeAndPatterns,
+  recursiveDivisionMaze,
+} from './helpers/mazeAndPatterns';
 import { getInitialGrid } from './helpers/grid';
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
 import Nav from './Nav';
@@ -61,7 +67,8 @@ const PathFinder = () => {
   const [numberOfObjects, setNumberOfObjects] = useState(0);
   const [isObject, setIsObject] = useState(false);
   const [algorithmSelected, setAlgorithmSelected] = useState('dijkstra');
-  const [mazeAndPatternsSelected, setMazeAndPatternsSelected] = useState('');
+  const [mazeAndPatternsSelected, setMazeAndPatternsSelected] =
+    useState('recursiveDivision');
   const [velocitySelected, setVelocitySelected] = useState('fast');
   const [previouslySwitchedNode, setPreviouslySwitchedNode] = useState(null);
   const [previouslySwitchedNodeWeight, setPreviouslySwitchedNodeWeight] =
@@ -389,6 +396,53 @@ const PathFinder = () => {
     setAlgoDone(true);
   };
 
+  const handleVisualizeMazeAndPatterns = () => {
+    const [rowStart, colStart] = start.split('-');
+    const [rowEnd, colEnd] = end.split('-');
+    const pathFinderData = {
+      start,
+      end,
+      rowStart: 2,
+      rowEnd: height - 3,
+      colStart: 2,
+      colEnd: width - 3,
+      orientation: 'horizontal',
+      surroundingWalls: false,
+      type: 'wall',
+      object,
+      nodes,
+      height,
+      width,
+      wallsToAnimate,
+      setAlgoDone,
+    };
+
+    if (mazeAndPatternsSelected === 'recursiveDivision') {
+      const pathFinderDataToReset = {
+        setGrid,
+        setNodes,
+        height,
+        width,
+      };
+      clearWalls(nodes);
+      clearPath(pathFinderData, 'clickedButton');
+      toggleButtonsAnimation(false, setIsToggleButtonOn);
+      setTimeout(() => {
+        recursiveDivisionMaze(pathFinderData);
+        setTimeout(() => {
+          mazeGenerationAnimations(
+            wallsToAnimate,
+            'fast',
+            toggleButtonsAnimation,
+            setIsToggleButtonOn,
+            nodes
+          );
+        }, 250);
+      }, 500);
+    }
+    return;
+  };
+
   const handleMouseDown = (nodeId) => {
     if (isToggleButtonOn) {
       setMouseDown(true);
@@ -517,6 +571,7 @@ const PathFinder = () => {
           setNodes={setNodes}
           height={height}
           width={width}
+          handleVisualizeMazeAndPatterns={handleVisualizeMazeAndPatterns}
         ></Nav>
         <Legends></Legends>
         {isVisibleBoard ? (
