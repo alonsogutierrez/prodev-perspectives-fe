@@ -424,6 +424,7 @@ const PathFinder = () => {
         height,
         width,
       };
+      setWallsToAnimate([]);
       clearWalls(nodes);
       clearPath(pathFinderData, 'clickedButton');
       toggleButtonsAnimation(false, setIsToggleButtonOn);
@@ -432,7 +433,7 @@ const PathFinder = () => {
         setTimeout(() => {
           mazeGenerationAnimations(
             wallsToAnimate,
-            'fast',
+            velocitySelected,
             toggleButtonsAnimation,
             setIsToggleButtonOn,
             nodes

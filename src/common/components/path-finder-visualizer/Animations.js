@@ -844,7 +844,7 @@ export const mazeGenerationAnimations = (
   nodesParam
 ) => {
   let nodes = wallsToAnimate.slice(0);
-  let speed = speedParam === 'fast' ? 5 : speedParam === 'average' ? 25 : 75;
+  let speed = speedParam === 'fast' ? 5 : speedParam === 'average' ? 40 : 70;
   const timeout = (index) => {
     setTimeout(function () {
       if (index === nodes.length) {
