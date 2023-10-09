@@ -19,6 +19,7 @@ import {
 } from './helpers/mazeAndPatterns';
 import { getInitialGrid } from './helpers/grid';
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
+import unweightedSearchAlgorithm from './../../../lib/algorithms/path-finders/unweighted/unweightedAlgorithms';
 import Nav from './Nav';
 import Legends from './Legends';
 
@@ -67,8 +68,9 @@ const PathFinder = () => {
   const [numberOfObjects, setNumberOfObjects] = useState(0);
   const [isObject, setIsObject] = useState(false);
   const [algorithmSelected, setAlgorithmSelected] = useState('dijkstra');
-  const [mazeAndPatternsSelected, setMazeAndPatternsSelected] =
-    useState('recursiveDivision');
+  const [mazeAndPatternsSelected, setMazeAndPatternsSelected] = useState(
+    'recursiveDivisionHorizontal'
+  );
   const [velocitySelected, setVelocitySelected] = useState('fast');
   const [previouslySwitchedNode, setPreviouslySwitchedNode] = useState(null);
   const [previouslySwitchedNodeWeight, setPreviouslySwitchedNodeWeight] =
@@ -324,7 +326,7 @@ const PathFinder = () => {
       (algo) => algo.value
     );
     const unweightedAlgorithmsNames = algorithmsData['unweighted'].map(
-      (algo) => algo.name
+      (algo) => algo.value
     );
     if (weightedAlgorithmsNames.includes(algorithmSelected)) {
       if (!numberOfObjects) {
@@ -361,37 +363,105 @@ const PathFinder = () => {
         }, 500);
       } else {
         setIsObject(true);
-        const success = weightedSearchAlgorithm(
-          nodes,
-          start,
-          end,
-          nodesToAnimate,
-          grid,
-          algorithmSelected
-        );
-        const pathFinderData = {
-          nodesToAnimate,
-          objectNodesToAnimate,
-          setObjectNodesToAnimate,
-          clearNodeStatuses,
-          setNodesToAnimate,
-          setObjectShortestPathNodesToAnimate,
-          setShortesPathNodesToAnimate,
-          objectShortestPathNodesToAnimate,
-          shortestPathNodesToAnimate,
-          nodes,
-          isObject,
-          start,
-          end,
-          object,
-          velocitySelected,
-          setIsToggleButtonOn,
-        };
-        launchAnimations(pathFinderData, success, 'weighted', 'object');
+        setTimeout(() => {
+          const success = weightedSearchAlgorithm(
+            nodes,
+            start,
+            end,
+            nodesToAnimate,
+            grid,
+            algorithmSelected
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              setObjectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              setShortesPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              nodes,
+              isObject,
+              start,
+              end,
+              object,
+              velocitySelected,
+              setIsToggleButtonOn,
+            };
+            launchAnimations(pathFinderData, success, 'weighted', 'object');
+          }, 250);
+        }, 500);
       }
     } else if (unweightedAlgorithmsNames.includes(algorithmSelected)) {
-      // Call to unweighted algorithm
-      //unweightedSearchAlgorithm(nodes, start, end, nodesToAnimate, grid, algorithmSelected)
+      if (!numberOfObjects) {
+        setTimeout(() => {
+          const success = unweightedSearchAlgorithm(
+            nodes,
+            start,
+            end,
+            nodesToAnimate,
+            grid,
+            algorithmSelected
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              setObjectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              setShortesPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              nodes,
+              isObject,
+              start,
+              end,
+              object,
+              velocitySelected,
+              setIsToggleButtonOn,
+            };
+            launchAnimations(pathFinderData, success, 'unweighted', false);
+          }, 250);
+        }, 500);
+      } else {
+        setIsObject(true);
+        setTimeout(() => {
+          const success = unweightedSearchAlgorithm(
+            nodes,
+            start,
+            object,
+            objectNodesToAnimate,
+            grid,
+            algorithmSelected
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              setObjectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              setShortesPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              nodes,
+              isObject,
+              start,
+              end,
+              object,
+              velocitySelected,
+              setIsToggleButtonOn,
+            };
+            launchAnimations(pathFinderData, success, 'unweighted', 'object');
+          }, 250);
+        }, 500);
+      }
     }
     setAlgoDone(true);
   };
@@ -399,30 +469,60 @@ const PathFinder = () => {
   const handleVisualizeMazeAndPatterns = () => {
     const [rowStart, colStart] = start.split('-');
     const [rowEnd, colEnd] = end.split('-');
-    const pathFinderData = {
-      start,
-      end,
-      rowStart: 2,
-      rowEnd: height - 3,
-      colStart: 2,
-      colEnd: width - 3,
-      orientation: 'horizontal',
-      surroundingWalls: false,
-      type: 'wall',
-      object,
-      nodes,
-      height,
-      width,
-      wallsToAnimate,
-      setAlgoDone,
-    };
 
-    if (mazeAndPatternsSelected === 'recursiveDivision') {
-      const pathFinderDataToReset = {
-        setGrid,
-        setNodes,
+    if (mazeAndPatternsSelected === 'recursiveDivisionHorizontal') {
+      const pathFinderData = {
+        start,
+        end,
+        rowStart: 2,
+        rowEnd: height - 3,
+        colStart: 2,
+        colEnd: width - 3,
+        orientation: 'horizontal',
+        surroundingWalls: false,
+        type: 'wall',
+        mazeType: 'normal',
+        object,
+        nodes,
         height,
         width,
+        wallsToAnimate,
+        setAlgoDone,
+      };
+      setWallsToAnimate([]);
+      clearWalls(nodes);
+      clearPath(pathFinderData, 'clickedButton');
+      toggleButtonsAnimation(false, setIsToggleButtonOn);
+      setTimeout(() => {
+        recursiveDivisionMaze(pathFinderData);
+        setTimeout(() => {
+          mazeGenerationAnimations(
+            wallsToAnimate,
+            velocitySelected,
+            toggleButtonsAnimation,
+            setIsToggleButtonOn,
+            nodes
+          );
+        }, 250);
+      }, 500);
+    } else if (mazeAndPatternsSelected === 'recursiveDivisionVertical') {
+      const pathFinderData = {
+        start,
+        end,
+        rowStart: 2,
+        rowEnd: height - 3,
+        colStart: 2,
+        colEnd: width - 3,
+        orientation: 'vertical',
+        surroundingWalls: false,
+        type: 'wall',
+        mazeType: 'special',
+        object,
+        nodes,
+        height,
+        width,
+        wallsToAnimate,
+        setAlgoDone,
       };
       setWallsToAnimate([]);
       clearWalls(nodes);

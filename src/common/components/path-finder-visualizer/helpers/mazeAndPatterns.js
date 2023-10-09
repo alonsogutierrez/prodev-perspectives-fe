@@ -1,18 +1,13 @@
 export const allMazeAndPatterns = [
   {
     id: 1,
-    name: 'Recursive Division',
-    value: 'recursiveDivision',
+    name: 'Recursive Division Horizontal',
+    value: 'recursiveDivisionHorizontal',
   },
   {
     id: 2,
-    name: 'Basic Random Maze',
-    value: 'basicRandomMaze',
-  },
-  {
-    id: 3,
-    name: 'Recursive Division (horizontal skew)',
-    value: 'recurisveDivisionHorizontalS',
+    name: 'Recursive Division Vertical',
+    value: 'recursiveDivisionVertical',
   },
 ];
 
@@ -32,6 +27,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
     height,
     width,
     wallsToAnimate,
+    mazeType,
   } = pathFinderData;
   if (rowEnd < rowStart || colEnd < colStart) {
     return;
@@ -113,6 +109,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     } else {
@@ -131,6 +128,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     }
@@ -150,6 +148,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     } else {
@@ -168,6 +167,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     }
@@ -218,7 +218,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         rowEnd,
         colStart,
         colEnd: currentCol - 2,
-        orientation: 'horizontal',
+        orientation: mazeType === 'normal' ? 'horizontal' : 'vertical',
         surroundingWalls,
         type,
         object,
@@ -226,6 +226,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     } else {
@@ -244,6 +245,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     }
@@ -263,6 +265,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     } else {
@@ -281,6 +284,7 @@ export const recursiveDivisionMaze = (pathFinderData) => {
         height,
         width,
         wallsToAnimate,
+        mazeType,
       };
       recursiveDivisionMaze(pathFinderData);
     }
