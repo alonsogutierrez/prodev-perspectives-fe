@@ -44,9 +44,9 @@ const allVelocities = [
 const PathFinder = () => {
   const [height] = useState(20);
   const [width] = useState(30);
+  const [start, setStart] = useState('10-7');
+  const [end, setEnd] = useState('10-22');
   const [getBoardInitValues] = useState(getInitialGrid(height, width));
-  const [start, setStart] = useState(getBoardInitValues.start);
-  const [end, setEnd] = useState(getBoardInitValues.end);
   const [object, setObject] = useState(null);
   const [nodes, setNodes] = useState(getBoardInitValues.nodes);
   const [grid, setGrid] = useState(getBoardInitValues.grid);
@@ -103,14 +103,12 @@ const PathFinder = () => {
   };
 
   const instantAlgorithm = () => {
-    let weightedAlgorithms = Object.keys(algorithmsData.weighted).map(
-      (algoType) => algorithmsData[algoType].map((alg) => alg.name)
-    );
-    let unweightedAlgorithms = Object.keys(algorithmsData.unweighted).map(
-      (algoType) => algorithmsData[algoType].map((alg) => alg.name)
+    let weightedAlgorithms = algorithmsData.weighted.map((alg) => alg.value);
+    let unweightedAlgorithms = algorithmsData.unweighted.map(
+      (alg) => alg.value
     );
     let success;
-    if (algorithmSelected === 'astar') {
+    if (algorithmSelected === 'astart') {
       if (!numberOfObjects) {
         success = weightedSearchAlgorithm(
           nodes,
@@ -173,120 +171,136 @@ const PathFinder = () => {
     }
     if (weightedAlgorithms.includes(algorithmSelected)) {
       if (!numberOfObjects) {
-        success = weightedSearchAlgorithm(
-          nodes,
-          start,
-          end,
-          nodesToAnimate,
-          grid,
-          algorithmSelected,
-          currentHeuristic
-        );
-        const pathFinderData = {
-          nodesToAnimate,
-          objectNodesToAnimate,
-          clearNodeStatuses,
-          setNodesToAnimate,
-          setObjectShortestPathNodesToAnimate,
-          objectShortestPathNodesToAnimate,
-          shortestPathNodesToAnimate,
-          nodes,
-          isObject,
-          start,
-          end,
-          object,
-        };
-        launchInstantAnimations(pathFinderData, success, 'weighted');
+        setTimeout(() => {
+          success = weightedSearchAlgorithm(
+            nodes,
+            start,
+            end,
+            nodesToAnimate,
+            grid,
+            algorithmSelected,
+            null
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              nodes,
+              isObject,
+              start,
+              end,
+              object,
+            };
+            launchInstantAnimations(pathFinderData, success, 'weighted');
+          }, 250);
+        }, 500);
       } else {
         setIsObject(true);
-        success = weightedSearchAlgorithm(
-          nodes,
-          start,
-          object,
-          objectNodesToAnimate,
-          grid,
-          algorithmSelected,
-          currentHeuristic
-        );
-        const pathFinderData = {
-          nodesToAnimate,
-          objectNodesToAnimate,
-          clearNodeStatuses,
-          setNodesToAnimate,
-          setObjectShortestPathNodesToAnimate,
-          objectShortestPathNodesToAnimate,
-          shortestPathNodesToAnimate,
-          nodes,
-          isObject,
-          start,
-          end,
-          object,
-        };
-        launchInstantAnimations(
-          pathFinderData,
-          success,
-          'weighted',
-          'object',
-          algorithmSelected,
-          currentHeuristic
-        );
+        setTimeout(() => {
+          success = weightedSearchAlgorithm(
+            nodes,
+            start,
+            object,
+            objectNodesToAnimate,
+            grid,
+            algorithmSelected,
+            currentHeuristic
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              nodes,
+              isObject,
+              start,
+              end,
+              object,
+            };
+            launchInstantAnimations(
+              pathFinderData,
+              success,
+              'weighted',
+              'object',
+              algorithmSelected,
+              currentHeuristic
+            );
+          }, 250);
+        }, 500);
       }
       setAlgoDone(true);
     } else if (unweightedAlgorithms.includes(algorithmSelected)) {
       if (!numberOfObjects) {
-        success = unweightedSearchAlgorithm(
-          nodes,
-          start,
-          end,
-          nodesToAnimate,
-          grid,
-          algorithmSelected
-        );
-        const pathFinderData = {
-          nodesToAnimate,
-          objectNodesToAnimate,
-          clearNodeStatuses,
-          setNodesToAnimate,
-          setObjectShortestPathNodesToAnimate,
-          objectShortestPathNodesToAnimate,
-          shortestPathNodesToAnimate,
-          isObject,
-          start,
-          end,
-          object,
-        };
-        launchInstantAnimations(pathFinderData, success, 'unweighted');
+        setTimeout(() => {
+          success = unweightedSearchAlgorithm(
+            nodes,
+            start,
+            end,
+            nodesToAnimate,
+            grid,
+            algorithmSelected
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              isObject,
+              start,
+              end,
+              object,
+            };
+            launchInstantAnimations(pathFinderData, success, 'unweighted');
+          }, 250);
+        }, 500);
       } else {
         setIsObject(true);
-        success = unweightedSearchAlgorithm(
-          nodes,
-          start,
-          object,
-          objectNodesToAnimate,
-          grid,
-          algorithmSelected
-        );
-        const pathFinderData = {
-          nodesToAnimate,
-          objectNodesToAnimate,
-          clearNodeStatuses,
-          setNodesToAnimate,
-          setObjectShortestPathNodesToAnimate,
-          objectShortestPathNodesToAnimate,
-          shortestPathNodesToAnimate,
-          nodes,
-          isObject,
-          start,
-          end,
-          object,
-        };
-        launchInstantAnimations(
-          pathFinderData,
-          success,
-          'unweighted',
-          'object',
-          algorithmSelected
-        );
+        setTimeout(() => {
+          success = unweightedSearchAlgorithm(
+            nodes,
+            start,
+            object,
+            objectNodesToAnimate,
+            grid,
+            algorithmSelected
+          );
+          setTimeout(() => {
+            const pathFinderData = {
+              nodesToAnimate,
+              objectNodesToAnimate,
+              clearNodeStatuses,
+              setNodesToAnimate,
+              setObjectShortestPathNodesToAnimate,
+              objectShortestPathNodesToAnimate,
+              shortestPathNodesToAnimate,
+              nodes,
+              isObject,
+              start,
+              end,
+              object,
+            };
+            launchInstantAnimations(
+              pathFinderData,
+              success,
+              'unweighted',
+              'object',
+              algorithmSelected
+            );
+          }, 250);
+        }, 500);
       }
       setAlgoDone(true);
     }
@@ -545,6 +559,7 @@ const PathFinder = () => {
   };
 
   const handleMouseDown = (nodeId) => {
+    console.log('isToggleButtonOn: ', isToggleButtonOn);
     if (isToggleButtonOn) {
       setMouseDown(true);
       const currentNode = getNode(nodeId);
@@ -553,7 +568,10 @@ const PathFinder = () => {
         currentNode.status === 'node-end' ||
         currentNode.status === 'object'
       ) {
+        console.log('here at mouse down');
         setPressedNodeStatus(currentNode.status);
+        let element = document.getElementById(nodeId);
+        element.className = `node ${currentNode.status}`;
       } else {
         setPressedNodeStatus('normal');
         const pathFinderData = {
@@ -562,7 +580,6 @@ const PathFinder = () => {
         };
         changeNormalNode(pathFinderData, currentNode);
       }
-      setKeyDown(!keyDown);
     }
   };
 
@@ -570,26 +587,38 @@ const PathFinder = () => {
     if (isToggleButtonOn) {
       setMouseDown(false);
       if (pressedNodeStatus === 'node-end') {
+        let element = document.getElementById(nodeId);
+        element.className = `node node-end`;
         setEnd(nodeId);
       } else if (pressedNodeStatus === 'node-start') {
         setStart(nodeId);
+        let element = document.getElementById(nodeId);
+        element.className = `node node-start`;
       } else if (pressedNodeStatus === 'object') {
         setObject(nodeId);
+        let element = document.getElementById(nodeId);
+        element.className = `node object`;
       }
       setPressedNodeStatus('normal');
     }
   };
 
   const handleMouseEnter = (nodeId) => {
+    console.log('onmouseenter');
     if (isToggleButtonOn) {
       const currentNode = getNode(nodeId);
-      if (keyDown && pressedNodeStatus !== 'normal') {
+      if (mouseDown && pressedNodeStatus !== 'normal') {
         const pathFinderData = {
           previouslySwitchedNode,
           setPreviouslySwitchedNode,
           setPreviouslySwitchedNodeWeight,
           previouslySwitchedNodeWeight,
+          pressedNodeStatus,
+          previouslyPressedNodeStatus,
+          setPreviouslyPressedNodeStatus,
+          algoDone,
         };
+        console.log('before call change special node');
         changeSpecialNode(pathFinderData, currentNode);
         if (pressedNodeStatus === 'node-end') {
           setEnd(nodeId);
@@ -608,6 +637,7 @@ const PathFinder = () => {
           }
         }
       } else if (keyDown) {
+        console.log('case keydown');
         const pathFinderData = {
           keyDown,
           algorithmSelected,
@@ -618,6 +648,9 @@ const PathFinder = () => {
   };
 
   const handleMouseLeave = (nodeId) => {
+    console.log('onmouseleave');
+    console.log('mouseDown: ', mouseDown);
+    console.log('pressedNodeStatus: ', pressedNodeStatus);
     if (isToggleButtonOn) {
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const currentNode = getNode(nodeId);
@@ -626,6 +659,10 @@ const PathFinder = () => {
           setPreviouslySwitchedNode,
           setPreviouslySwitchedNodeWeight,
           previouslySwitchedNodeWeight,
+          pressedNodeStatus,
+          previouslyPressedNodeStatus,
+          setPreviouslyPressedNodeStatus,
+          algoDone,
         };
         changeSpecialNode(pathFinderData, currentNode);
       }
@@ -644,11 +681,9 @@ const PathFinder = () => {
     setVelocitySelected(velocity);
   };
 
-  useEffect(() => {}, [
-    algorithmSelected,
-    mazeAndPatternsSelected,
-    isVisibleBoard,
-  ]);
+  useEffect(() => {
+    console.log('use effect hook');
+  }, [algorithmSelected, mazeAndPatternsSelected, isVisibleBoard]);
 
   return (
     <>

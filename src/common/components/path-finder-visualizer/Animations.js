@@ -1,4 +1,3 @@
-import { integer } from 'sharp/lib/is';
 import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
 import { getInitialGrid } from './helpers/grid';
 
@@ -474,6 +473,63 @@ export const launchInstantAnimations = (
   algorithm,
   heuristic
 ) => {
+  const change = (currentNode, previousNode) => {
+    let currentHTMLNode = document.getElementById(currentNode.id);
+    let relevantClassNames = [
+      'node-start',
+      'shortest-path',
+      'instantshortest-path',
+      'instantshortest-path weight',
+      'node node-start',
+      'node shortest-path',
+      'node instantshortest-path',
+      'node instantshortest-path weight',
+    ];
+    if (previousNode) {
+      let previousHTMLNode = document.getElementById(previousNode.id);
+      if (!relevantClassNames.includes(previousHTMLNode.className)) {
+        if (object) {
+          previousHTMLNode.className =
+            previousNode.weight === 15
+              ? 'node instantvisitedobject weight'
+              : 'node instantvisitedobject';
+        } else {
+          previousHTMLNode.className =
+            previousNode.weight === 15
+              ? 'node instantvisited weight'
+              : 'node instantvisited';
+        }
+      }
+    }
+  };
+
+  const shortestPathChange = (currentNode, previousNode) => {
+    let currentHTMLNode = document.getElementById(currentNode.id);
+    if (type === 'unweighted') {
+      currentHTMLNode.className = 'node shortest-path-unweighted';
+    } else {
+      if (currentNode.direction === 'up') {
+        currentHTMLNode.className = 'node shortest-path-up';
+      } else if (currentNode.direction === 'down') {
+        currentHTMLNode.className = 'node shortest-path-down';
+      } else if (currentNode.direction === 'right') {
+        currentHTMLNode.className = 'node shortest-path-right';
+      } else if (currentNode.direction === 'left') {
+        currentHTMLNode.className = 'node shortest-path-left';
+      }
+    }
+    if (previousNode) {
+      let previousHTMLNode = document.getElementById(previousNode.id);
+      previousHTMLNode.className =
+        previousNode.weight === 15
+          ? 'node instantshortest-path weight'
+          : 'node instantshortest-path';
+    } else {
+      let element = document.getElementById(start);
+      element.className = 'node startTransparent';
+    }
+  };
+
   const {
     nodesToAnimate,
     objectNodesToAnimate,
@@ -604,67 +660,9 @@ export const launchInstantAnimations = (
     objectShortestPathNodesToAnimate = [];
     shortestPathNodesToAnimate = [];
   }
-
-  const change = (currentNode, previousNode) => {
-    let currentHTMLNode = document.getElementById(currentNode.id);
-    let relevantClassNames = [
-      'node-start',
-      'shortest-path',
-      'instantshortest-path',
-      'instantshortest-path weight',
-      'node node-start',
-      'node shortest-path',
-      'node instantshortest-path',
-      'node instantshortest-path weight',
-    ];
-    if (previousNode) {
-      let previousHTMLNode = document.getElementById(previousNode.id);
-      if (!relevantClassNames.includes(previousHTMLNode.className)) {
-        if (object) {
-          previousHTMLNode.className =
-            previousNode.weight === 15
-              ? 'node instantvisitedobject weight'
-              : 'node instantvisitedobject';
-        } else {
-          previousHTMLNode.className =
-            previousNode.weight === 15
-              ? 'node instantvisited weight'
-              : 'node instantvisited';
-        }
-      }
-    }
-  };
-
-  const shortestPathChange = (currentNode, previousNode) => {
-    let currentHTMLNode = document.getElementById(currentNode.id);
-    if (type === 'unweighted') {
-      currentHTMLNode.className = 'node shortest-path-unweighted';
-    } else {
-      if (currentNode.direction === 'up') {
-        currentHTMLNode.className = 'node shortest-path-up';
-      } else if (currentNode.direction === 'down') {
-        currentHTMLNode.className = 'node shortest-path-down';
-      } else if (currentNode.direction === 'right') {
-        currentHTMLNode.className = 'node shortest-path-right';
-      } else if (currentNode.direction === 'left') {
-        currentHTMLNode.className = 'node shortest-path-left';
-      }
-    }
-    if (previousNode) {
-      let previousHTMLNode = document.getElementById(previousNode.id);
-      previousHTMLNode.className =
-        previousNode.weight === 15
-          ? 'node instantshortest-path weight'
-          : 'node instantshortest-path';
-    } else {
-      let element = document.getElementById(start);
-      element.className = 'node startTransparent';
-    }
-  };
 };
 
 export const clearPath = (pathFinderData, clickedButton) => {
-  console.log('hereee pathFinderData: ', pathFinderData);
   const { nodes, start, end, numberOfObjects, object, setAlgoDone } =
     pathFinderData;
   if (clickedButton) {
@@ -714,10 +712,14 @@ export const clearPath = (pathFinderData, clickedButton) => {
 
 export const changeNormalNode = (pathFinderData, currentNode) => {
   const { keyDown, algorithmSelected } = pathFinderData;
+  console.log('change normal node');
+  console.log('keyDown: ', keyDown);
+  console.log('algorithmSelected: ', algorithmSelected);
   let currentElement = document.getElementById(currentNode.id);
   const relevantStatuses = ['node-start', 'node-end', 'object'];
   const unweightAlgorithms = ['dfs', 'bfs'];
   if (keyDown) {
+    console.log('her enormal node case keyown true');
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
         currentNode.status !== 'node-wall'
@@ -735,8 +737,12 @@ export const changeNormalNode = (pathFinderData, currentNode) => {
   ) {
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
-        currentNode.weight !== 15 ? 'node node-weight' : 'node node-unvisited';
-      currentNode.weight = !currentElement.className.includes('node-weight')
+        currentNode.weight !== 15
+          ? 'node node-unvisited weight'
+          : 'node node-unvisited';
+      currentNode.weight = !currentElement.className.includes(
+        'node-unvisited weight'
+      )
         ? 0
         : 15;
       currentNode.status = 'node-unvisited';
@@ -750,7 +756,16 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
     setPreviouslySwitchedNode,
     setPreviouslySwitchedNodeWeight,
     previouslySwitchedNodeWeight,
+    pressedNodeStatus,
+    previouslyPressedNodeStatus,
+    setPreviouslyPressedNodeStatus,
+    algoDone,
   } = pathFinderData;
+
+  console.log('changeSpecialNode: ', currentNode);
+  console.log('pressedNodeStatus: ', pressedNodeStatus);
+  console.log('previouslyPressedNodeStatus: ', previouslyPressedNodeStatus);
+  console.log('previouslySwitchedNode: ', previouslySwitchedNode);
   let currentElement = document.getElementById(currentNode.id);
   let previousElement = null;
   if (previouslySwitchedNode)
@@ -760,27 +775,47 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
     currentNode.status !== 'node-start' &&
     currentNode.status !== 'object'
   ) {
+    console.log('case status not special node');
     if (previouslySwitchedNode) {
+      console.log(
+        'case status not special node and previusoly switch node exsts'
+      );
       previouslySwitchedNode.status = previouslyPressedNodeStatus;
       previouslySwitchedNode.className =
         previouslySwitchedNodeWeight === 15
-          ? 'node node-weight'
+          ? 'node node-unvisited weight'
           : previouslyPressedNodeStatus;
       previouslySwitchedNode.weight =
         previouslySwitchedNodeWeight === 15 ? 15 : 0;
       setPreviouslySwitchedNode(null);
       setPreviouslySwitchedNodeWeight(currentNode.weight);
+      setPreviouslyPressedNodeStatus(currentNode.status);
       currentElement.className = `node ${pressedNodeStatus}`;
       currentNode.status = pressedNodeStatus;
       currentNode.weight = 0;
     }
   } else if (currentNode.status !== pressedNodeStatus && !algoDone) {
+    console.log('case status different pressed node status');
     previouslySwitchedNode.status = pressedNodeStatus;
     previousElement.className = `node ${pressedNodeStatus}`;
   } else if (currentNode.status === pressedNodeStatus) {
-    previouslySwitchedNode = currentNode;
-    currentElement.className = `node ${previouslyPressedNodeStatus}`;
-    currentNode.status = previouslyPressedNodeStatus;
+    console.log('case status equals pressed node status');
+    // todo review this logic
+    setPreviouslySwitchedNode(currentNode);
+    if (previouslyPressedNodeStatus) {
+      currentElement.className = `node ${previouslyPressedNodeStatus}`;
+      currentNode.status = previouslyPressedNodeStatus;
+    } else {
+      currentElement.className = 'node node-unvisited';
+      currentNode.status = 'node-unvisited';
+    }
+
+    // // Logic added by pro dev
+    // currentElement.className = 'node node-unvisited';
+    // currentNode.status = 'node-unvisited';
+    // setPreviouslySwitchedNode(currentNode);
+    // setPreviouslySwitchedNodeWeight(currentNode.weight);
+    // setPreviouslyPressedNodeStatus(currentNode.status);
   }
 };
 

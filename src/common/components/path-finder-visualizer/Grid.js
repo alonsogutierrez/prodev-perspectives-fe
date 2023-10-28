@@ -23,10 +23,10 @@ const Grid = (props) => {
                   status={status}
                   isWall={isWall}
                   mouseIsPressed={mouseIsPressed}
-                  onMouseEnter={(nodeId) => handleMouseEnter(nodeId)}
-                  onMouseDown={(nodeId) => handleMouseDown(nodeId)}
-                  onMouseUp={() => handleMouseUp()}
-                  onMouseLeave={() => handleMouseLeave()}
+                  onMouseEnter={() => handleMouseEnter(id)}
+                  onMouseDown={() => handleMouseDown(id)}
+                  onMouseUp={() => handleMouseUp(id)}
+                  onMouseLeave={() => handleMouseLeave(id)}
                 ></Node>
               );
             })}
