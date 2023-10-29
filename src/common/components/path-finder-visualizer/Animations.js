@@ -711,14 +711,14 @@ export const clearPath = (pathFinderData, clickedButton) => {
 };
 
 export const changeNormalNode = (pathFinderData, currentNode) => {
-  const { keyDown, algorithmSelected } = pathFinderData;
+  const { mouseDown, algorithmSelected } = pathFinderData;
   console.log('change normal node');
-  console.log('keyDown: ', keyDown);
+  console.log('mouseDown: ', mouseDown);
   console.log('algorithmSelected: ', algorithmSelected);
   let currentElement = document.getElementById(currentNode.id);
   const relevantStatuses = ['node-start', 'node-end', 'object'];
   const unweightAlgorithms = ['dfs', 'bfs'];
-  if (keyDown) {
+  if (mouseDown) {
     console.log('her enormal node case keyown true');
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
@@ -731,10 +731,7 @@ export const changeNormalNode = (pathFinderData, currentNode) => {
           : 'node-wall';
       currentNode.weight = 0;
     }
-  } else if (
-    keyDown === 87 &&
-    !unweightAlgorithms.includes(algorithmSelected)
-  ) {
+  } else if (mouseDown && !unweightAlgorithms.includes(algorithmSelected)) {
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
         currentNode.weight !== 15
@@ -787,7 +784,7 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
           : previouslyPressedNodeStatus;
       previouslySwitchedNode.weight =
         previouslySwitchedNodeWeight === 15 ? 15 : 0;
-      setPreviouslySwitchedNode(null);
+      previouslySwitchedNode = currentNode;
       setPreviouslySwitchedNodeWeight(currentNode.weight);
       setPreviouslyPressedNodeStatus(currentNode.status);
       currentElement.className = `node ${pressedNodeStatus}`;
@@ -800,8 +797,7 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
     previousElement.className = `node ${pressedNodeStatus}`;
   } else if (currentNode.status === pressedNodeStatus) {
     console.log('case status equals pressed node status');
-    // todo review this logic
-    setPreviouslySwitchedNode(currentNode);
+    previouslySwitchedNode = currentNode;
     if (previouslyPressedNodeStatus) {
       currentElement.className = `node ${previouslyPressedNodeStatus}`;
       currentNode.status = previouslyPressedNodeStatus;
@@ -809,13 +805,6 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
       currentElement.className = 'node node-unvisited';
       currentNode.status = 'node-unvisited';
     }
-
-    // // Logic added by pro dev
-    // currentElement.className = 'node node-unvisited';
-    // currentNode.status = 'node-unvisited';
-    // setPreviouslySwitchedNode(currentNode);
-    // setPreviouslySwitchedNodeWeight(currentNode.weight);
-    // setPreviouslyPressedNodeStatus(currentNode.status);
   }
 };
 
@@ -824,7 +813,7 @@ export const resetBoard = (pathFinderData, start, end) => {
   const START_COL = parseInt(start.split('-')[1]);
   const END_ROW = parseInt(end.split('-')[0]);
   const END_COL = parseInt(end.split('-')[1]);
-  const { setGrid, setNodes, height, width } = pathFinderData;
+  const { setGrid, setNodes, setAlgoDone, height, width } = pathFinderData;
   const elements = document.querySelectorAll('.node');
   elements.forEach((element) => {
     const id = element.id;
@@ -846,6 +835,7 @@ export const resetBoard = (pathFinderData, start, end) => {
   const newGrid = getInitialGrid(height, width);
   setNodes(newGrid.nodes);
   setGrid(newGrid.grid);
+  setAlgoDone(false);
   return;
 };
 

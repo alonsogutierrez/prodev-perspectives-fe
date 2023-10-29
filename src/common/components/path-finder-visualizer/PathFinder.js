@@ -41,6 +41,8 @@ const allVelocities = [
   },
 ];
 
+let previouslySwitchedNodeGlobal = null;
+
 const PathFinder = () => {
   const [height] = useState(20);
   const [width] = useState(30);
@@ -53,7 +55,6 @@ const PathFinder = () => {
   const [buttonsOn, setButtonsOn] = useState(true);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
   const [pressedNodeStatus, setPressedNodeStatus] = useState('normal');
-  const [keyDown, setKeyDown] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [nodesToAnimate, setNodesToAnimate] = useState([]);
   const [objectNodesToAnimate, setObjectNodesToAnimate] = useState([]);
@@ -575,7 +576,7 @@ const PathFinder = () => {
       } else {
         setPressedNodeStatus('normal');
         const pathFinderData = {
-          keyDown,
+          mouseDown,
           algorithmSelected,
         };
         changeNormalNode(pathFinderData, currentNode);
@@ -609,7 +610,7 @@ const PathFinder = () => {
       const currentNode = getNode(nodeId);
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const pathFinderData = {
-          previouslySwitchedNode,
+          previouslySwitchedNodeGlobal,
           setPreviouslySwitchedNode,
           setPreviouslySwitchedNodeWeight,
           previouslySwitchedNodeWeight,
@@ -636,10 +637,10 @@ const PathFinder = () => {
             redoAlgorithm();
           }
         }
-      } else if (keyDown) {
-        console.log('case keydown');
+      } else if (mouseDown) {
+        console.log('case mouseDown');
         const pathFinderData = {
-          keyDown,
+          mouseDown,
           algorithmSelected,
         };
         changeNormalNode(pathFinderData, currentNode);
@@ -655,7 +656,7 @@ const PathFinder = () => {
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const currentNode = getNode(nodeId);
         const pathFinderData = {
-          previouslySwitchedNode,
+          previouslySwitchedNodeGlobal,
           setPreviouslySwitchedNode,
           setPreviouslySwitchedNodeWeight,
           previouslySwitchedNodeWeight,
@@ -705,6 +706,7 @@ const PathFinder = () => {
           isToggleButtonOn={isToggleButtonOn}
           setGrid={setGrid}
           setNodes={setNodes}
+          setAlgoDone={setAlgoDone}
           height={height}
           width={width}
           handleVisualizeMazeAndPatterns={handleVisualizeMazeAndPatterns}

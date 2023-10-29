@@ -17,6 +17,7 @@ const Nav = (props) => {
     isToggleButtonOn,
     setGrid,
     setNodes,
+    setAlgoDone,
     height,
     width,
     handleVisualizeMazeAndPatterns,
@@ -31,6 +32,7 @@ const Nav = (props) => {
   const pathFinderData = {
     setGrid,
     setNodes,
+    setAlgoDone,
     height,
     width,
   };
