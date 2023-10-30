@@ -1,27 +1,26 @@
 import React from 'react';
 
 const Node = ({
-  id,
+  nodeId,
   status,
   isWall,
-  onMouseDown,
-  onMouseEnter,
-  onMouseUp,
-  onMouseLeave,
+  handleMouseEnter,
+  handleMouseDown,
+  handleMouseUp,
+  handleMouseLeave,
 }) => {
-  const idNode = id;
-  let extraClassName = `node ${status}`;
+  let extraClassName = status ? `node ${status}` : 'node node-unvisited';
   if (isWall) {
     extraClassName = 'node node-wall';
   }
   return (
     <div
-      id={idNode}
+      id={nodeId}
       className={extraClassName}
-      onMouseDown={() => (onMouseDown ? onMouseDown(id) : null)}
-      onMouseEnter={() => (onMouseEnter ? onMouseEnter(id) : null)}
-      onMouseUp={() => (onMouseUp ? onMouseUp(id) : null)}
-      onMouseLeave={() => (onMouseLeave ? onMouseLeave(id) : null)}
+      onMouseEnter={() => handleMouseEnter(nodeId)}
+      onMouseDown={() => handleMouseDown(nodeId)}
+      onMouseUp={() => handleMouseUp(nodeId)}
+      onMouseLeave={() => handleMouseLeave(nodeId)}
     />
   );
 };

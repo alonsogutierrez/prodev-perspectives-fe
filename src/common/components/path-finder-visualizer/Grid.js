@@ -19,14 +19,13 @@ const Grid = (props) => {
               return (
                 <Node
                   key={nodeIdx}
-                  id={id}
+                  nodeId={id}
                   status={status}
                   isWall={isWall}
-                  mouseIsPressed={mouseIsPressed}
-                  onMouseEnter={() => handleMouseEnter(id)}
-                  onMouseDown={() => handleMouseDown(id)}
-                  onMouseUp={() => handleMouseUp(id)}
-                  onMouseLeave={() => handleMouseLeave(id)}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseDown={handleMouseDown}
+                  handleMouseUp={handleMouseUp}
+                  handleMouseLeave={handleMouseLeave}
                 ></Node>
               );
             })}
