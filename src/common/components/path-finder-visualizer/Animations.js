@@ -720,6 +720,7 @@ export const changeNormalNode = (pathFinderData, currentNode) => {
   const unweightAlgorithms = ['dfs', 'bfs'];
   if (mouseDown) {
     console.log('her enormal node case keyown true');
+    console.log('current node status: ', currentNode.status);
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
         currentNode.status !== 'node-wall'
@@ -747,60 +748,57 @@ export const changeNormalNode = (pathFinderData, currentNode) => {
   }
 };
 
+let previouslySwitchedNodeGlobalClone = null;
+let previouslyPressedNodeStatusClone = null;
+
 export const changeSpecialNode = (pathFinderData, currentNode) => {
   const {
-    previouslySwitchedNode,
-    setPreviouslySwitchedNode,
     setPreviouslySwitchedNodeWeight,
     previouslySwitchedNodeWeight,
     pressedNodeStatus,
-    previouslyPressedNodeStatus,
-    setPreviouslyPressedNodeStatus,
     algoDone,
   } = pathFinderData;
-
   console.log('changeSpecialNode: ', currentNode);
-  console.log('pressedNodeStatus: ', pressedNodeStatus);
-  console.log('previouslyPressedNodeStatus: ', previouslyPressedNodeStatus);
-  console.log('previouslySwitchedNode: ', previouslySwitchedNode);
   let currentElement = document.getElementById(currentNode.id);
   let previousElement = null;
-  if (previouslySwitchedNode)
-    previousElement = document.getElementById(previouslySwitchedNode.id);
+  if (previouslySwitchedNodeGlobalClone)
+    previousElement = document.getElementById(
+      previouslySwitchedNodeGlobalClone.id
+    );
   if (
     currentNode.status !== 'node-end' &&
     currentNode.status !== 'node-start' &&
     currentNode.status !== 'object'
   ) {
-    console.log('case status not special node');
-    if (previouslySwitchedNode) {
-      console.log(
-        'case status not special node and previusoly switch node exsts'
-      );
-      previouslySwitchedNode.status = previouslyPressedNodeStatus;
-      previouslySwitchedNode.className =
+    if (previouslySwitchedNodeGlobalClone) {
+      console.log('CASE 1');
+      previouslySwitchedNodeGlobalClone.status =
+        previouslyPressedNodeStatusClone;
+      previouslySwitchedNodeGlobalClone.className =
         previouslySwitchedNodeWeight === 15
           ? 'node node-unvisited weight'
-          : previouslyPressedNodeStatus;
-      previouslySwitchedNode.weight =
+          : previouslyPressedNodeStatusClone
+          ? `node ${previouslyPressedNodeStatusClone}`
+          : 'node node-unvisited';
+      previouslySwitchedNodeGlobalClone.weight =
         previouslySwitchedNodeWeight === 15 ? 15 : 0;
-      previouslySwitchedNode = currentNode;
+      previouslySwitchedNodeGlobalClone = currentNode;
       setPreviouslySwitchedNodeWeight(currentNode.weight);
-      setPreviouslyPressedNodeStatus(currentNode.status);
+      previouslyPressedNodeStatusClone = currentNode.status;
       currentElement.className = `node ${pressedNodeStatus}`;
       currentNode.status = pressedNodeStatus;
       currentNode.weight = 0;
     }
   } else if (currentNode.status !== pressedNodeStatus && !algoDone) {
-    console.log('case status different pressed node status');
-    previouslySwitchedNode.status = pressedNodeStatus;
+    console.log('CASE 2');
+    previouslySwitchedNodeGlobalClone.status = pressedNodeStatus;
     previousElement.className = `node ${pressedNodeStatus}`;
   } else if (currentNode.status === pressedNodeStatus) {
-    console.log('case status equals pressed node status');
-    previouslySwitchedNode = currentNode;
-    if (previouslyPressedNodeStatus) {
-      currentElement.className = `node ${previouslyPressedNodeStatus}`;
-      currentNode.status = previouslyPressedNodeStatus;
+    console.log('CASE 3');
+    previouslySwitchedNodeGlobalClone = currentNode;
+    if (previouslyPressedNodeStatusClone) {
+      currentElement.className = `node ${previouslyPressedNodeStatusClone}`;
+      currentNode.status = previouslyPressedNodeStatusClone;
     } else {
       currentElement.className = 'node node-unvisited';
       currentNode.status = 'node-unvisited';

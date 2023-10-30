@@ -73,7 +73,6 @@ const PathFinder = () => {
     'recursiveDivisionHorizontal'
   );
   const [velocitySelected, setVelocitySelected] = useState('fast');
-  const [previouslySwitchedNode, setPreviouslySwitchedNode] = useState(null);
   const [previouslySwitchedNodeWeight, setPreviouslySwitchedNodeWeight] =
     useState(0);
   const [previouslyPressedNodeStatus, setPreviouslyPressedNodeStatus] =
@@ -560,7 +559,7 @@ const PathFinder = () => {
   };
 
   const handleMouseDown = (nodeId) => {
-    console.log('isToggleButtonOn: ', isToggleButtonOn);
+    console.log('handleMouseDown');
     if (isToggleButtonOn) {
       setMouseDown(true);
       const currentNode = getNode(nodeId);
@@ -610,13 +609,9 @@ const PathFinder = () => {
       const currentNode = getNode(nodeId);
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const pathFinderData = {
-          previouslySwitchedNodeGlobal,
-          setPreviouslySwitchedNode,
           setPreviouslySwitchedNodeWeight,
           previouslySwitchedNodeWeight,
           pressedNodeStatus,
-          previouslyPressedNodeStatus,
-          setPreviouslyPressedNodeStatus,
           algoDone,
         };
         console.log('before call change special node');
@@ -650,19 +645,13 @@ const PathFinder = () => {
 
   const handleMouseLeave = (nodeId) => {
     console.log('onmouseleave');
-    console.log('mouseDown: ', mouseDown);
-    console.log('pressedNodeStatus: ', pressedNodeStatus);
     if (isToggleButtonOn) {
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const currentNode = getNode(nodeId);
         const pathFinderData = {
-          previouslySwitchedNodeGlobal,
-          setPreviouslySwitchedNode,
           setPreviouslySwitchedNodeWeight,
           previouslySwitchedNodeWeight,
           pressedNodeStatus,
-          previouslyPressedNodeStatus,
-          setPreviouslyPressedNodeStatus,
           algoDone,
         };
         changeSpecialNode(pathFinderData, currentNode);
