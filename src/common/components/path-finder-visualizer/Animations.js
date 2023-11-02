@@ -712,15 +712,10 @@ export const clearPath = (pathFinderData, clickedButton) => {
 
 export const changeNormalNode = (pathFinderData, currentNode) => {
   const { mouseDown, algorithmSelected } = pathFinderData;
-  console.log('change normal node');
-  console.log('mouseDown: ', mouseDown);
-  console.log('algorithmSelected: ', algorithmSelected);
   let currentElement = document.getElementById(currentNode.id);
   const relevantStatuses = ['node-start', 'node-end', 'object'];
   const unweightAlgorithms = ['dfs', 'bfs'];
   if (mouseDown) {
-    console.log('her enormal node case keyown true');
-    console.log('current node status: ', currentNode.status);
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
         currentNode.status !== 'node-wall'
@@ -758,7 +753,6 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
     pressedNodeStatus,
     algoDone,
   } = pathFinderData;
-  console.log('changeSpecialNode: ', currentNode);
   let currentElement = document.getElementById(currentNode.id);
   let previousElement = null;
   if (previouslySwitchedNodeGlobalClone)
@@ -771,7 +765,6 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
     currentNode.status !== 'object'
   ) {
     if (previouslySwitchedNodeGlobalClone) {
-      console.log('CASE 1');
       previouslySwitchedNodeGlobalClone.status =
         previouslyPressedNodeStatusClone;
       previouslySwitchedNodeGlobalClone.className =
@@ -790,11 +783,9 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
       currentNode.weight = 0;
     }
   } else if (currentNode.status !== pressedNodeStatus && !algoDone) {
-    console.log('CASE 2');
     previouslySwitchedNodeGlobalClone.status = pressedNodeStatus;
     previousElement.className = `node ${pressedNodeStatus}`;
   } else if (currentNode.status === pressedNodeStatus) {
-    console.log('CASE 3');
     previouslySwitchedNodeGlobalClone = currentNode;
     if (previouslyPressedNodeStatusClone) {
       currentElement.className = `node ${previouslyPressedNodeStatusClone}`;
@@ -807,10 +798,8 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
 };
 
 export const resetBoard = (pathFinderData, start, end) => {
-  const START_ROW = parseInt(start.split('-')[0]);
-  const START_COL = parseInt(start.split('-')[1]);
-  const END_ROW = parseInt(end.split('-')[0]);
-  const END_COL = parseInt(end.split('-')[1]);
+  const [startRow, startCol] = start.split('-');
+  const [endRow, endCol] = end.split('-');
   const { setGrid, setNodes, setAlgoDone, height, width } = pathFinderData;
   const elements = document.querySelectorAll('.node');
   elements.forEach((element) => {
@@ -819,8 +808,10 @@ export const resetBoard = (pathFinderData, start, end) => {
     if (!isNaN(rowId) && !isNaN(colId)) {
       rowId = parseInt(rowId);
       colId = parseInt(colId);
-      const isStart = rowId === START_ROW && colId === START_COL;
-      const isEnd = rowId === END_ROW && colId === END_COL;
+      const isStart =
+        rowId === parseInt(startRow) && colId === parseInt(startCol);
+      const isEnd = rowId === parseInt(endRow) && colId === parseInt(endCol);
+
       element.className = 'node node-unvisited';
       if (isStart) {
         element.className = 'node node-start';
@@ -830,7 +821,7 @@ export const resetBoard = (pathFinderData, start, end) => {
       }
     }
   });
-  const newGrid = getInitialGrid(height, width);
+  const newGrid = getInitialGrid(height, width, start, end);
   setNodes(newGrid.nodes);
   setGrid(newGrid.grid);
   setAlgoDone(false);

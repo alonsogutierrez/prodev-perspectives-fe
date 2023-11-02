@@ -26,29 +26,25 @@ const createNode = (id, status) => {
   };
 };
 
-export const getInitialGrid = (totalRows, totalColumns) => {
+export const getInitialGrid = (totalRows, totalColumns, startNode, endNode) => {
   const grid = [];
-  let start = '';
-  let end = '';
+  let start = startNode;
+  let end = endNode;
   let nodes = {};
+  const [startNodeRow, startNodeCol] = startNode.split('-');
+  const [endNodeRow, endNodeCol] = endNode.split('-');
   for (let row = 0; row < totalRows; row++) {
     const currentRow = [];
     for (let column = 0; column < totalColumns; column++) {
       let newNodeId = `${row}-${column}`;
       let status = '';
-      let heightDividedByTwo = Math.floor(totalRows / 2);
-      if (
-        row === heightDividedByTwo &&
-        column === Math.floor(totalColumns / 4)
-      ) {
+      if (row === parseInt(startNodeRow) && column === parseInt(startNodeCol)) {
         status = 'node-start';
-        start = newNodeId;
       } else if (
-        row === heightDividedByTwo &&
-        column === Math.floor((3 * totalColumns) / 4)
+        row === parseInt(endNodeRow) &&
+        column === parseInt(endNodeCol)
       ) {
         status = 'node-end';
-        end = newNodeId;
       } else {
         status = 'node-unvisited';
       }

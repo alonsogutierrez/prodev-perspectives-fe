@@ -41,18 +41,17 @@ const allVelocities = [
   },
 ];
 
-let previouslySwitchedNodeGlobal = null;
-
 const PathFinder = () => {
   const [height] = useState(20);
   const [width] = useState(30);
-  const [start, setStart] = useState('10-7');
-  const [end, setEnd] = useState('10-22');
-  const [getBoardInitValues] = useState(getInitialGrid(height, width));
+  const [start, setStart] = useState('6-5');
+  const [end, setEnd] = useState('12-22');
+  const [getBoardInitValues] = useState(
+    getInitialGrid(height, width, start, end)
+  );
   const [object, setObject] = useState(null);
   const [nodes, setNodes] = useState(getBoardInitValues.nodes);
   const [grid, setGrid] = useState(getBoardInitValues.grid);
-  const [buttonsOn, setButtonsOn] = useState(true);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
   const [pressedNodeStatus, setPressedNodeStatus] = useState('normal');
   const [mouseDown, setMouseDown] = useState(false);
@@ -75,8 +74,6 @@ const PathFinder = () => {
   const [velocitySelected, setVelocitySelected] = useState('fast');
   const [previouslySwitchedNodeWeight, setPreviouslySwitchedNodeWeight] =
     useState(0);
-  const [previouslyPressedNodeStatus, setPreviouslyPressedNodeStatus] =
-    useState(null);
   const [algoDone, setAlgoDone] = useState(false);
   const [isVisibleBoard, setIsVisibleBoard] = useState(true);
   const [isToggleButtonOn, setIsToggleButtonOn] = useState(true);
@@ -559,7 +556,6 @@ const PathFinder = () => {
   };
 
   const handleMouseDown = (nodeId) => {
-    console.log('handleMouseDown');
     if (isToggleButtonOn) {
       setMouseDown(true);
       const currentNode = getNode(nodeId);
@@ -568,7 +564,6 @@ const PathFinder = () => {
         currentNode.status === 'node-end' ||
         currentNode.status === 'object'
       ) {
-        console.log('here at mouse down');
         setPressedNodeStatus(currentNode.status);
         let element = document.getElementById(nodeId);
         element.className = `node ${currentNode.status}`;
@@ -604,7 +599,6 @@ const PathFinder = () => {
   };
 
   const handleMouseEnter = (nodeId) => {
-    console.log('onmouseenter');
     if (isToggleButtonOn) {
       const currentNode = getNode(nodeId);
       if (mouseDown && pressedNodeStatus !== 'normal') {
@@ -614,7 +608,6 @@ const PathFinder = () => {
           pressedNodeStatus,
           algoDone,
         };
-        console.log('before call change special node');
         changeSpecialNode(pathFinderData, currentNode);
         if (pressedNodeStatus === 'node-end') {
           setEnd(nodeId);
@@ -633,7 +626,6 @@ const PathFinder = () => {
           }
         }
       } else if (mouseDown) {
-        console.log('case mouseDown');
         const pathFinderData = {
           mouseDown,
           algorithmSelected,
@@ -644,7 +636,6 @@ const PathFinder = () => {
   };
 
   const handleMouseLeave = (nodeId) => {
-    console.log('onmouseleave');
     if (isToggleButtonOn) {
       if (mouseDown && pressedNodeStatus !== 'normal') {
         const currentNode = getNode(nodeId);
@@ -671,9 +662,11 @@ const PathFinder = () => {
     setVelocitySelected(velocity);
   };
 
-  useEffect(() => {
-    console.log('use effect hook');
-  }, [algorithmSelected, mazeAndPatternsSelected, isVisibleBoard]);
+  useEffect(() => {}, [
+    algorithmSelected,
+    mazeAndPatternsSelected,
+    isVisibleBoard,
+  ]);
 
   return (
     <>

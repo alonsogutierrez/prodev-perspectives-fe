@@ -17,10 +17,10 @@ const Node = ({
     <div
       id={nodeId}
       className={extraClassName}
-      onMouseEnter={() => handleMouseEnter(nodeId)}
-      onMouseDown={() => handleMouseDown(nodeId)}
-      onMouseUp={() => handleMouseUp(nodeId)}
-      onMouseLeave={() => handleMouseLeave(nodeId)}
+      onMouseEnter={() => (handleMouseEnter ? handleMouseEnter(nodeId) : null)}
+      onMouseDown={() => (handleMouseDown ? handleMouseDown(nodeId) : null)}
+      onMouseUp={() => (handleMouseUp ? handleMouseUp(nodeId) : null)}
+      onMouseLeave={() => (handleMouseLeave ? handleMouseLeave(nodeId) : null)}
     />
   );
 };
