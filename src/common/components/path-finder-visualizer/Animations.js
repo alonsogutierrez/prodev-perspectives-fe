@@ -6,10 +6,12 @@ export const drawShortestPath = (
   setObjectShortestPathNodesToAnimate,
   endNodeId,
   startNodeId,
-  object
+  object,
+  shortestPathNodesToAnimate
 ) => {
   let currentNode;
-  currentNode = nodes[nodes[endNodeId].previousNode];
+  const endNode = nodes[endNodeId];
+  currentNode = nodes[endNode.previousNode];
   if (object) {
     while (currentNode.id !== startNodeId) {
       setObjectShortestPathNodesToAnimate(
@@ -22,16 +24,17 @@ export const drawShortestPath = (
     }
     return;
   }
-  while (currentNode.id !== startNodeId) {
-    setObjectShortestPathNodesToAnimate((objectShortestPathNodesToAnimate) => [
-      currentNode,
-      ...objectShortestPathNodesToAnimate,
-    ]);
-    document.getElementById(
-      currentNode.id
-    ).className = `node node-shortest-path`;
+  while (
+    currentNode &&
+    Object.keys(currentNode).length > 0 &&
+    currentNode.id &&
+    currentNode.id !== startNodeId
+  ) {
+    shortestPathNodesToAnimate.unshift(currentNode);
+    document.getElementById(currentNode.id).className = `node shortest-path`;
     currentNode = nodes[currentNode.previousNode];
   }
+
   return;
 };
 
@@ -470,8 +473,7 @@ export const launchInstantAnimations = (
   success,
   type,
   object,
-  algorithm,
-  heuristic
+  algorithm
 ) => {
   const change = (currentNode, previousNode) => {
     let currentHTMLNode = document.getElementById(currentNode.id);
@@ -536,42 +538,47 @@ export const launchInstantAnimations = (
     clearNodeStatuses,
     setNodesToAnimate,
     setObjectShortestPathNodesToAnimate,
+    setShortesPathNodesToAnimate,
     objectShortestPathNodesToAnimate,
     shortestPathNodesToAnimate,
+    nodes,
     isObject,
     start,
     end,
+    objectParam,
   } = pathFinderData;
-  let nodes = object ? objectNodesToAnimate.slice(0) : nodesToAnimate.slice(0);
+  let nodesNew = objectParam
+    ? objectNodesToAnimate.slice(0)
+    : nodesToAnimate.slice(0);
   let shortestNodes;
-  for (let i = 0; i < nodes.length; i++) {
+  for (let i = 0; i < nodesNew.length; i++) {
     if (i === 0) {
-      change(nodes[i]);
+      change(nodesNew[i]);
     } else {
-      change(nodes[i], nodes[i - 1]);
+      change(nodesNew[i], nodesNew[i - 1]);
     }
   }
-  if (object) {
+  if (objectParam) {
     objectNodesToAnimate = [];
     if (success) {
       drawShortestPath(
-        nodes,
+        nodesNew,
         setObjectShortestPathNodesToAnimate,
         object,
         start,
-        'object'
+        'object',
+        shortestPathNodesToAnimate
       );
       clearNodeStatuses();
       let newSuccess;
       if (type === 'weighted') {
         newSuccess = weightedSearchAlgorithm(
-          nodes,
-          object,
+          nodesNew,
+          objectParam,
           end,
           nodesToAnimate,
           grid,
-          algorithm,
-          heuristic
+          algorithm
         );
       } else {
         // newSuccess = unweightedSearchAlgorithm(
@@ -589,7 +596,7 @@ export const launchInstantAnimations = (
       );
     } else {
       console.log('Failure.');
-      reset(nodes, start, end, object);
+      reset(nodes, start, end, objectParam);
       return;
     }
   } else {
@@ -600,14 +607,18 @@ export const launchInstantAnimations = (
           nodes,
           setObjectShortestPathNodesToAnimate,
           end,
-          object
+          object,
+          shortestPathNodesToAnimate
         );
       } else {
+        console.log('calling from here');
         drawShortestPath(
           nodes,
           setObjectShortestPathNodesToAnimate,
           end,
-          start
+          start,
+          isObject,
+          shortestPathNodesToAnimate
         );
       }
       shortestNodes = objectShortestPathNodesToAnimate.concat(
@@ -628,8 +639,8 @@ export const launchInstantAnimations = (
       shortestPathChange(shortestNodes[j], shortestNodes[j - 1]);
     }
   }
-  reset(nodes, start, end, object);
-  if (object) {
+  reset(nodes, start, end, objectParam);
+  if (objectParam) {
     shortestPathChange(nodes[end], shortestNodes[j - 1]);
     objectShortestPathNodesToAnimate = [];
     shortestPathNodesToAnimate = [];
@@ -638,7 +649,7 @@ export const launchInstantAnimations = (
     if (type === 'weighted') {
       newSuccess = weightedSearchAlgorithm(
         nodes,
-        object,
+        objectParam,
         end,
         nodesToAnimate,
         grid,
@@ -657,8 +668,8 @@ export const launchInstantAnimations = (
     launchInstantAnimations(newSuccess, type);
   } else {
     shortestPathChange(nodes[end], shortestNodes[j - 1]);
-    objectShortestPathNodesToAnimate = [];
-    shortestPathNodesToAnimate = [];
+    setObjectShortestPathNodesToAnimate([]);
+    setShortesPathNodesToAnimate([]);
   }
 };
 

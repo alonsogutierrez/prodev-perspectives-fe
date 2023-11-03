@@ -130,7 +130,13 @@ const PathFinder = () => {
           end,
           object,
         };
-        launchInstantAnimations(pathFinderData, success, 'weighted');
+        launchInstantAnimations(
+          pathFinderData,
+          success,
+          'weighted',
+          false,
+          algorithmSelected
+        );
       } else {
         setIsObject(true);
         success = weightedSearchAlgorithm(
@@ -148,6 +154,7 @@ const PathFinder = () => {
           clearNodeStatuses,
           setNodesToAnimate,
           setObjectShortestPathNodesToAnimate,
+          setShortesPathNodesToAnimate,
           objectShortestPathNodesToAnimate,
           shortestPathNodesToAnimate,
           nodes,
@@ -175,16 +182,17 @@ const PathFinder = () => {
             end,
             nodesToAnimate,
             grid,
-            algorithmSelected,
-            null
+            algorithmSelected
           );
           setTimeout(() => {
             const pathFinderData = {
               nodesToAnimate,
               objectNodesToAnimate,
+              setObjectNodesToAnimate,
               clearNodeStatuses,
               setNodesToAnimate,
               setObjectShortestPathNodesToAnimate,
+              setShortesPathNodesToAnimate,
               objectShortestPathNodesToAnimate,
               shortestPathNodesToAnimate,
               nodes,
@@ -192,8 +200,16 @@ const PathFinder = () => {
               start,
               end,
               object,
+              velocitySelected,
+              setIsToggleButtonOn,
             };
-            launchInstantAnimations(pathFinderData, success, 'weighted');
+            launchInstantAnimations(
+              pathFinderData,
+              success,
+              'weighted',
+              false,
+              algorithmSelected
+            );
           }, 250);
         }, 500);
       } else {
@@ -228,8 +244,7 @@ const PathFinder = () => {
               success,
               'weighted',
               'object',
-              algorithmSelected,
-              currentHeuristic
+              algorithmSelected
             );
           }, 250);
         }, 500);
@@ -260,7 +275,13 @@ const PathFinder = () => {
               end,
               object,
             };
-            launchInstantAnimations(pathFinderData, success, 'unweighted');
+            launchInstantAnimations(
+              pathFinderData,
+              success,
+              'unweighted',
+              false,
+              algorithmSelected
+            );
           }, 250);
         }, 500);
       } else {
