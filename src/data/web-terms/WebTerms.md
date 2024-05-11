@@ -1,5 +1,5 @@
 ---
-sTitle: 'This Terms and Conditions was published on June 11, 2023.'
+sTitle: "This Terms and Conditions was published on June 11, 2024."
 ---
 
 ### Terms of Use

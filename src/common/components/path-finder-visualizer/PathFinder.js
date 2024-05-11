@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import Grid from './Grid';
+import Grid from "./Grid";
 import {
   launchAnimations,
   launchInstantAnimations,
@@ -11,41 +11,41 @@ import {
   mazeGenerationAnimations,
   resetBoard,
   clearWalls,
-} from './Animations';
-import { algorithmsData } from './helpers/algorithms';
+} from "./Animations";
+import { algorithmsData } from "./helpers/algorithms";
 import {
   allMazeAndPatterns,
   recursiveDivisionMaze,
-} from './helpers/mazeAndPatterns';
-import { getInitialGrid } from './helpers/grid';
-import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
-import unweightedSearchAlgorithm from './../../../lib/algorithms/path-finders/unweighted/unweightedAlgorithms';
-import Nav from './Nav';
-import Legends from './Legends';
+} from "./helpers/mazeAndPatterns";
+import { getInitialGrid } from "./helpers/grid";
+import weightedSearchAlgorithm from "@algorithms/path-finders/weighted/weightedAlgorithms";
+import unweightedSearchAlgorithm from "@algorithms/path-finders/unweighted/unweightedAlgorithms";
+import Nav from "./Nav";
+import Legends from "./Legends";
 
 const allVelocities = [
   {
     id: 1,
-    value: 'fast',
-    name: 'Fast',
+    value: "fast",
+    name: "Fast",
   },
   {
     id: 2,
-    value: 'average',
-    name: 'Average',
+    value: "average",
+    name: "Average",
   },
   {
     id: 3,
-    value: 'slow',
-    name: 'Slow',
+    value: "slow",
+    name: "Slow",
   },
 ];
 
 const PathFinder = () => {
   const [height] = useState(20);
   const [width] = useState(30);
-  const [start, setStart] = useState('6-5');
-  const [end, setEnd] = useState('12-22');
+  const [start, setStart] = useState("6-5");
+  const [end, setEnd] = useState("12-22");
   const [getBoardInitValues] = useState(
     getInitialGrid(height, width, start, end)
   );
@@ -53,7 +53,7 @@ const PathFinder = () => {
   const [nodes, setNodes] = useState(getBoardInitValues.nodes);
   const [grid, setGrid] = useState(getBoardInitValues.grid);
   const [mouseIsPressed, setMouseIsPressed] = useState(false);
-  const [pressedNodeStatus, setPressedNodeStatus] = useState('normal');
+  const [pressedNodeStatus, setPressedNodeStatus] = useState("normal");
   const [mouseDown, setMouseDown] = useState(false);
   const [nodesToAnimate, setNodesToAnimate] = useState([]);
   const [objectNodesToAnimate, setObjectNodesToAnimate] = useState([]);
@@ -67,11 +67,11 @@ const PathFinder = () => {
   const [wallsToAnimate, setWallsToAnimate] = useState([]);
   const [numberOfObjects, setNumberOfObjects] = useState(0);
   const [isObject, setIsObject] = useState(false);
-  const [algorithmSelected, setAlgorithmSelected] = useState('dijkstra');
+  const [algorithmSelected, setAlgorithmSelected] = useState("dijkstra");
   const [mazeAndPatternsSelected, setMazeAndPatternsSelected] = useState(
-    'recursiveDivisionHorizontal'
+    "recursiveDivisionHorizontal"
   );
-  const [velocitySelected, setVelocitySelected] = useState('fast');
+  const [velocitySelected, setVelocitySelected] = useState("fast");
   const [previouslySwitchedNodeWeight, setPreviouslySwitchedNodeWeight] =
     useState(0);
   const [algoDone, setAlgoDone] = useState(false);
@@ -79,7 +79,7 @@ const PathFinder = () => {
   const [isToggleButtonOn, setIsToggleButtonOn] = useState(true);
 
   const getNode = (nodeId) => {
-    const [row, column] = nodeId.split('-');
+    const [row, column] = nodeId.split("-");
     return grid[row][column];
   };
 
@@ -92,9 +92,9 @@ const PathFinder = () => {
       currentNode.heuristicDistance = null;
       currentNode.storedDirection = currentNode.direction;
       currentNode.direction = null;
-      let relevantStatuses = ['node-wall', 'node-start', 'node-end', 'object'];
+      let relevantStatuses = ["node-wall", "node-start", "node-end", "object"];
       if (!relevantStatuses.includes(currentNode.status)) {
-        currentNode.status = 'node-unvisited';
+        currentNode.status = "node-unvisited";
       }
     });
   };
@@ -105,7 +105,7 @@ const PathFinder = () => {
       (alg) => alg.value
     );
     let success;
-    if (algorithmSelected === 'astart') {
+    if (algorithmSelected === "astart") {
       if (!numberOfObjects) {
         success = weightedSearchAlgorithm(
           nodes,
@@ -133,7 +133,7 @@ const PathFinder = () => {
         launchInstantAnimations(
           pathFinderData,
           success,
-          'weighted',
+          "weighted",
           false,
           algorithmSelected
         );
@@ -166,8 +166,8 @@ const PathFinder = () => {
         launchInstantAnimations(
           pathFinderData,
           success,
-          'weighted',
-          'object',
+          "weighted",
+          "object",
           algorithmSelected
         );
       }
@@ -206,7 +206,7 @@ const PathFinder = () => {
             launchInstantAnimations(
               pathFinderData,
               success,
-              'weighted',
+              "weighted",
               false,
               algorithmSelected
             );
@@ -242,8 +242,8 @@ const PathFinder = () => {
             launchInstantAnimations(
               pathFinderData,
               success,
-              'weighted',
-              'object',
+              "weighted",
+              "object",
               algorithmSelected
             );
           }, 250);
@@ -278,7 +278,7 @@ const PathFinder = () => {
             launchInstantAnimations(
               pathFinderData,
               success,
-              'unweighted',
+              "unweighted",
               false,
               algorithmSelected
             );
@@ -313,8 +313,8 @@ const PathFinder = () => {
             launchInstantAnimations(
               pathFinderData,
               success,
-              'unweighted',
-              'object',
+              "unweighted",
+              "object",
               algorithmSelected
             );
           }, 250);
@@ -351,13 +351,13 @@ const PathFinder = () => {
       setAlgoDone,
     };
 
-    clearPath(pathFinderData, 'clickedBtn');
+    clearPath(pathFinderData, "clickedBtn");
     toggleButtonsAnimation(false, setIsToggleButtonOn);
 
-    const weightedAlgorithmsNames = algorithmsData['weighted'].map(
+    const weightedAlgorithmsNames = algorithmsData["weighted"].map(
       (algo) => algo.value
     );
-    const unweightedAlgorithmsNames = algorithmsData['unweighted'].map(
+    const unweightedAlgorithmsNames = algorithmsData["unweighted"].map(
       (algo) => algo.value
     );
     if (weightedAlgorithmsNames.includes(algorithmSelected)) {
@@ -390,7 +390,7 @@ const PathFinder = () => {
               velocitySelected,
               setIsToggleButtonOn,
             };
-            launchAnimations(pathFinderData, success, 'weighted', false);
+            launchAnimations(pathFinderData, success, "weighted", false);
           }, 250);
         }, 500);
       } else {
@@ -423,7 +423,7 @@ const PathFinder = () => {
               velocitySelected,
               setIsToggleButtonOn,
             };
-            launchAnimations(pathFinderData, success, 'weighted', 'object');
+            launchAnimations(pathFinderData, success, "weighted", "object");
           }, 250);
         }, 500);
       }
@@ -457,7 +457,7 @@ const PathFinder = () => {
               velocitySelected,
               setIsToggleButtonOn,
             };
-            launchAnimations(pathFinderData, success, 'unweighted', false);
+            launchAnimations(pathFinderData, success, "unweighted", false);
           }, 250);
         }, 500);
       } else {
@@ -490,7 +490,7 @@ const PathFinder = () => {
               velocitySelected,
               setIsToggleButtonOn,
             };
-            launchAnimations(pathFinderData, success, 'unweighted', 'object');
+            launchAnimations(pathFinderData, success, "unweighted", "object");
           }, 250);
         }, 500);
       }
@@ -499,10 +499,10 @@ const PathFinder = () => {
   };
 
   const handleVisualizeMazeAndPatterns = () => {
-    const [rowStart, colStart] = start.split('-');
-    const [rowEnd, colEnd] = end.split('-');
+    const [rowStart, colStart] = start.split("-");
+    const [rowEnd, colEnd] = end.split("-");
 
-    if (mazeAndPatternsSelected === 'recursiveDivisionHorizontal') {
+    if (mazeAndPatternsSelected === "recursiveDivisionHorizontal") {
       const pathFinderData = {
         start,
         end,
@@ -510,10 +510,10 @@ const PathFinder = () => {
         rowEnd: height - 3,
         colStart: 2,
         colEnd: width - 3,
-        orientation: 'horizontal',
+        orientation: "horizontal",
         surroundingWalls: false,
-        type: 'wall',
-        mazeType: 'normal',
+        type: "wall",
+        mazeType: "normal",
         object,
         nodes,
         height,
@@ -523,7 +523,7 @@ const PathFinder = () => {
       };
       setWallsToAnimate([]);
       clearWalls(nodes);
-      clearPath(pathFinderData, 'clickedButton');
+      clearPath(pathFinderData, "clickedButton");
       toggleButtonsAnimation(false, setIsToggleButtonOn);
       setTimeout(() => {
         recursiveDivisionMaze(pathFinderData);
@@ -537,7 +537,7 @@ const PathFinder = () => {
           );
         }, 250);
       }, 500);
-    } else if (mazeAndPatternsSelected === 'recursiveDivisionVertical') {
+    } else if (mazeAndPatternsSelected === "recursiveDivisionVertical") {
       const pathFinderData = {
         start,
         end,
@@ -545,10 +545,10 @@ const PathFinder = () => {
         rowEnd: height - 3,
         colStart: 2,
         colEnd: width - 3,
-        orientation: 'vertical',
+        orientation: "vertical",
         surroundingWalls: false,
-        type: 'wall',
-        mazeType: 'special',
+        type: "wall",
+        mazeType: "special",
         object,
         nodes,
         height,
@@ -558,7 +558,7 @@ const PathFinder = () => {
       };
       setWallsToAnimate([]);
       clearWalls(nodes);
-      clearPath(pathFinderData, 'clickedButton');
+      clearPath(pathFinderData, "clickedButton");
       toggleButtonsAnimation(false, setIsToggleButtonOn);
       setTimeout(() => {
         recursiveDivisionMaze(pathFinderData);
@@ -581,15 +581,15 @@ const PathFinder = () => {
       setMouseDown(true);
       const currentNode = getNode(nodeId);
       if (
-        currentNode.status === 'node-start' ||
-        currentNode.status === 'node-end' ||
-        currentNode.status === 'object'
+        currentNode.status === "node-start" ||
+        currentNode.status === "node-end" ||
+        currentNode.status === "object"
       ) {
         setPressedNodeStatus(currentNode.status);
         let element = document.getElementById(nodeId);
         element.className = `node ${currentNode.status}`;
       } else {
-        setPressedNodeStatus('normal');
+        setPressedNodeStatus("normal");
         const pathFinderData = {
           mouseDown,
           algorithmSelected,
@@ -602,27 +602,27 @@ const PathFinder = () => {
   const handleMouseUp = (nodeId) => {
     if (isToggleButtonOn) {
       setMouseDown(false);
-      if (pressedNodeStatus === 'node-end') {
+      if (pressedNodeStatus === "node-end") {
         let element = document.getElementById(nodeId);
         element.className = `node node-end`;
         setEnd(nodeId);
-      } else if (pressedNodeStatus === 'node-start') {
+      } else if (pressedNodeStatus === "node-start") {
         setStart(nodeId);
         let element = document.getElementById(nodeId);
         element.className = `node node-start`;
-      } else if (pressedNodeStatus === 'object') {
+      } else if (pressedNodeStatus === "object") {
         setObject(nodeId);
         let element = document.getElementById(nodeId);
         element.className = `node object`;
       }
-      setPressedNodeStatus('normal');
+      setPressedNodeStatus("normal");
     }
   };
 
   const handleMouseEnter = (nodeId) => {
     if (isToggleButtonOn) {
       const currentNode = getNode(nodeId);
-      if (mouseDown && pressedNodeStatus !== 'normal') {
+      if (mouseDown && pressedNodeStatus !== "normal") {
         const pathFinderData = {
           setPreviouslySwitchedNodeWeight,
           previouslySwitchedNodeWeight,
@@ -630,17 +630,17 @@ const PathFinder = () => {
           algoDone,
         };
         changeSpecialNode(pathFinderData, currentNode);
-        if (pressedNodeStatus === 'node-end') {
+        if (pressedNodeStatus === "node-end") {
           setEnd(nodeId);
           if (algoDone) {
             redoAlgorithm();
           }
-        } else if (pressedNodeStatus === 'node-start') {
+        } else if (pressedNodeStatus === "node-start") {
           setStart(nodeId);
           if (algoDone) {
             redoAlgorithm();
           }
-        } else if (pressedNodeStatus === 'object') {
+        } else if (pressedNodeStatus === "object") {
           setObject(nodeId);
           if (algoDone) {
             redoAlgorithm();
@@ -658,7 +658,7 @@ const PathFinder = () => {
 
   const handleMouseLeave = (nodeId) => {
     if (isToggleButtonOn) {
-      if (mouseDown && pressedNodeStatus !== 'normal') {
+      if (mouseDown && pressedNodeStatus !== "normal") {
         const currentNode = getNode(nodeId);
         const pathFinderData = {
           setPreviouslySwitchedNodeWeight,
@@ -692,8 +692,8 @@ const PathFinder = () => {
   return (
     <>
       <div
-        style={{ textAlign: 'center', padding: '50px' }}
-        className='post-single-wrapper axil-section-gap bg-color-white'
+        style={{ textAlign: "center", padding: "50px" }}
+        className="post-single-wrapper axil-section-gap bg-color-white"
       >
         <Nav
           start={start}

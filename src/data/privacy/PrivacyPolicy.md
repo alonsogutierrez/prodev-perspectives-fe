@@ -1,5 +1,5 @@
 ---
-sTitle: 'This Privacy policy was published on June 11, 2023.'
+sTitle: "This Privacy policy was published on June 11, 2024."
 ---
 
 ### Privacy Policy

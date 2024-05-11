@@ -1,22 +1,25 @@
+import Image from "next/image";
+import Link from "next/link";
+
 const PostSectionPortafolio = ({ portafolioData, certifications, bgColor }) => {
   return (
     <>
-      <div className={`axil-tech-post-banner ${bgColor || 'bg-color-grey'}`}>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-xl-6 col-lg-6 col-md-12 col-md-6 col-12'>
-              <div className='row'>
+      <div className={`axil-tech-post-banner ${bgColor || "bg-color-grey"}`}>
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-12 col-md-6 col-12">
+              <div className="row">
                 {portafolioData.map((portafolio, index) => (
                   <div
-                    className='col-lg-6 col-md-6 col-sm-6 col-12 mt--30'
+                    className="col-lg-6 col-md-6 col-sm-6 col-12 mt--30"
                     key={`portafolio-${index}`}
                   >
-                    <div className='content-block post-default image-rounded'>
-                      <div className='post-content'>
-                        <div className='post-cat'>
-                          <div className='post-cat-list'>
-                            <a className='hover-flip-item-wrapper'>
-                              <span className='hover-flip-item'>
+                    <div className="content-block post-default image-rounded">
+                      <div className="post-content">
+                        <div className="post-cat">
+                          <div className="post-cat-list">
+                            <a className="hover-flip-item-wrapper">
+                              <span className="hover-flip-item">
                                 <span data-text={portafolio.cloud[0]}>
                                   {portafolio.cloud[1]}
                                 </span>
@@ -24,11 +27,24 @@ const PostSectionPortafolio = ({ portafolioData, certifications, bgColor }) => {
                             </a>
                           </div>
                         </div>
-                        <h5 className='title'>
+                        <h5 className="title">
                           <a href={portafolio.url}>{portafolio.title}</a>
                         </h5>
                         <br />
                         <div>
+                          <span>
+                            <Link href={portafolio.url}>
+                              <a>
+                                <Image
+                                  src={portafolio.images[0]}
+                                  alt={portafolio.title}
+                                  height={660}
+                                  width={550}
+                                  priority={true}
+                                />
+                              </a>
+                            </Link>
+                          </span>
                           <span>
                             <h5>Description: </h5>
                             <h6>{portafolio.description}</h6>
@@ -53,20 +69,20 @@ const PostSectionPortafolio = ({ portafolioData, certifications, bgColor }) => {
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-xl-6 col-lg-6 col-md-12 col-md-6 col-12'>
-              <div className='row'>
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-12 col-md-6 col-12">
+              <div className="row">
                 {certifications.map((certification, index) => (
                   <div
-                    className='col-lg-6 col-md-6 col-sm-6 col-12 mt--30'
+                    className="col-lg-6 col-md-6 col-sm-6 col-12 mt--30"
                     key={`certification-${index}`}
                   >
-                    <div className='content-block post-default image-rounded'>
-                      <div className='post-content'>
-                        <div className='post-cat'>
-                          <div className='post-cat-list'>
-                            <a className='hover-flip-item-wrapper'>
-                              <span className='hover-flip-item'>
+                    <div className="content-block post-default image-rounded">
+                      <div className="post-content">
+                        <div className="post-cat">
+                          <div className="post-cat-list">
+                            <a className="hover-flip-item-wrapper">
+                              <span className="hover-flip-item">
                                 <span data-text={certification.cloud[0]}>
                                   {certification.cloud[1]}
                                 </span>
@@ -74,11 +90,24 @@ const PostSectionPortafolio = ({ portafolioData, certifications, bgColor }) => {
                             </a>
                           </div>
                         </div>
-                        <h5 className='title'>
+                        <h5 className="title">
                           <a href={certification.url}>{certification.title}</a>
                         </h5>
                         <br />
                         <div>
+                          <span>
+                            <Link href={certification.url}>
+                              <a>
+                                <Image
+                                  src={certification.images[0]}
+                                  alt={certification.title}
+                                  height={500}
+                                  width={900}
+                                  priority={true}
+                                />
+                              </a>
+                            </Link>
+                          </span>
                           <span>
                             <h5>Description: </h5>
                             <h6>{certification.description}</h6>

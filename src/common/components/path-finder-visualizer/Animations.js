@@ -1,5 +1,5 @@
-import weightedSearchAlgorithm from './../../../lib/algorithms/path-finders/weighted/weightedAlgorithms';
-import { getInitialGrid } from './helpers/grid';
+import weightedSearchAlgorithm from "@algorithms/path-finders/weighted/weightedAlgorithms";
+import { getInitialGrid } from "./helpers/grid";
 
 export const drawShortestPath = (
   nodes,
@@ -105,7 +105,7 @@ export const drawShortestPathTimeout = (
         shortestPathChange(
           nodes[endNodeId],
           currentNodesToAnimate[index - 1],
-          'isActualTarget'
+          "isActualTarget"
         );
       }
       if (index > currentNodesToAnimate.length) {
@@ -117,17 +117,17 @@ export const drawShortestPathTimeout = (
   };
 
   const shortestPathChange = (currentNode, previousNode, isActualTarget) => {
-    if (currentNode === 'object') {
+    if (currentNode === "object") {
       let element = document.getElementById(object);
-      element.className = 'node objectTransparent';
+      element.className = "node objectTransparent";
     } else if (currentNode.id !== startNodeId) {
       if (
         currentNode.id !== endNodeId ||
         (currentNode.id === endNodeId && isActualTarget)
       ) {
         let currentHTMLNode = document.getElementById(currentNode.id);
-        if (type === 'unweighted') {
-          currentHTMLNode.className = 'node shortest-path-unweighted';
+        if (type === "unweighted") {
+          currentHTMLNode.className = "node shortest-path-unweighted";
         } else {
           let direction;
           if (
@@ -135,40 +135,40 @@ export const drawShortestPathTimeout = (
             !currentNode.overwriteObjectRelation &&
             currentNode.id !== endNodeId
           ) {
-            direction = 'storedDirection';
+            direction = "storedDirection";
             currentNode.overwriteObjectRelation = true;
           } else {
-            direction = 'direction';
+            direction = "direction";
           }
-          if (currentNode[direction] === 'up') {
-            currentHTMLNode.className = 'node shortest-path-up';
-          } else if (currentNode[direction] === 'down') {
-            currentHTMLNode.className = 'node shortest-path-down';
-          } else if (currentNode[direction] === 'right') {
-            currentHTMLNode.className = 'node shortest-path-right';
-          } else if (currentNode[direction] === 'left') {
-            currentHTMLNode.className = 'node shortest-path-left';
+          if (currentNode[direction] === "up") {
+            currentHTMLNode.className = "node shortest-path-up";
+          } else if (currentNode[direction] === "down") {
+            currentHTMLNode.className = "node shortest-path-down";
+          } else if (currentNode[direction] === "right") {
+            currentHTMLNode.className = "node shortest-path-right";
+          } else if (currentNode[direction] === "left") {
+            currentHTMLNode.className = "node shortest-path-left";
           } else {
-            currentHTMLNode.className = 'node shortest-path';
+            currentHTMLNode.className = "node shortest-path";
           }
         }
       }
     }
     if (previousNode) {
       if (
-        previousNode !== 'object' &&
+        previousNode !== "object" &&
         previousNode.id !== endNodeId &&
         previousNode.id !== startNodeId
       ) {
         let previousHTMLNode = document.getElementById(previousNode.id);
         previousHTMLNode.className =
           previousNode.weight === 15
-            ? 'node shortest-path weight'
-            : 'node shortest-path';
+            ? "node shortest-path weight"
+            : "node shortest-path";
       }
     } else {
       let element = document.getElementById(startNodeId);
-      element.className = 'node startTransparent';
+      element.className = "node startTransparent";
     }
   };
 
@@ -176,15 +176,15 @@ export const drawShortestPathTimeout = (
 };
 
 export const reset = (nodes, start, end, object, objectNotTransparent) => {
-  nodes[start].status = 'node-start';
-  document.getElementById(start).className = 'node startTransparent';
-  nodes[end].status = 'node-end';
+  nodes[start].status = "node-start";
+  document.getElementById(start).className = "node startTransparent";
+  nodes[end].status = "node-end";
   if (object) {
-    nodes[object].status = 'object';
+    nodes[object].status = "object";
     if (objectNotTransparent) {
-      document.getElementById(object).className = 'node visitedObjectNode';
+      document.getElementById(object).className = "node visitedObjectNode";
     } else {
-      document.getElementById(object).className = 'node objectTransparent';
+      document.getElementById(object).className = "node objectTransparent";
     }
   }
 };
@@ -217,9 +217,9 @@ export const launchAnimations = (
     ? objectNodesToAnimate.slice(0)
     : nodesToAnimate.slice(0);
   let speed =
-    velocitySelected === 'fast'
+    velocitySelected === "fast"
       ? 0
-      : velocitySelected === 'average'
+      : velocitySelected === "average"
       ? 100
       : 500;
   let shortestNodes;
@@ -235,11 +235,11 @@ export const launchAnimations = (
               setObjectShortestPathNodesToAnimate,
               object,
               start,
-              'object'
+              "object"
             );
             clearNodeStatuses();
             let newSuccess;
-            if (type === 'weighted') {
+            if (type === "weighted") {
               newSuccess = weightedSearchAlgorithm(
                 nodes,
                 object,
@@ -259,11 +259,11 @@ export const launchAnimations = (
               // );
             }
             document.getElementById(object).className =
-              'node visitedObjectNode';
+              "node visitedObjectNode";
             launchAnimations(newSuccess, type, false);
             return;
           } else {
-            console.log('Failure.');
+            console.log("Failure.");
             reset(nodes, start, end, object);
             toggleButtonsAnimation(true, setIsToggleButtonOn);
             return;
@@ -274,10 +274,10 @@ export const launchAnimations = (
             if (
               !document
                 .getElementById(end)
-                .className.includes('visitedendNodeBlue')
+                .className.includes("visitedendNodeBlue")
             ) {
               document.getElementById(end).className =
-                'node visitedendNodeBlue';
+                "node visitedendNodeBlue";
             }
             if (isObject) {
               addShortestPath(
@@ -295,7 +295,7 @@ export const launchAnimations = (
               );
               setObjectShortestPathNodesToAnimate([]);
               setShortesPathNodesToAnimate([]);
-              reset(nodes, start, end, object, 'objectNotTransparent');
+              reset(nodes, start, end, object, "objectNotTransparent");
             } else {
               drawShortestPathTimeout(
                 nodes,
@@ -314,7 +314,7 @@ export const launchAnimations = (
             );
             return;
           } else {
-            console.log('Failure.');
+            console.log("Failure.");
             reset(nodes, start, end, object);
             toggleButtonsAnimation(true, setIsToggleButtonOn);
             return;
@@ -323,15 +323,15 @@ export const launchAnimations = (
       } else if (index === 0) {
         if (objectParam) {
           document.getElementById(start).className =
-            'node visitedStartNodePurple';
+            "node visitedStartNodePurple";
         } else {
           if (
             !document
               .getElementById(start)
-              .className.includes('visitedStartNodePurple')
+              .className.includes("visitedStartNodePurple")
           ) {
             document.getElementById(start).className =
-              'node visitedStartNodeBlue';
+              "node visitedStartNodeBlue";
           }
         }
         change(nodesToAnimateCopy[index]);
@@ -345,34 +345,34 @@ export const launchAnimations = (
   const change = (currentNode, previousNode) => {
     let currentHTMLNode = document.getElementById(currentNode.id);
     let relevantClassNames = [
-      'node-start',
-      'node-end',
-      'object',
-      'visitedStartNodeBlue',
-      'visitedStartNodePurple',
-      'visitedObjectNode',
-      'visitedendNodePurple',
-      'visitedendNodeBlue',
-      'node node-start',
-      'node node-end',
-      'node object',
-      'node visitedStartNodeBlue',
-      'node visitedStartNodePurple',
-      'node visitedObjectNode',
-      'node visitedendNodePurple',
-      'node visitedendNodeBlue',
+      "node-start",
+      "node-end",
+      "object",
+      "visitedStartNodeBlue",
+      "visitedStartNodePurple",
+      "visitedObjectNode",
+      "visitedendNodePurple",
+      "visitedendNodeBlue",
+      "node node-start",
+      "node node-end",
+      "node object",
+      "node visitedStartNodeBlue",
+      "node visitedStartNodePurple",
+      "node visitedObjectNode",
+      "node visitedendNodePurple",
+      "node visitedendNodeBlue",
     ];
     if (!relevantClassNames.includes(currentHTMLNode.className)) {
-      currentHTMLNode.className = 'node current';
+      currentHTMLNode.className = "node current";
     }
     if (
-      currentHTMLNode.className.includes('visitedStartNodePurple') &&
+      currentHTMLNode.className.includes("visitedStartNodePurple") &&
       !objectParam
     ) {
-      currentHTMLNode.className = 'node visitedStartNodeBlue';
+      currentHTMLNode.className = "node visitedStartNodeBlue";
     }
-    if (currentHTMLNode.className.includes('node-end') && objectParam) {
-      currentHTMLNode.className = 'node visitedendNodePurple';
+    if (currentHTMLNode.className.includes("node-end") && objectParam) {
+      currentHTMLNode.className = "node visitedendNodePurple";
     }
     if (previousNode) {
       let previousHTMLNode = document.getElementById(previousNode.id);
@@ -380,13 +380,13 @@ export const launchAnimations = (
         if (objectParam) {
           previousHTMLNode.className =
             previousNode.weight === 15
-              ? 'node visitedobject weight'
-              : 'node visitedobject';
+              ? "node visitedobject weight"
+              : "node visitedobject";
         } else {
           previousHTMLNode.className =
             previousNode.weight === 15
-              ? 'node node-visited weight'
-              : 'node node-visited';
+              ? "node node-visited weight"
+              : "node node-visited";
         }
       }
     }
@@ -402,7 +402,7 @@ export const launchAnimations = (
           shortestPathNodesToAnimate = [];
           clearNodeStatuses();
           let newSuccess;
-          if (type === 'weighted') {
+          if (type === "weighted") {
             newSuccess = weightedSearchAlgorithm(
               nodes,
               object,
@@ -440,28 +440,28 @@ export const launchAnimations = (
 
   const shortestPathChange = (currentNode, previousNode) => {
     let currentHTMLNode = document.getElementById(currentNode.id);
-    if (type === 'unweighted') {
-      currentHTMLNode.className = 'node shortest-path-unweighted';
+    if (type === "unweighted") {
+      currentHTMLNode.className = "node shortest-path-unweighted";
     } else {
-      if (currentNode.direction === 'up') {
-        currentHTMLNode.className = 'node shortest-path-up';
-      } else if (currentNode.direction === 'down') {
-        currentHTMLNode.className = 'node shortest-path-down';
-      } else if (currentNode.direction === 'right') {
-        currentHTMLNode.className = 'node shortest-path-right';
-      } else if (currentNode.direction === 'left') {
-        currentHTMLNode.className = 'node shortest-path-left';
-      } else if ((currentNode.direction = 'down-right')) {
-        currentHTMLNode.className = 'node node-wall';
+      if (currentNode.direction === "up") {
+        currentHTMLNode.className = "node shortest-path-up";
+      } else if (currentNode.direction === "down") {
+        currentHTMLNode.className = "node shortest-path-down";
+      } else if (currentNode.direction === "right") {
+        currentHTMLNode.className = "node shortest-path-right";
+      } else if (currentNode.direction === "left") {
+        currentHTMLNode.className = "node shortest-path-left";
+      } else if ((currentNode.direction = "down-right")) {
+        currentHTMLNode.className = "node node-wall";
       }
     }
     if (previousNode) {
       let previousHTMLNode = document.getElementById(previousNode.id);
-      previousHTMLNode.className = 'node shortest-path';
+      previousHTMLNode.className = "node shortest-path";
     } else {
       let element = document.getElementById(start);
-      element.className = 'node shortest-path';
-      element.removeAttribute('style');
+      element.className = "node shortest-path";
+      element.removeAttribute("style");
     }
   };
 
@@ -478,14 +478,14 @@ export const launchInstantAnimations = (
   const change = (currentNode, previousNode) => {
     let currentHTMLNode = document.getElementById(currentNode.id);
     let relevantClassNames = [
-      'node-start',
-      'shortest-path',
-      'instantshortest-path',
-      'instantshortest-path weight',
-      'node node-start',
-      'node shortest-path',
-      'node instantshortest-path',
-      'node instantshortest-path weight',
+      "node-start",
+      "shortest-path",
+      "instantshortest-path",
+      "instantshortest-path weight",
+      "node node-start",
+      "node shortest-path",
+      "node instantshortest-path",
+      "node instantshortest-path weight",
     ];
     if (previousNode) {
       let previousHTMLNode = document.getElementById(previousNode.id);
@@ -493,13 +493,13 @@ export const launchInstantAnimations = (
         if (object) {
           previousHTMLNode.className =
             previousNode.weight === 15
-              ? 'node instantvisitedobject weight'
-              : 'node instantvisitedobject';
+              ? "node instantvisitedobject weight"
+              : "node instantvisitedobject";
         } else {
           previousHTMLNode.className =
             previousNode.weight === 15
-              ? 'node instantvisited weight'
-              : 'node instantvisited';
+              ? "node instantvisited weight"
+              : "node instantvisited";
         }
       }
     }
@@ -507,28 +507,28 @@ export const launchInstantAnimations = (
 
   const shortestPathChange = (currentNode, previousNode) => {
     let currentHTMLNode = document.getElementById(currentNode.id);
-    if (type === 'unweighted') {
-      currentHTMLNode.className = 'node shortest-path-unweighted';
+    if (type === "unweighted") {
+      currentHTMLNode.className = "node shortest-path-unweighted";
     } else {
-      if (currentNode.direction === 'up') {
-        currentHTMLNode.className = 'node shortest-path-up';
-      } else if (currentNode.direction === 'down') {
-        currentHTMLNode.className = 'node shortest-path-down';
-      } else if (currentNode.direction === 'right') {
-        currentHTMLNode.className = 'node shortest-path-right';
-      } else if (currentNode.direction === 'left') {
-        currentHTMLNode.className = 'node shortest-path-left';
+      if (currentNode.direction === "up") {
+        currentHTMLNode.className = "node shortest-path-up";
+      } else if (currentNode.direction === "down") {
+        currentHTMLNode.className = "node shortest-path-down";
+      } else if (currentNode.direction === "right") {
+        currentHTMLNode.className = "node shortest-path-right";
+      } else if (currentNode.direction === "left") {
+        currentHTMLNode.className = "node shortest-path-left";
       }
     }
     if (previousNode) {
       let previousHTMLNode = document.getElementById(previousNode.id);
       previousHTMLNode.className =
         previousNode.weight === 15
-          ? 'node instantshortest-path weight'
-          : 'node instantshortest-path';
+          ? "node instantshortest-path weight"
+          : "node instantshortest-path";
     } else {
       let element = document.getElementById(start);
-      element.className = 'node startTransparent';
+      element.className = "node startTransparent";
     }
   };
 
@@ -566,12 +566,12 @@ export const launchInstantAnimations = (
         setObjectShortestPathNodesToAnimate,
         object,
         start,
-        'object',
+        "object",
         shortestPathNodesToAnimate
       );
       clearNodeStatuses();
       let newSuccess;
-      if (type === 'weighted') {
+      if (type === "weighted") {
         newSuccess = weightedSearchAlgorithm(
           nodesNew,
           objectParam,
@@ -595,7 +595,7 @@ export const launchInstantAnimations = (
         shortestPathNodesToAnimate
       );
     } else {
-      console.log('Failure.');
+      console.log("Failure.");
       reset(nodes, start, end, objectParam);
       return;
     }
@@ -611,7 +611,7 @@ export const launchInstantAnimations = (
           shortestPathNodesToAnimate
         );
       } else {
-        console.log('calling from here');
+        console.log("calling from here");
         drawShortestPath(
           nodes,
           setObjectShortestPathNodesToAnimate,
@@ -625,7 +625,7 @@ export const launchInstantAnimations = (
         shortestPathNodesToAnimate
       );
     } else {
-      console.log('Failure');
+      console.log("Failure");
       reset(nodes, start, end, object);
       return;
     }
@@ -646,7 +646,7 @@ export const launchInstantAnimations = (
     shortestPathNodesToAnimate = [];
     clearNodeStatuses();
     let newSuccess;
-    if (type === 'weighted') {
+    if (type === "weighted") {
       newSuccess = weightedSearchAlgorithm(
         nodes,
         objectParam,
@@ -680,13 +680,13 @@ export const clearPath = (pathFinderData, clickedButton) => {
     let startNode = nodes[start];
     let endNode = nodes[end];
     let objectNode = numberOfObjects ? nodes[object] : null;
-    startNode.status = 'node-start';
-    document.getElementById(startNode.id).className = 'node node-start';
-    endNode.status = 'node-end';
-    document.getElementById(endNode.id).className = 'node node-end';
+    startNode.status = "node-start";
+    document.getElementById(startNode.id).className = "node node-start";
+    endNode.status = "node-end";
+    document.getElementById(endNode.id).className = "node node-end";
     if (objectNode) {
-      objectNode.status = 'node-unvisited';
-      document.getElementById(objectNode.id).className = 'node node-unvisited';
+      objectNode.status = "node-unvisited";
+      document.getElementById(objectNode.id).className = "node node-unvisited";
     }
   }
 
@@ -706,17 +706,17 @@ export const clearPath = (pathFinderData, clickedButton) => {
     currentNode.otherdistance = Infinity;
     currentNode.otherdirection = null;
     let currentHTMLNode = document.getElementById(id);
-    let relevantStatuses = ['node-wall', 'node-start', 'node-end', 'object'];
+    let relevantStatuses = ["node-wall", "node-start", "node-end", "object"];
     if (
       (!relevantStatuses.includes(currentNode.status) ||
-        currentHTMLNode.className.includes('visitedobject')) &&
+        currentHTMLNode.className.includes("visitedobject")) &&
       currentNode.weight !== 15
     ) {
-      currentNode.status = 'node-unvisited';
-      currentHTMLNode.className = 'node node-unvisited';
+      currentNode.status = "node-unvisited";
+      currentHTMLNode.className = "node node-unvisited";
     } else if (currentNode.weight === 15) {
-      currentNode.status = 'node-unvisited';
-      currentHTMLNode.className = 'node node-unvisited weight';
+      currentNode.status = "node-unvisited";
+      currentHTMLNode.className = "node node-unvisited weight";
     }
   });
 };
@@ -724,32 +724,32 @@ export const clearPath = (pathFinderData, clickedButton) => {
 export const changeNormalNode = (pathFinderData, currentNode) => {
   const { mouseDown, algorithmSelected } = pathFinderData;
   let currentElement = document.getElementById(currentNode.id);
-  const relevantStatuses = ['node-start', 'node-end', 'object'];
-  const unweightAlgorithms = ['dfs', 'bfs'];
+  const relevantStatuses = ["node-start", "node-end", "object"];
+  const unweightAlgorithms = ["dfs", "bfs"];
   if (mouseDown) {
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
-        currentNode.status !== 'node-wall'
-          ? 'node node-wall'
-          : 'node node-unvisited';
+        currentNode.status !== "node-wall"
+          ? "node node-wall"
+          : "node node-unvisited";
       currentNode.status =
-        currentElement.className !== 'node node-wall'
-          ? 'node-unvisited'
-          : 'node-wall';
+        currentElement.className !== "node node-wall"
+          ? "node-unvisited"
+          : "node-wall";
       currentNode.weight = 0;
     }
   } else if (mouseDown && !unweightAlgorithms.includes(algorithmSelected)) {
     if (!relevantStatuses.includes(currentNode.status)) {
       currentElement.className =
         currentNode.weight !== 15
-          ? 'node node-unvisited weight'
-          : 'node node-unvisited';
+          ? "node node-unvisited weight"
+          : "node node-unvisited";
       currentNode.weight = !currentElement.className.includes(
-        'node-unvisited weight'
+        "node-unvisited weight"
       )
         ? 0
         : 15;
-      currentNode.status = 'node-unvisited';
+      currentNode.status = "node-unvisited";
     }
   }
 };
@@ -771,19 +771,19 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
       previouslySwitchedNodeGlobalClone.id
     );
   if (
-    currentNode.status !== 'node-end' &&
-    currentNode.status !== 'node-start' &&
-    currentNode.status !== 'object'
+    currentNode.status !== "node-end" &&
+    currentNode.status !== "node-start" &&
+    currentNode.status !== "object"
   ) {
     if (previouslySwitchedNodeGlobalClone) {
       previouslySwitchedNodeGlobalClone.status =
         previouslyPressedNodeStatusClone;
       previouslySwitchedNodeGlobalClone.className =
         previouslySwitchedNodeWeight === 15
-          ? 'node node-unvisited weight'
+          ? "node node-unvisited weight"
           : previouslyPressedNodeStatusClone
           ? `node ${previouslyPressedNodeStatusClone}`
-          : 'node node-unvisited';
+          : "node node-unvisited";
       previouslySwitchedNodeGlobalClone.weight =
         previouslySwitchedNodeWeight === 15 ? 15 : 0;
       previouslySwitchedNodeGlobalClone = currentNode;
@@ -802,20 +802,20 @@ export const changeSpecialNode = (pathFinderData, currentNode) => {
       currentElement.className = `node ${previouslyPressedNodeStatusClone}`;
       currentNode.status = previouslyPressedNodeStatusClone;
     } else {
-      currentElement.className = 'node node-unvisited';
-      currentNode.status = 'node-unvisited';
+      currentElement.className = "node node-unvisited";
+      currentNode.status = "node-unvisited";
     }
   }
 };
 
 export const resetBoard = (pathFinderData, start, end) => {
-  const [startRow, startCol] = start.split('-');
-  const [endRow, endCol] = end.split('-');
+  const [startRow, startCol] = start.split("-");
+  const [endRow, endCol] = end.split("-");
   const { setGrid, setNodes, setAlgoDone, height, width } = pathFinderData;
-  const elements = document.querySelectorAll('.node');
+  const elements = document.querySelectorAll(".node");
   elements.forEach((element) => {
     const id = element.id;
-    let [rowId, colId] = id.split('-');
+    let [rowId, colId] = id.split("-");
     if (!isNaN(rowId) && !isNaN(colId)) {
       rowId = parseInt(rowId);
       colId = parseInt(colId);
@@ -823,12 +823,12 @@ export const resetBoard = (pathFinderData, start, end) => {
         rowId === parseInt(startRow) && colId === parseInt(startCol);
       const isEnd = rowId === parseInt(endRow) && colId === parseInt(endCol);
 
-      element.className = 'node node-unvisited';
+      element.className = "node node-unvisited";
       if (isStart) {
-        element.className = 'node node-start';
+        element.className = "node node-start";
       }
       if (isEnd) {
-        element.className = 'node node-end';
+        element.className = "node node-end";
       }
     }
   });
@@ -844,19 +844,19 @@ export const toggleButtonsAnimation = (
   setIsToggleButtonOn
 ) => {
   if (!isToggleButtonOn) {
-    document.getElementById('btnClickVisualizeAlg').className =
-      'btn btn-primary btn-disabled';
-    document.getElementById('btnHandleMazeAndPatterns').className =
-      'btn btn-primary btn-disabled';
-    document.getElementById('btnResetBoard').className =
-      'btn btn-info btn-disabled';
+    document.getElementById("btnClickVisualizeAlg").className =
+      "btn btn-primary btn-disabled";
+    document.getElementById("btnHandleMazeAndPatterns").className =
+      "btn btn-primary btn-disabled";
+    document.getElementById("btnResetBoard").className =
+      "btn btn-info btn-disabled";
     setIsToggleButtonOn(isToggleButtonOn);
     return;
   }
-  document.getElementById('btnClickVisualizeAlg').className = 'btn btn-primary';
-  document.getElementById('btnHandleMazeAndPatterns').className =
-    'btn btn-primary';
-  document.getElementById('btnResetBoard').className = 'btn btn-info';
+  document.getElementById("btnClickVisualizeAlg").className = "btn btn-primary";
+  document.getElementById("btnHandleMazeAndPatterns").className =
+    "btn btn-primary";
+  document.getElementById("btnResetBoard").className = "btn btn-info";
   setIsToggleButtonOn(isToggleButtonOn);
   return;
 };
@@ -869,7 +869,7 @@ export const mazeGenerationAnimations = (
   nodesParam
 ) => {
   let nodes = wallsToAnimate.slice(0);
-  let speed = speedParam === 'fast' ? 5 : speedParam === 'average' ? 40 : 70;
+  let speed = speedParam === "fast" ? 5 : speedParam === "average" ? 40 : 70;
   const timeout = (index) => {
     setTimeout(function () {
       if (index === nodes.length) {
@@ -879,8 +879,8 @@ export const mazeGenerationAnimations = (
       }
       nodes[index].className =
         nodesParam[nodes[index].id].weight === 15
-          ? 'node node-unvisited weight'
-          : 'node node-wall';
+          ? "node node-unvisited weight"
+          : "node node-wall";
       timeout(index + 1);
     }, speed);
   };
@@ -892,10 +892,10 @@ export const clearWalls = (nodes) => {
   Object.keys(nodes).forEach((node) => {
     let currentNode = nodes[node];
     let currentHTMLNode = document.getElementById(node);
-    if (currentNode.status === 'node-wall' || currentNode.weight === 15) {
-      currentNode.status = 'node-unvisited';
+    if (currentNode.status === "node-wall" || currentNode.weight === 15) {
+      currentNode.status = "node-unvisited";
       currentNode.weight = 0;
-      currentHTMLNode.className = 'node node-unvisited';
+      currentHTMLNode.className = "node node-unvisited";
     }
   });
 };
