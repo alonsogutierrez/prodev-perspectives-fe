@@ -27,8 +27,7 @@
     "react-slick": "^0.29.0",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
-    "sass": "^1.52.3",
-    "sharp": "^0.30.7"
+    "sass": "^1.52.3"
   },
   "devDependencies": {
     "eslint": "8.18.0",
