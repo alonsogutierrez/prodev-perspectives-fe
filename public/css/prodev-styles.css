@@ -1,0 +1,7 @@
+.post-details-content ol li {
+  color: "#9ed02e";
+}
+
+.post-details-content ul li:before {
+  color: "#009bdc";
+}
