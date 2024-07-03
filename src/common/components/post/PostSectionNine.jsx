@@ -2,8 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { slugify } from "../../utils";
 
-const PostSectionNine = ({ allPosts, bgColor }) => {
-  const firstPost = allPosts[0];
+const PostSectionNine = ({ allPosts = [], bgColor }) => {
+  const firstPost = allPosts[0] || { featureImg: "" };
+  const featureImg = firstPost.featureImg || "";
 
   return (
     <>
@@ -15,12 +16,12 @@ const PostSectionNine = ({ allPosts, bgColor }) => {
             </div>
             <div className="col-xl-6 col-md-12 col-12 mt--30">
               <div className="content-block post-grid post-grid-transparent">
-                {firstPost.featureImg ? (
+                {featureImg !== "" ? (
                   <div className="post-thumbnail">
                     <Link href={`/post/${firstPost.slug}`}>
                       <a>
                         <Image
-                          src={firstPost.featureImg}
+                          src={featureImg}
                           alt={firstPost.title}
                           height={600}
                           width={600}
