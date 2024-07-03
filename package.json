@@ -1,6 +1,14 @@
 {
-  "name": "blogar",
-  "version": "0.1.0",
+  "name": "prodev-perspectives-fe",
+  "description": "ProDev Perspectives Frontend Project with Next.js",
+  "version": "1.0.0",
+  "author": {
+    "name": "ProDev Perspectives",
+    "email": "alonso.gutierrez@prodevperspectives.com"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -9,7 +9,6 @@ import {
   changeSpecialNode,
   toggleButtonsAnimation,
   mazeGenerationAnimations,
-  resetBoard,
   clearWalls,
 } from "./Animations";
 import { algorithmsData } from "./helpers/algorithms";
@@ -52,7 +51,7 @@ const PathFinder = () => {
   const [object, setObject] = useState(null);
   const [nodes, setNodes] = useState(getBoardInitValues.nodes);
   const [grid, setGrid] = useState(getBoardInitValues.grid);
-  const [mouseIsPressed, setMouseIsPressed] = useState(false);
+  const [mouseIsPressed] = useState(false);
   const [pressedNodeStatus, setPressedNodeStatus] = useState("normal");
   const [mouseDown, setMouseDown] = useState(false);
   const [nodesToAnimate, setNodesToAnimate] = useState([]);
@@ -65,7 +64,7 @@ const PathFinder = () => {
     setObjectShortestPathNodesToAnimate,
   ] = useState([]);
   const [wallsToAnimate, setWallsToAnimate] = useState([]);
-  const [numberOfObjects, setNumberOfObjects] = useState(0);
+  const [numberOfObjects] = useState(0);
   const [isObject, setIsObject] = useState(false);
   const [algorithmSelected, setAlgorithmSelected] = useState("dijkstra");
   const [mazeAndPatternsSelected, setMazeAndPatternsSelected] = useState(
@@ -75,7 +74,7 @@ const PathFinder = () => {
   const [previouslySwitchedNodeWeight, setPreviouslySwitchedNodeWeight] =
     useState(0);
   const [algoDone, setAlgoDone] = useState(false);
-  const [isVisibleBoard, setIsVisibleBoard] = useState(true);
+  const [isVisibleBoard] = useState(true);
   const [isToggleButtonOn, setIsToggleButtonOn] = useState(true);
 
   const getNode = (nodeId) => {
@@ -499,9 +498,6 @@ const PathFinder = () => {
   };
 
   const handleVisualizeMazeAndPatterns = () => {
-    const [rowStart, colStart] = start.split("-");
-    const [rowEnd, colEnd] = end.split("-");
-
     if (mazeAndPatternsSelected === "recursiveDivisionHorizontal") {
       const pathFinderData = {
         start,
