@@ -59,6 +59,41 @@ const SubHeader = ({}) => {
             </div>
           </div>
         </div>
+
+        <div className="header-celphone">
+          <div className="header-middle-celphone">
+            <div className="container">
+              <div className="row align-items-center">
+                <div className="col-lg-3 col-md-4 col-sm-6">
+                  <div className="logo">
+                    <Link href="/">
+                      <Image
+                        className="dark-logo"
+                        width={130}
+                        height={130}
+                        src="/images/logo/prodev-02.png"
+                        alt="ProDev Perspectives logo"
+                      />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="header-bottom-celphone">
+            <div className="header-search d-flex flex-wrap align-items-center justify-content-center justify-content-xl-end">
+              {/* Start Hamburger Menu  */}
+              <div className="hamburger-menu d-block d-xl-none">
+                <div className="hamburger-inner">
+                  <div className="icon" onClick={MobileShowHandler}>
+                    <i className="fal fa-bars" />
+                  </div>
+                </div>
+              </div>
+              {/* End Hamburger Menu  */}
+            </div>
+          </div>
+        </div>
       </header>
 
       <MobileMenu menuShow={showMMenu} menuHide={MobileHideHandler} />
