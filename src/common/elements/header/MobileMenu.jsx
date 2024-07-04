@@ -19,7 +19,6 @@ const MobileMenu = ({ menuShow, menuHide }) => {
     <div className={`popup-mobilemenu-area ${menuShow ? "show" : ""}`}>
       <div className="inner">
         <div className="mobile-menu-top">
-          <h2>test</h2>
           <div className="logo">
             <Link href="/">
               <Image
