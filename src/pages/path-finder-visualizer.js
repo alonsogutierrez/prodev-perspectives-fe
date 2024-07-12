@@ -14,7 +14,7 @@ const PathFinderVisualizer = () => {
       <SubHeader pClass="header-light header-sticky header-with-shadow" />
       <div className="axil-post-list-area axil-section-gap bg-color-white">
         <div className="container">
-          <h3>Path Finder Visualizer - Search Algorithms</h3>
+          <h3>Path Finder Visualizer</h3>
           <PathFinder />
         </div>
       </div>

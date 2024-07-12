@@ -688,7 +688,7 @@ const PathFinder = () => {
   return (
     <>
       <div
-        style={{ textAlign: "center", padding: "50px" }}
+        style={{ textAlign: "center", padding: "5vh" }}
         className="post-single-wrapper axil-section-gap bg-color-white"
       >
         <Nav

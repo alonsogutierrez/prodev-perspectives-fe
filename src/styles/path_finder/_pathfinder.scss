@@ -3,6 +3,15 @@
   list-style: none;
   padding: 0 28px 0 0;
 }
+.pathfinder-wrapper {
+  padding: 10vh;
+}
+.pathfinder-menu {
+  display: block;
+}
+.pathfinder-menu-mobile {
+  display: none;
+}
 
 #displayLegendsList {
   list-style-type: none;
@@ -16,7 +25,16 @@
   padding: 0px 20px 0px 0px !important; /* Add some spacing between list items */
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 640px) {
+  .pathfinder-wrapper {
+    padding: 5vh;
+  }
+  .pathfinder-menu {
+    display: none;
+  }
+  .pathfinder-menu-mobile {
+    display: block;
+  }
   #displayLegendsList li {
     margin-right: 0px;
     padding: 0px 5px 0px 0px !important; /* Add some spacing between list items */
