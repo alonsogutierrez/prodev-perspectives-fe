@@ -4,6 +4,7 @@ import SubHeader from "../common/elements/header/SubHeader";
 import HeadTitle from "../common/elements/head/HeadTitle";
 import PostSectionNine from "../common/components/post/PostSectionNine";
 import CategoryListSlide from "../common/components/category/CategoryListSlide";
+import PortfolioHome from "../common/components/path-finder-visualizer/home/PortfolioHome";
 
 const HomeDefault = ({ allPosts }) => {
   return (
@@ -11,6 +12,7 @@ const HomeDefault = ({ allPosts }) => {
       <HeadTitle pageTitle="Home" />
       <SubHeader />
       <PostSectionNine allPosts={allPosts} />
+      <PortfolioHome />
       <CategoryListSlide categoryPostsData={allPosts} />
       <Footer />
     </>

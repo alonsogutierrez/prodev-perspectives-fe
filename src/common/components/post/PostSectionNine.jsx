@@ -12,7 +12,15 @@ const PostSectionNine = ({ allPosts = [], bgColor }) => {
         <div className="container">
           <div className="row">
             <div className="col-xl-12 col-md-12 col-12 mt--30">
-              <h1>Recently blog posts</h1>
+              <h1
+                style={{
+                  color: "#bdd926",
+                  textShadow: "2px 2px 1px #000",
+                  fontWeight: "bold",
+                }}
+              >
+                Recently blog posts
+              </h1>
             </div>
             <div className="col-xl-6 col-md-12 col-12 mt--30">
               <div className="content-block post-grid post-grid-transparent">
@@ -50,7 +58,15 @@ const PostSectionNine = ({ allPosts = [], bgColor }) => {
                     </div>
                     <h3 className="title">
                       <Link href={`/post/${firstPost.slug}`}>
-                        <a>{firstPost.title}</a>
+                        <a
+                          style={{
+                            color: "#bdd926",
+                            textShadow: "2px 2px 1px #000",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {firstPost.title}
+                        </a>
                       </Link>
                     </h3>
                   </div>
