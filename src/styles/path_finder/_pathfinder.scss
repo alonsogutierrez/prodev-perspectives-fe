@@ -37,9 +37,24 @@
   display: block;
 }
 
+#pathFinderWrapper {
+  text-align: center;
+  padding: 5vh;
+}
+
 @media screen and (max-width: 640px) {
+  #pathFinderWrapper {
+    text-align: center;
+    padding: 1vh;
+  }
+
   #mainText {
     padding-top: 0vh;
+  }
+  #mainText > ul li {
+    display: inline-block;
+    list-style: none;
+    padding: 0 2.5vh 0 0;
   }
   .pathfinder-wrapper {
     padding: 5vh;
@@ -539,7 +554,7 @@
 
 @media screen and (max-width: 500px) {
   .grid {
-    margin: 35px -83px 0;
+    margin: 2vh -83px 0;
   }
 }
 
