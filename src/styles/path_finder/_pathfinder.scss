@@ -1,3 +1,7 @@
+#mainText {
+  padding-top: 3vh;
+}
+
 #mainText > ul li {
   display: inline-block;
   list-style: none;
@@ -34,6 +38,9 @@
 }
 
 @media screen and (max-width: 640px) {
+  #mainText {
+    padding-top: 0vh;
+  }
   .pathfinder-wrapper {
     padding: 5vh;
   }
@@ -48,6 +55,7 @@
   }
   .lengendListMobile {
     display: block;
+    margin-bottom: 1vh;
   }
   .legendListDesktop {
     display: none;
