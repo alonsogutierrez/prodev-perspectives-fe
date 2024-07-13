@@ -710,7 +710,7 @@ const PathFinder = () => {
           width={width}
           handleVisualizeMazeAndPatterns={handleVisualizeMazeAndPatterns}
         ></Nav>
-        <Legends></Legends>
+        <Legends />
         {isVisibleBoard ? (
           <Grid
             grid={grid}

@@ -55,6 +55,7 @@ const PortfolioHome = () => {
                             color: "#00aae6",
                             textShadow: "2px 2px 1px #000",
                             fontWeight: "bold",
+                            backgroundColor: "#fff",
                           }}
                         >
                           DSA Path Finder Visualizer - Dijkstra - A* - DFS - BFS

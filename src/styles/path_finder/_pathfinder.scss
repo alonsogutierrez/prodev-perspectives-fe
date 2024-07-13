@@ -14,6 +14,7 @@
 }
 
 #displayLegendsList {
+  display: block;
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -23,6 +24,13 @@
 #displayLegendsList li {
   margin-right: 0px;
   padding: 0px 20px 0px 0px !important; /* Add some spacing between list items */
+}
+.lengendListMobile {
+  display: none;
+}
+
+.legendListDesktop {
+  display: block;
 }
 
 @media screen and (max-width: 640px) {
@@ -35,9 +43,14 @@
   .pathfinder-menu-mobile {
     display: block;
   }
-  #displayLegendsList li {
-    margin-right: 0px;
-    padding: 0px 5px 0px 0px !important; /* Add some spacing between list items */
+  #displayLegendsList {
+    display: none;
+  }
+  .lengendListMobile {
+    display: block;
+  }
+  .legendListDesktop {
+    display: none;
   }
 }
 
