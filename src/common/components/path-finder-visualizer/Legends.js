@@ -3,7 +3,7 @@ import Node from "./node/node";
 
 const Legends = () => {
   return (
-    <div id="mainText" style={{ paddingTop: "3vh" }}>
+    <div id="mainText">
       <ul id="displayLegendsList" className="lengendListDesktop">
         <li>
           <Node id="legend-start" status="node-start" isWall={false}></Node>

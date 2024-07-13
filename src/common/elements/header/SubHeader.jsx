@@ -13,6 +13,7 @@ const SubHeader = ({}) => {
   return (
     <>
       <header className="header axil-header header-style-3  header-light header-sticky">
+        {/* Start Header Top  */}
         <div className="header-middle">
           <div className="container">
             <div className="row align-items-center">
@@ -32,7 +33,7 @@ const SubHeader = ({}) => {
             </div>
           </div>
         </div>
-
+        {/* Start Header Bottom  */}
         <div className="header-bottom">
           <div className="container">
             <div className="row justify-content-between align-items-center">
@@ -60,17 +61,18 @@ const SubHeader = ({}) => {
           </div>
         </div>
 
+        {/* Start Header Celphone  */}
         <div className="header-celphone">
           <div className="header-middle-celphone">
             <div className="container">
               <div className="row align-items-center">
                 <div className="col-lg-3 col-md-4 col-sm-6">
-                  <div className="logo">
+                  <div className="logo" style={{ marginBottom: "0vh" }}>
                     <Link href="/">
                       <Image
                         className="dark-logo"
-                        width={130}
-                        height={130}
+                        width={70}
+                        height={70}
                         src="/images/logo/prodev-02.png"
                         alt="ProDev Perspectives logo"
                       />
