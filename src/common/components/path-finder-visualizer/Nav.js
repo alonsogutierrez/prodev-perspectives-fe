@@ -222,7 +222,13 @@ const Nav = (props) => {
                         })}
                       </select>
                       <button
-                        id="btnClickVisualizeAlg"
+                        id={
+                          key.includes("maze")
+                            ? "btnHandleMazeAndPatternsMobile"
+                            : key.includes("velocities")
+                            ? "btnResetBoardMobile"
+                            : "btnClickVisualizeAlgMobile"
+                        }
                         type="submit"
                         className={
                           !key.includes("velocities")

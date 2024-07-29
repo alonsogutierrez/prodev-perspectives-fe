@@ -6,12 +6,14 @@ import MenuData from "../../../data/mobilemenu/MenuData.json";
 const MobileMenu = ({ menuShow, menuHide }) => {
   const MenuToggleHandler = (e) => {
     let selectElm = e.target.nextSibling;
-    if (!selectElm.classList.contains("open")) {
-      selectElm.classList.add("open");
-      e.target.classList.add("open");
-    } else {
-      selectElm.classList.remove("open");
-      e.target.classList.remove("open");
+    if (selectElm != null) {
+      if (!selectElm.classList.contains("open")) {
+        selectElm.classList.add("open");
+        e.target.classList.add("open");
+      } else {
+        selectElm.classList.remove("open");
+        e.target.classList.remove("open");
+      }
     }
   };
 

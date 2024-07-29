@@ -843,20 +843,33 @@ export const toggleButtonsAnimation = (
   isToggleButtonOn,
   setIsToggleButtonOn
 ) => {
+  console.log("toggleButtonsAnimation", isToggleButtonOn);
   if (!isToggleButtonOn) {
     document.getElementById("btnClickVisualizeAlg").className =
       "btn btn-primary btn-disabled";
+    document.getElementById("btnClickVisualizeAlgMobile").className =
+      "btn btn-primary btn-disabled";
     document.getElementById("btnHandleMazeAndPatterns").className =
+      "btn btn-primary btn-disabled";
+    document.getElementById("btnHandleMazeAndPatternsMobile").className =
       "btn btn-primary btn-disabled";
     document.getElementById("btnResetBoard").className =
       "btn btn-info btn-disabled";
+    document.getElementById("btnResetBoardMobile").className =
+      "btn btn-info btn-disabled";
+    console.log("button disabled");
     setIsToggleButtonOn(isToggleButtonOn);
     return;
   }
   document.getElementById("btnClickVisualizeAlg").className = "btn btn-primary";
+  document.getElementById("btnClickVisualizeAlgMobile").className =
+    "btn btn-primary";
   document.getElementById("btnHandleMazeAndPatterns").className =
     "btn btn-primary";
+  document.getElementById("btnHandleMazeAndPatternsMobile").className =
+    "btn btn-primary";
   document.getElementById("btnResetBoard").className = "btn btn-info";
+  document.getElementById("btnResetBoardMobile").className = "btn btn-info";
   setIsToggleButtonOn(isToggleButtonOn);
   return;
 };

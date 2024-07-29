@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import Grid from "./Grid";
 import {
   launchAnimations,
@@ -349,10 +348,8 @@ const PathFinder = () => {
       object,
       setAlgoDone,
     };
-
     clearPath(pathFinderData, "clickedBtn");
     toggleButtonsAnimation(false, setIsToggleButtonOn);
-
     const weightedAlgorithmsNames = algorithmsData["weighted"].map(
       (algo) => algo.value
     );
