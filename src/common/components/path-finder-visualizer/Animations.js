@@ -611,7 +611,6 @@ export const launchInstantAnimations = (
           shortestPathNodesToAnimate
         );
       } else {
-        console.log("calling from here");
         drawShortestPath(
           nodes,
           setObjectShortestPathNodesToAnimate,
@@ -843,7 +842,6 @@ export const toggleButtonsAnimation = (
   isToggleButtonOn,
   setIsToggleButtonOn
 ) => {
-  console.log("toggleButtonsAnimation", isToggleButtonOn);
   if (!isToggleButtonOn) {
     document.getElementById("btnClickVisualizeAlg").className =
       "btn btn-primary btn-disabled";
@@ -857,7 +855,6 @@ export const toggleButtonsAnimation = (
       "btn btn-info btn-disabled";
     document.getElementById("btnResetBoardMobile").className =
       "btn btn-info btn-disabled";
-    console.log("button disabled");
     setIsToggleButtonOn(isToggleButtonOn);
     return;
   }
