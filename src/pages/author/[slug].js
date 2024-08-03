@@ -100,7 +100,6 @@ export async function getStaticProps({ params }) {
       authorData,
       allPosts,
     },
-    revalidate: 1800, // Revalidate the page every 30 minutes
   };
 }
 

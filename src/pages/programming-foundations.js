@@ -28,6 +28,5 @@ export async function getStaticProps() {
   const allPosts = await getAllPosts();
   return {
     props: { allPosts },
-    revalidate: 1800, // Revalidate the page every 30 minutes
   };
 }
