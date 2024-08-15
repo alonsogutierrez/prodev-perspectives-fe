@@ -15,7 +15,7 @@ const PortfolioHome = () => {
                   fontWeight: "bold",
                 }}
               >
-                ProDev Portfolio projects
+                Visit our ProDev Perspectives's portfolio
               </h1>
             </div>
             <div className="col-xl-6 col-md-12 col-12 mt--30">
@@ -58,8 +58,7 @@ const PortfolioHome = () => {
                             backgroundColor: "#fff",
                           }}
                         >
-                          DSA Path Finder Visualizer - Dijkstra - A* - DFS - BFS
-                          & More
+                          Path Finder Visualizer with Dijkstra - A* - DFS - BFS
                         </a>
                       </Link>
                     </h3>
@@ -78,10 +77,10 @@ const PortfolioHome = () => {
                       <Link href="https://todoonadatattooart.com">
                         <a>
                           <Image
-                            src="/images/portfolio/plp.png"
+                            src="/images/portfolio/ecommerce-sudaderas.png"
                             alt={"Todo o Nada Tattoo Art Ecommerce CL"}
-                            height={300}
-                            width={60}
+                            height={200}
+                            width={100}
                             priority={true}
                           />
                         </a>

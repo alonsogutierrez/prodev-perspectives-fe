@@ -11,8 +11,8 @@ const HomeDefault = ({ allPosts }) => {
     <>
       <HeadTitle pageTitle="Home" />
       <SubHeader />
-      <PostSectionNine allPosts={allPosts} />
       <PortfolioHome />
+      <PostSectionNine allPosts={allPosts} />
       <CategoryListSlide categoryPostsData={allPosts} />
       <Footer />
     </>
