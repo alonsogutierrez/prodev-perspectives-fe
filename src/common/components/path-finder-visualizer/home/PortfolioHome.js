@@ -15,7 +15,7 @@ const PortfolioHome = () => {
                   fontWeight: "bold",
                 }}
               >
-                Visit our ProDev Perspectives's portfolio
+                Visit our ProDev Perspectives&apos;s portfolio
               </h1>
             </div>
             <div className="col-xl-6 col-md-12 col-12 mt--30">
@@ -77,7 +77,9 @@ const PortfolioHome = () => {
                       <Link href="https://todoonadatattooart.com">
                         <a>
                           <Image
-                            src="/images/portfolio/ecommerce-sudaderas.png"
+                            src={
+                              "https://prodevperspectives-images.s3.us-east-2.amazonaws.com/images/medium/ecommerce.png"
+                            }
                             alt={"Todo o Nada Tattoo Art Ecommerce CL"}
                             height={200}
                             width={100}
