@@ -27,18 +27,12 @@ A professional and modern tech blog built with Next.js, showcasing insights abou
 
 ### Prerequisites
 
-- Node.js v14.17.6 or higher
+- Node.js v20 or higher
 - npm or yarn package manager
 
 ### Installation
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/alonsogutierrez/prodev-perspectives-fe.git
-```
-
-2. Install dependencies:
+1. Clone the repository:- Next JS v12
 
 ```bash
 npm install
@@ -54,7 +48,7 @@ npm run dev
 
 ## 🛠️ Built With
 
-- [Next.js](https://nextjs.org/) - React framework for production
+- [Next.js](https://nextjs.org/) - React framework for production - Next JS v12
 - Modern CSS and responsive design
 - Optimized image handling
 - SEO best practices

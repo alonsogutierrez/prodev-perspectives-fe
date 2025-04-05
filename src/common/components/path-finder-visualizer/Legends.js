@@ -1,110 +1,81 @@
 import React from "react";
 import Node from "./node/node";
 
+const legendItems = [
+  {
+    id: "legend-start",
+    status: "node-start",
+    isWall: false,
+    className: "start",
+    label: "Start",
+  },
+  {
+    id: "legend-end",
+    status: "node-end",
+    isWall: false,
+    className: "end",
+    label: "End",
+  },
+  {
+    id: "legend-weighted",
+    status: "node-weighted",
+    isWall: false,
+    className: "borderlessWeight",
+    label: "Weighted",
+  },
+  {
+    id: "legend-unvisited",
+    status: "node-unvisited",
+    isWall: false,
+    className: "unvisited",
+    label: "Unvisited",
+  },
+  {
+    id: "legend-visited",
+    status: "node-visited",
+    isWall: false,
+    className: "visited",
+    label: "Visited",
+  },
+  {
+    id: "legend-shortest-path",
+    status: "node-shortest-path",
+    isWall: false,
+    className: "shortest-path",
+    label: "Shortest-path",
+  },
+  {
+    id: "legend-wall",
+    status: "node-wall",
+    isWall: false,
+    className: "wall",
+    label: "Wall",
+  },
+];
+
 const Legends = () => {
   return (
     <div id="mainText">
+      {/* Desktop Legends */}
       <ul id="displayLegendsList" className="lengendListDesktop">
-        <li>
-          <Node id="legend-start" status="node-start" isWall={false}></Node>
-          <div className="start"></div>
-          Start
-        </li>
-        <li>
-          <Node id="legend-end" status="node-end" isWall={false}></Node>
-          <div className="end"></div>
-          End
-        </li>
-        <li id="weightLegend">
-          <Node
-            id="legend-weighted"
-            status="node-weighted"
-            isWall={false}
-          ></Node>
-          <div className="borderlessWeight"></div>
-          Weighted
-        </li>
-        <li>
-          <Node
-            id="legend-unvisited"
-            status="node-unvisited"
-            isWall={false}
-          ></Node>
-          <div className="unvisited"></div>
-          Unvisited
-        </li>
-        <li>
-          <Node id="legend-visited" status="node-visited" isWall={false}></Node>
-          <div className="visited"></div>
-          {/* <div className='visitedobject'></div> */}
-          Visited
-        </li>
-        <li>
-          <Node
-            id="legend-shortest-path"
-            status="node-shortest-path"
-            isWall={false}
-          ></Node>
-          <div className="shortest-path"></div>
-          Shortest-path
-        </li>
-        <li>
-          <Node id="legend-wall" status="node-wall" isWall={false}></Node>
-          <div className="wall"></div>
-          Wall
-        </li>
+        {legendItems.map((item) => (
+          <li key={item.id}>
+            <Node id={item.id} status={item.status} isWall={item.isWall}></Node>
+            <div className={item.className}></div>
+            {item.label}
+          </li>
+        ))}
       </ul>
+
+      {/* Mobile Legends */}
       <ul className="lengendListMobile">
-        <li>
-          <Node id="legend-start" status="node-start" isWall={false}></Node>
-          <div className="start"></div>
-          Start
-        </li>
-        <li>
-          <Node id="legend-end" status="node-end" isWall={false}></Node>
-          <div className="end"></div>
-          End
-        </li>
-        <li id="weightLegend">
-          <Node
-            id="legend-weighted"
-            status="node-weighted"
-            isWall={false}
-          ></Node>
-          <div className="borderlessWeight"></div>
-          Weighted
-        </li>
-        <li>
-          <Node
-            id="legend-unvisited"
-            status="node-unvisited"
-            isWall={false}
-          ></Node>
-          <div className="unvisited"></div>
-          Unvisited
-        </li>
-      </ul>
-      <ul className="lengendListMobile">
-        <li>
-          <Node id="legend-visited" status="node-visited" isWall={false}></Node>
-          <div className="visited"></div>
-          {/* <div className='visitedobject'></div> */}
-          Visited
-        </li>
-        <li>
-          <Node
-            id="legend-shortest-path"
-            status="node-shortest-path"
-            isWall={false}
-          ></Node>
-          <div className="shortest-path"></div>
-          Shortest-path
-        </li>
-        <li>
-          <Node id="legend-wall" status="node-wall" isWall={false}></Node>
-          <div className="wall"></div>
-          Wall
-        </li>
+        {legendItems.map((item) => (
+          <li key={item.id}>
+            <Node id={item.id} status={item.status} isWall={item.isWall}></Node>
+            <div className={item.className}></div>
+            {item.label}
+          </li>
+        ))}
       </ul>
     </div>
   );
